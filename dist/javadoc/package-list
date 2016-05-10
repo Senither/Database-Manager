@@ -1,0 +1,12 @@
+com.sendev.databasemanager
+com.sendev.databasemanager.connections
+com.sendev.databasemanager.contracts
+com.sendev.databasemanager.eloquent
+com.sendev.databasemanager.exceptions
+com.sendev.databasemanager.grammar
+com.sendev.databasemanager.output
+com.sendev.databasemanager.plugin
+com.sendev.databasemanager.query
+com.sendev.databasemanager.schema
+com.sendev.databasemanager.schema.contracts
+com.sendev.databasemanager.utils
