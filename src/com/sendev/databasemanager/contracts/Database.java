@@ -154,6 +154,7 @@ public abstract class Database implements DatabaseContract
     public final synchronized ResultSet query(String query) throws SQLException
     {
         queryValidation(getStatement(query));
+
         PreparedStatement statement = createPreparedStatement(query);
 
         if (statement.execute(query)) {

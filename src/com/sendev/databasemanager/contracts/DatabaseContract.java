@@ -29,7 +29,7 @@ public interface DatabaseContract
      * @param table The table name to check.
      * @return Boolean
      */
-    public abstract boolean isTable(String table);
+    public abstract boolean hasTable(String table);
 
     /**
      * Attempts to truncate the given table, this will delete

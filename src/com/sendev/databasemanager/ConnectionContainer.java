@@ -11,12 +11,12 @@ public class ConnectionContainer
     private String defaultConnection = null;
 
     /**
-     * Creates a new database connection container instance, making it easier to 
+     * Creates a new database connection container instance, making it easier to
      * store, manage and use the database connections parsed to the Database Manager.
-     * 
-     * @see com.sendev.databasemanager.DatabaseManager 
-     * 
-     * @param dbm 
+     *
+     * @see com.sendev.databasemanager.DatabaseManager Checkout the Database Manager.
+     *
+     * @param dbm
      */
     public ConnectionContainer(DatabaseManager dbm)
     {

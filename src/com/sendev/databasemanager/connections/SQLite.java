@@ -83,10 +83,10 @@ public class SQLite extends FilenameDatabase
     }
 
     @Override
-    public boolean isTable(String table)
+    public boolean hasTable(String table)
     {
         try {
-            DatabaseMetaData md = connection.getMetaData();
+            DatabaseMetaData md = getConnection().getMetaData();
 
             try (ResultSet tables = md.getTables(null, null, table, null)) {
                 if (tables.next()) {
@@ -108,7 +108,7 @@ public class SQLite extends FilenameDatabase
     public boolean truncate(String table)
     {
         try {
-            if (!isTable(table)) {
+            if (!hasTable(table)) {
                 getLogger().log(Level.SEVERE, "DBM - Table \"{0}\" does not exist.", table);
                 return false;
             }

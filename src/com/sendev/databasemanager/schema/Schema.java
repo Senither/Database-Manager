@@ -21,13 +21,9 @@ public class Schema
 
     public boolean hasTable(String table) throws SQLException
     {
-        DatabaseMetaData meta = getMetaData();
-
         dbm.output().debug("Schema::hasTable was called on \"%s\"", table);
-
-        ResultSet result = meta.getTables(null, null, table, new String[]{"TABLE"});
-
-        return result.next();
+        
+        return dbm.getConnections().getDefaultConnection().hasTable(table);
     }
 
     public boolean hasColumn(String table, String column) throws SQLException

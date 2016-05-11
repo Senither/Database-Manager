@@ -2,11 +2,11 @@ package com.sendev.databasemanager.connections;
 
 import com.sendev.databasemanager.contracts.HostnameDatabase;
 import com.sendev.databasemanager.contracts.StatementContract;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import static org.bukkit.Bukkit.getLogger;
 
 public class MySQL extends HostnameDatabase
 {
@@ -28,7 +28,7 @@ public class MySQL extends HostnameDatabase
 
             return true;
         } catch (ClassNotFoundException e) {
-            getLogger().log(Level.WARNING, "DBM - MySQL DataSource class missing: {0}", e.getMessage());
+            dbm.output().exception("MySQL DataSource class missing: %s", e, e.getMessage());
         }
 
         return false;
@@ -47,7 +47,7 @@ public class MySQL extends HostnameDatabase
             }
 
         } catch (SQLException e) {
-            getLogger().log(Level.SEVERE, "DBM - Could not establish a MySQL connection, SQLException: {0}", e.getMessage());
+            dbm.output().exception("Could not establish a MySQL connection, SQLException: %s", e, e.getMessage());
         }
 
         return false;
@@ -56,16 +56,24 @@ public class MySQL extends HostnameDatabase
     @Override
     protected void queryValidation(StatementContract statement) throws SQLException
     {
+        SQLException exception;
+
         switch ((MySQLStatement) statement) {
             case USE:
-                getLogger().warning("DBM - Please create a new connection to use a different database.");
-                throw new SQLException("Please create a new connection to use a different database.");
+                exception = new SQLException("Please create a new connection to use a different database.");
+
+                dbm.output().exception("Please create a new connection to use a different database.", exception);
+
+                throw exception;
 
             case PREPARE:
             case EXECUTE:
             case DEALLOCATE:
-                getLogger().warning("DBM - Please use the prepare() method to prepare a query.");
-                throw new SQLException("Please use the prepare() method to prepare a query.");
+                exception = new SQLException("Please use the prepare() method to prepare a query.");
+
+                dbm.output().exception("Please use the prepare() method to prepare a query.", exception);
+
+                throw exception;
         }
     }
 
@@ -77,26 +85,29 @@ public class MySQL extends HostnameDatabase
         try {
             return MySQLStatement.valueOf(statement[0].toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new SQLException(String.format("Unknown statement: \"%s\".", statement[0]));
+            dbm.output().exception("Unknown statement: \"%s\"", e, statement[0]);
         }
+
+        return null;
     }
 
     @Override
-    public boolean isTable(String table)
+    public boolean hasTable(String table)
     {
-        Statement statement;
-
         try {
-            statement = getConnection().createStatement();
-        } catch (SQLException e) {
-            return false;
-        }
+            DatabaseMetaData md = getConnection().getMetaData();
 
-        try {
-            statement.executeQuery(String.format("SELECT * FROM `%s` LIMIT 1;", table));
+            try (ResultSet tables = md.getTables(null, null, table, null)) {
+                if (tables.next()) {
+                    tables.close();
+
+                    return true;
+                }
+            }
 
             return true;
         } catch (SQLException e) {
+            dbm.output().exception("Failed to check if table exists \"%s\": %s", e, table, e.getMessage());
         }
 
         return false;
@@ -106,7 +117,7 @@ public class MySQL extends HostnameDatabase
     public boolean truncate(String table)
     {
         try {
-            if (!isTable(table)) {
+            if (!hasTable(table)) {
                 return false;
             }
 
@@ -116,6 +127,7 @@ public class MySQL extends HostnameDatabase
 
             return true;
         } catch (SQLException e) {
+            dbm.output().exception("Failed to truncate \"%s\": %s", e, table, e.getMessage());
         }
 
         return false;

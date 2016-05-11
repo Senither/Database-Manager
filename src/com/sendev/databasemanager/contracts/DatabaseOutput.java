@@ -100,17 +100,17 @@ public abstract class DatabaseOutput
         }
     }
 
-    public void log(Level level, String message, Object... parms)
+    private void log(Level level, String message, Object... parms)
     {
         logger.log(level, "[DBM] {0}", String.format(message, parms));
     }
 
-    public void logDebug(Level level, String message, Object... parms)
+    private void logDebug(Level level, String message, Object... parms)
     {
         logger.log(level, "[DBM::DEBUG] {0}", String.format(message, parms));
     }
 
-    public void logDebug(Level level, String message, Exception exception, Object... parms)
+    private void logDebug(Level level, String message, Exception exception, Object... parms)
     {
         logger.log(level, "[DBM::DEBUG] {0} {1}", new Object[]{String.format(message, parms), exception});
     }
