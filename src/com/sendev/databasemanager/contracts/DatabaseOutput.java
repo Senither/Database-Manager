@@ -8,20 +8,12 @@ public abstract class DatabaseOutput
 {
     private Logger logger = null;
     protected DatabaseManager dbm;
-    private String channelName = "Unknown";
 
     public void setDatabaseManager(DatabaseManager dbm)
     {
         this.dbm = dbm;
 
         this.logger = dbm.plugin().getLogger();
-
-        setChannelName(this.dbm.plugin().getDescription().getName());
-    }
-
-    private void setChannelName(String channelName)
-    {
-        this.channelName = channelName;
     }
 
     public abstract boolean info();
