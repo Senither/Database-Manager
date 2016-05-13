@@ -9,30 +9,60 @@ public class DataRow
 
     private final Map<String, Object> items;
 
+    /**
+     * Creates a new data row object from a map of data.
+     *
+     * @param items The map to generate the data row from.
+     */
     public DataRow(Map<String, Object> items)
     {
         this.items = items;
     }
 
+    /**
+     * Checks to see if the given index exists in the data rows list of items.
+     *
+     * @param name The index(name) to check if exists.
+     *
+     * @return true if the index exists, otherwise it will return false.
+     */
     public boolean has(String name)
     {
         return items.containsKey(name);
     }
 
+    /**
+     * Gets all the keys from the data row.
+     *
+     * @return All the keys from the data row.
+     */
     public Set<String> keySet()
     {
         return items.keySet();
     }
 
+    /**
+     * Gets a object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>NULL</code> if the index doesn't exists.
+     */
     public Object get(String name)
     {
-        if (has(name)) {
-            return items.get(name);
-        }
-
-        return null;
+        return get(name, null);
     }
 
+    /**
+     * Gets a object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
     public Object get(String name, Object def)
     {
         if (has(name)) {
@@ -42,11 +72,28 @@ public class DataRow
         return def;
     }
 
+    /**
+     * Gets a boolean object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>FALSE</code> if the index doesn't exists.
+     */
     public boolean getBoolean(String name)
     {
         return getBoolean(name, false);
     }
 
+    /**
+     * Gets a boolean object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
     public boolean getBoolean(String name, boolean def)
     {
         Object value = get(name, def);
@@ -60,11 +107,28 @@ public class DataRow
         return (boolean) value;
     }
 
+    /**
+     * Gets a string object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>NULL</code> if the index doesn't exists.
+     */
     public String getString(String name)
     {
         return getString(name, null);
     }
 
+    /**
+     * Gets a string object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
     public String getString(String name, String def)
     {
         Object value = get(name, def);
@@ -72,11 +136,28 @@ public class DataRow
         return String.valueOf(value);
     }
 
-    public double getDouble(String path)
+    /**
+     * Gets a double object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>0.0D</code> if the index doesn't exists.
+     */
+    public double getDouble(String name)
     {
-        return getDouble(path, 0.0D);
+        return getDouble(name, 0.0D);
     }
 
+    /**
+     * Gets a double object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
     public double getDouble(String name, double def)
     {
         Object value = get(name, def);
@@ -94,11 +175,28 @@ public class DataRow
         return (double) value;
     }
 
+    /**
+     * Gets a integer object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>0</code> if the index doesn't exists.
+     */
     public int getInt(String name)
     {
         return getInt(name, 0);
     }
 
+    /**
+     * Gets a integer object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
     public int getInt(String name, int def)
     {
         Object value = get(name, def);
@@ -116,11 +214,28 @@ public class DataRow
         return (int) value;
     }
 
+    /**
+     * Gets a long object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>0L</code> if the index doesn't exists.
+     */
     public long getLong(String name)
     {
         return getLong(name, 0L);
     }
 
+    /**
+     * Gets a long object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
     public long getLong(String name, long def)
     {
         Object value = get(name, def);
@@ -138,11 +253,28 @@ public class DataRow
         return (long) value;
     }
 
+    /**
+     * Gets a carbon timestamp object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>NULL</code> if the index doesn't exists.
+     */
     public Carbon getTimestamp(String name)
     {
         return getTimestamp(name, null);
     }
 
+    /**
+     * Gets a carbon timestamp object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
     public Carbon getTimestamp(String name, Carbon def)
     {
         try {

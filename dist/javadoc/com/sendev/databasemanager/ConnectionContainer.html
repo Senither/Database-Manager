@@ -130,7 +130,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionContainer.html#ConnectionContainer-com.sendev.databasemanager.DatabaseManager-">ConnectionContainer</a></span>(<a href="../../../com/sendev/databasemanager/DatabaseManager.html" title="class in com.sendev.databasemanager">DatabaseManager</a>&nbsp;dbm)</code>
-<div class="block">Creates a new database connection container instance, making it easier to 
+<div class="block">Creates a new database connection container instance, making it easier to
  store, manage and use the database connections parsed to the Database Manager.</div>
 </td>
 </tr>
@@ -153,15 +153,24 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionContainer.html#addConnection-java.lang.String-com.sendev.databasemanager.ConnectionLevel-com.sendev.databasemanager.contracts.Database-">addConnection</a></span>(java.lang.String&nbsp;name,
              <a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a>&nbsp;level,
-             <a href="../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a>&nbsp;connection)</code>&nbsp;</td>
+             <a href="../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a>&nbsp;connection)</code>
+<div class="block">Adds a database connection to the connections container, allowing
+ queries to be run against the connection.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionContainer.html#getConnection-java.lang.String-">getConnection</a></span>(java.lang.String&nbsp;connection)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionContainer.html#getConnection-java.lang.String-">getConnection</a></span>(java.lang.String&nbsp;connection)</code>
+<div class="block">Gets the database connection associated with the given name, if there isn't any database
+ connection with the given name, <code>NULL</code> will be returned instead.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionContainer.html#getDefaultConnection--">getDefaultConnection</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionContainer.html#getDefaultConnection--">getDefaultConnection</a></span>()</code>
+<div class="block">Returns the default database connection, if there are not default connection the
+ database with the highest database connection level will be returned instead.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -192,7 +201,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>ConnectionContainer</h4>
 <pre>public&nbsp;ConnectionContainer(<a href="../../../com/sendev/databasemanager/DatabaseManager.html" title="class in com.sendev.databasemanager">DatabaseManager</a>&nbsp;dbm)</pre>
-<div class="block">Creates a new database connection container instance, making it easier to 
+<div class="block">Creates a new database connection container instance, making it easier to
  store, manage and use the database connections parsed to the Database Manager.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -219,6 +228,21 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;boolean&nbsp;addConnection(java.lang.String&nbsp;name,
                              <a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a>&nbsp;level,
                              <a href="../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a>&nbsp;connection)</pre>
+<div class="block">Adds a database connection to the connections container, allowing
+ queries to be run against the connection.
+ <p>
+ The <code>connection level</code> will be used to determine the priority of the connection,
+ the top level will always be <code>DEFAULT</code>, after that the it's
+ <code>HIGEST</code>, <code>HIGE</code>, <code>MEDIUM</code>, etc...</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The name of the connection.</dd>
+<dd><code>level</code> - The level/priority of the connection.</dd>
+<dd><code>connection</code> - The database instance, this can be MySQL, SQLite, etc...</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>True</code> if the connection was added successfully, or
+         <code>False</code> if the connection name already exists.</dd>
+</dl>
 </li>
 </ul>
 <a name="getConnection-java.lang.String-">
@@ -228,6 +252,15 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getConnection</h4>
 <pre>public&nbsp;<a href="../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a>&nbsp;getConnection(java.lang.String&nbsp;connection)</pre>
+<div class="block">Gets the database connection associated with the given name, if there isn't any database
+ connection with the given name, <code>NULL</code> will be returned instead.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>connection</code> - The name of the connection to fetch.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>either (1) the database connection instance with the given name
+         or (2) <code>NULL</code> if the no database instance exists with the given name</dd>
+</dl>
 </li>
 </ul>
 <a name="getDefaultConnection--">
@@ -237,6 +270,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getDefaultConnection</h4>
 <pre>public&nbsp;<a href="../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a>&nbsp;getDefaultConnection()</pre>
+<div class="block">Returns the default database connection, if there are not default connection the
+ database with the highest database connection level will be returned instead.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>either (1) The default or highest level database connection
+         or (2) <code>NULL</code> if there are no connections in the container.</dd>
+</dl>
 </li>
 </ul>
 </li>

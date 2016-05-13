@@ -10,7 +10,7 @@ public interface DatabaseContract
      * type, this will return true if it manages to connect
      * to the database, and false otherwise.
      *
-     * @return Boolean
+     * @return true if the database connection is open, false otherwise.
      */
     public abstract boolean open();
 
@@ -18,8 +18,14 @@ public interface DatabaseContract
      * Attempts to get the database statement from the query.
      *
      * @param query The query to check.
-     * @return StatementContract
-     * @throws SQLException
+     *
+     * @return The implementation of the statement contract.
+     *
+     * @exception SQLException if a database access error occurs,
+     *                         this method is called on a closed <code>Statement</code>, the given
+     *                         SQL statement produces anything other than a single
+     *                         <code>ResultSet</code> object, the method is called on a
+     *                         <code>PreparedStatement</code> or <code>CallableStatement</code>
      */
     public abstract StatementContract getStatement(String query) throws SQLException;
 
@@ -27,7 +33,8 @@ public interface DatabaseContract
      * Attempts to find out if the parsed string is a table.
      *
      * @param table The table name to check.
-     * @return Boolean
+     *
+     * @return true if the table exists, false otherwise.
      */
     public abstract boolean hasTable(String table);
 
@@ -36,7 +43,8 @@ public interface DatabaseContract
      * every record in the table and reset it completely.
      *
      * @param table The table name to truncate.
-     * @return Boolean
+     *
+     * @return true if the table was successfully reset, false otherwise.
      */
     public abstract boolean truncate(String table);
 }

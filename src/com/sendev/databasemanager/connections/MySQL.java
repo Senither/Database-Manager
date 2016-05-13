@@ -10,11 +10,28 @@ import java.sql.Statement;
 
 public class MySQL extends HostnameDatabase
 {
+    /**
+     * Creates a MySQL database connection instance with the parsed information, the port used will default to <code>3306</code>.
+     *
+     * @param hostname The hostname the database should connection to.
+     * @param database The database name the database should connect to.
+     * @param username The username to login to the database.
+     * @param password The password to login to the database.
+     */
     public MySQL(String hostname, String database, String username, String password)
     {
         super(hostname, 3306, database, username, password);
     }
 
+    /**
+     * Creates a MySQL database connection instance with the parsed information-
+     *
+     * @param hostname The hostname the database should connection to.
+     * @param port     The port the database is listening on.
+     * @param database The database name the database should connect to.
+     * @param username The username to login to the database.
+     * @param password The password to login to the database.
+     */
     public MySQL(String hostname, int port, String database, String username, String password)
     {
         super(hostname, port, database, username, password);

@@ -132,7 +132,7 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/contracts/DatabaseContract.html#isTable-java.lang.String-">isTable</a></span>(java.lang.String&nbsp;table)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/contracts/DatabaseContract.html#hasTable-java.lang.String-">hasTable</a></span>(java.lang.String&nbsp;table)</code>
 <div class="block">Attempts to find out if the parsed string is a table.</div>
 </td>
 </tr>
@@ -178,7 +178,7 @@ var activeTableTab = "activeTableTab";
  to the database, and false otherwise.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Boolean</dd>
+<dd>true if the database connection is open, false otherwise.</dd>
 </dl>
 </li>
 </ul>
@@ -195,25 +195,29 @@ var activeTableTab = "activeTableTab";
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>query</code> - The query to check.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>StatementContract</dd>
+<dd>The implementation of the statement contract.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code></dd>
+<dd><code>java.sql.SQLException</code> - if a database access error occurs,
+                         this method is called on a closed <code>Statement</code>, the given
+                         SQL statement produces anything other than a single
+                         <code>ResultSet</code> object, the method is called on a
+                         <code>PreparedStatement</code> or <code>CallableStatement</code></dd>
 </dl>
 </li>
 </ul>
-<a name="isTable-java.lang.String-">
+<a name="hasTable-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>isTable</h4>
-<pre>boolean&nbsp;isTable(java.lang.String&nbsp;table)</pre>
+<h4>hasTable</h4>
+<pre>boolean&nbsp;hasTable(java.lang.String&nbsp;table)</pre>
 <div class="block">Attempts to find out if the parsed string is a table.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>table</code> - The table name to check.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Boolean</dd>
+<dd>true if the table exists, false otherwise.</dd>
 </dl>
 </li>
 </ul>
@@ -230,7 +234,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>table</code> - The table name to truncate.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Boolean</dd>
+<dd>true if the table was successfully reset, false otherwise.</dd>
 </dl>
 </li>
 </ul>

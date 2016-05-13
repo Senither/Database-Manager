@@ -125,11 +125,6 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">MySQL</span>
 extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDatabase.html" title="class in com.sendev.databasemanager.contracts">HostnameDatabase</a></pre>
-<div class="block">test</div>
-<dl>
-<dt><span class="simpleTagLabel">Author:</span></dt>
-<dd>hjalt</dd>
-</dl>
 </li>
 </ul>
 </div>
@@ -167,13 +162,17 @@ extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDataba
      int&nbsp;port,
      java.lang.String&nbsp;database,
      java.lang.String&nbsp;username,
-     java.lang.String&nbsp;password)</code>&nbsp;</td>
+     java.lang.String&nbsp;password)</code>
+<div class="block">Creates a MySQL database connection instance with the parsed information-</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/connections/MySQL.html#MySQL-java.lang.String-java.lang.String-java.lang.String-java.lang.String-">MySQL</a></span>(java.lang.String&nbsp;hostname,
      java.lang.String&nbsp;database,
      java.lang.String&nbsp;username,
-     java.lang.String&nbsp;password)</code>&nbsp;</td>
+     java.lang.String&nbsp;password)</code>
+<div class="block">Creates a MySQL database connection instance with the parsed information, the port used will default to <code>3306</code>.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -197,16 +196,16 @@ extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDataba
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/connections/MySQL.html#hasTable-java.lang.String-">hasTable</a></span>(java.lang.String&nbsp;table)</code>
+<div class="block">Attempts to find out if the parsed string is a table.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/connections/MySQL.html#initialize--">initialize</a></span>()</code>
 <div class="block">Initialize the database abstraction, this should be
  called by the open method if it's necessary.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/connections/MySQL.html#isTable-java.lang.String-">isTable</a></span>(java.lang.String&nbsp;table)</code>
-<div class="block">Attempts to find out if the parsed string is a table.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -277,6 +276,14 @@ extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDataba
              java.lang.String&nbsp;database,
              java.lang.String&nbsp;username,
              java.lang.String&nbsp;password)</pre>
+<div class="block">Creates a MySQL database connection instance with the parsed information, the port used will default to <code>3306</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hostname</code> - The hostname the database should connection to.</dd>
+<dd><code>database</code> - The database name the database should connect to.</dd>
+<dd><code>username</code> - The username to login to the database.</dd>
+<dd><code>password</code> - The password to login to the database.</dd>
+</dl>
 </li>
 </ul>
 <a name="MySQL-java.lang.String-int-java.lang.String-java.lang.String-java.lang.String-">
@@ -290,6 +297,15 @@ extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDataba
              java.lang.String&nbsp;database,
              java.lang.String&nbsp;username,
              java.lang.String&nbsp;password)</pre>
+<div class="block">Creates a MySQL database connection instance with the parsed information-</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hostname</code> - The hostname the database should connection to.</dd>
+<dd><code>port</code> - The port the database is listening on.</dd>
+<dd><code>database</code> - The database name the database should connect to.</dd>
+<dd><code>username</code> - The username to login to the database.</dd>
+<dd><code>password</code> - The password to login to the database.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -331,7 +347,7 @@ extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDataba
  to the database, and false otherwise.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Boolean</dd>
+<dd>true if the database connection is open, false otherwise.</dd>
 </dl>
 </li>
 </ul>
@@ -370,26 +386,30 @@ extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDataba
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>query</code> - The query to check.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>StatementContract</dd>
+<dd>The implementation of the statement contract.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code></dd>
+<dd><code>java.sql.SQLException</code> - if a database access error occurs,
+                         this method is called on a closed <code>Statement</code>, the given
+                         SQL statement produces anything other than a single
+                         <code>ResultSet</code> object, the method is called on a
+                         <code>PreparedStatement</code> or <code>CallableStatement</code></dd>
 </dl>
 </li>
 </ul>
-<a name="isTable-java.lang.String-">
+<a name="hasTable-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>isTable</h4>
-<pre>public&nbsp;boolean&nbsp;isTable(java.lang.String&nbsp;table)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/sendev/databasemanager/contracts/DatabaseContract.html#isTable-java.lang.String-">DatabaseContract</a></code></span></div>
+<h4>hasTable</h4>
+<pre>public&nbsp;boolean&nbsp;hasTable(java.lang.String&nbsp;table)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/sendev/databasemanager/contracts/DatabaseContract.html#hasTable-java.lang.String-">DatabaseContract</a></code></span></div>
 <div class="block">Attempts to find out if the parsed string is a table.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>table</code> - The table name to check.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Boolean</dd>
+<dd>true if the table exists, false otherwise.</dd>
 </dl>
 </li>
 </ul>
@@ -407,7 +427,7 @@ extends <a href="../../../../com/sendev/databasemanager/contracts/HostnameDataba
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>table</code> - The table name to truncate.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Boolean</dd>
+<dd>true if the table was successfully reset, false otherwise.</dd>
 </dl>
 </li>
 </ul>

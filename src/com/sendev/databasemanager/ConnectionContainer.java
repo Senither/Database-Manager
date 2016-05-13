@@ -14,7 +14,7 @@ public class ConnectionContainer
      * Creates a new database connection container instance, making it easier to
      * store, manage and use the database connections parsed to the Database Manager.
      *
-     * @see com.sendev.databasemanager.DatabaseManager Checkout the Database Manager.
+     * @see com.sendev.databasemanager.DatabaseManager
      *
      * @param dbm
      */
@@ -23,6 +23,21 @@ public class ConnectionContainer
         this.dbm = dbm;
     }
 
+    /**
+     * Adds a database connection to the connections container, allowing
+     * queries to be run against the connection.
+     * <p>
+     * The <code>connection level</code> will be used to determine the priority of the connection,
+     * the top level will always be <code>DEFAULT</code>, after that the it's
+     * <code>HIGEST</code>, <code>HIGE</code>, <code>MEDIUM</code>, etc...
+     *
+     * @param name       The name of the connection.
+     * @param level      The level/priority of the connection.
+     * @param connection The database instance, this can be MySQL, SQLite, etc...
+     *
+     * @return <code>True</code> if the connection was added successfully, or
+     *         <code>False</code> if the connection name already exists.
+     */
     public boolean addConnection(String name, ConnectionLevel level, Database connection)
     {
         name = name.toLowerCase();
@@ -31,11 +46,24 @@ public class ConnectionContainer
             return false;
         }
 
+        if (level.equals(ConnectionLevel.DEFAULT)) {
+            defaultConnection = name;
+        }
+
         connections.put(name, new Connection(dbm, level, connection));
 
         return true;
     }
 
+    /**
+     * Gets the database connection associated with the given name, if there isn't any database
+     * connection with the given name, <code>NULL</code> will be returned instead.
+     *
+     * @param connection The name of the connection to fetch.
+     *
+     * @return either (1) the database connection instance with the given name
+     *         or (2) <code>NULL</code> if the no database instance exists with the given name
+     */
     public Database getConnection(String connection)
     {
         connection = connection.toLowerCase();
@@ -47,6 +75,13 @@ public class ConnectionContainer
         return null;
     }
 
+    /**
+     * Returns the default database connection, if there are not default connection the
+     * database with the highest database connection level will be returned instead.
+     *
+     * @return either (1) The default or highest level database connection
+     *         or (2) <code>NULL</code> if there are no connections in the container.
+     */
     public Database getDefaultConnection()
     {
         if (defaultConnection != null) {
@@ -57,11 +92,6 @@ public class ConnectionContainer
 
         for (String name : connections.keySet()) {
             Connection db = connections.get(name);
-
-            if (db.getLevel().equals(ConnectionLevel.DEFAULT)) {
-                defaultConnection = name;
-                return db.getConnection();
-            }
 
             if (connection == null) {
                 connection = db;

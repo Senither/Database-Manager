@@ -134,7 +134,10 @@ implements java.lang.Cloneable</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#Carbon-java.lang.String-">Carbon</a></span>(java.lang.String&nbsp;time)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#Carbon-java.lang.String-">Carbon</a></span>(java.lang.String&nbsp;time)</code>
+<div class="block">Attempts to create a new Carbon instance from the given time string,
+ the string must be a valid date to be parsed correctly.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -269,7 +272,9 @@ implements java.lang.Cloneable</pre>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../com/sendev/databasemanager/utils/Carbon.html" title="class in com.sendev.databasemanager.utils">Carbon</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#now--">now</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#now--">now</a></span>()</code>
+<div class="block">Creates a new Carbon instance with the current date and time.</div>
+</td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/sendev/databasemanager/utils/Carbon.html" title="class in com.sendev.databasemanager.utils">Carbon</a></code></td>
@@ -369,7 +374,9 @@ implements java.lang.Cloneable</pre>
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../com/sendev/databasemanager/utils/Carbon.html" title="class in com.sendev.databasemanager.utils">Carbon</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#tomorrow--">tomorrow</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#tomorrow--">tomorrow</a></span>()</code>
+<div class="block">Creates a new Carbon instance with the date and time set to tomorrow.</div>
+</td>
 </tr>
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -377,7 +384,9 @@ implements java.lang.Cloneable</pre>
 </tr>
 <tr id="i56" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../com/sendev/databasemanager/utils/Carbon.html" title="class in com.sendev.databasemanager.utils">Carbon</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#yesterday--">yesterday</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Carbon.html#yesterday--">yesterday</a></span>()</code>
+<div class="block">Creates a new Carbon instance with the date and time set to yesterday.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -409,9 +418,17 @@ implements java.lang.Cloneable</pre>
 <h4>Carbon</h4>
 <pre>public&nbsp;Carbon(java.lang.String&nbsp;time)
        throws java.text.ParseException</pre>
+<div class="block">Attempts to create a new Carbon instance from the given time string,
+ the string must be a valid date to be parsed correctly.
+ <p>
+ The string will be parsed through the <code>SimpleDateFormat</code>'s parser.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>time</code> - The date string to parse.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.text.ParseException</code></dd>
+<dd><code>java.text.ParseException</code> - if the date string given doesn't match the format</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>SimpleDateFormat</code></dd>
 </dl>
 </li>
 </ul>
@@ -430,6 +447,11 @@ implements java.lang.Cloneable</pre>
 <li class="blockList">
 <h4>now</h4>
 <pre>public static&nbsp;<a href="../../../../com/sendev/databasemanager/utils/Carbon.html" title="class in com.sendev.databasemanager.utils">Carbon</a>&nbsp;now()</pre>
+<div class="block">Creates a new Carbon instance with the current date and time.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a Carbon instance with the current date and time.</dd>
+</dl>
 </li>
 </ul>
 <a name="tomorrow--">
@@ -439,6 +461,11 @@ implements java.lang.Cloneable</pre>
 <li class="blockList">
 <h4>tomorrow</h4>
 <pre>public static&nbsp;<a href="../../../../com/sendev/databasemanager/utils/Carbon.html" title="class in com.sendev.databasemanager.utils">Carbon</a>&nbsp;tomorrow()</pre>
+<div class="block">Creates a new Carbon instance with the date and time set to tomorrow.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a Carbon instance with the date and time set to tomorrows date.</dd>
+</dl>
 </li>
 </ul>
 <a name="yesterday--">
@@ -448,6 +475,11 @@ implements java.lang.Cloneable</pre>
 <li class="blockList">
 <h4>yesterday</h4>
 <pre>public static&nbsp;<a href="../../../../com/sendev/databasemanager/utils/Carbon.html" title="class in com.sendev.databasemanager.utils">Carbon</a>&nbsp;yesterday()</pre>
+<div class="block">Creates a new Carbon instance with the date and time set to yesterday.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a Carbon instance with the date and time set to yesterdays date.</dd>
+</dl>
 </li>
 </ul>
 <a name="setSecond-int-">

@@ -148,39 +148,61 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#disableDebugMessages--">disableDebugMessages</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#disableDebugMessages--">disableDebugMessages</a></span>()</code>
+<div class="block">This will disable the debug mode in the Database Manager.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#enableDebugMessages--">enableDebugMessages</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#enableDebugMessages--">enableDebugMessages</a></span>()</code>
+<div class="block">This will enable the debug mode in the Database Manager, allowing the Database
+ Output to give more detailed information about what is going on within the
+ DBM, internal exceptions will also be printed out to the console.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/sendev/databasemanager/schema/DatabaseEngine.html" title="enum in com.sendev.databasemanager.schema">DatabaseEngine</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#getEngine--">getEngine</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#getEngine--">getEngine</a></span>()</code>
+<div class="block">Gets the database engine that should be used with <code>INSERT</code> and <code>CREATE</code> statements.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#getQueryReturnLimit--">getQueryReturnLimit</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#getQueryReturnLimit--">getQueryReturnLimit</a></span>()</code>
+<div class="block">Gets the query return limit.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#getQueryTimeout--">getQueryTimeout</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#getQueryTimeout--">getQueryTimeout</a></span>()</code>
+<div class="block">Gets the query timeout length.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#isDebugMessagesEnabled--">isDebugMessagesEnabled</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#isDebugMessagesEnabled--">isDebugMessagesEnabled</a></span>()</code>
+<div class="block">Checks to see if the debugging mode is enabled within the DBM.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#setDefaultEngine-com.sendev.databasemanager.schema.DatabaseEngine-">setDefaultEngine</a></span>(<a href="../../../com/sendev/databasemanager/schema/DatabaseEngine.html" title="enum in com.sendev.databasemanager.schema">DatabaseEngine</a>&nbsp;engine)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#setDefaultEngine-com.sendev.databasemanager.schema.DatabaseEngine-">setDefaultEngine</a></span>(<a href="../../../com/sendev/databasemanager/schema/DatabaseEngine.html" title="enum in com.sendev.databasemanager.schema">DatabaseEngine</a>&nbsp;engine)</code>
+<div class="block">Sets the default database engine that should be used when inserting and creating data.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#setQueryReturnLimit-int-">setQueryReturnLimit</a></span>(int&nbsp;queryReturnLimit)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#setQueryReturnLimit-int-">setQueryReturnLimit</a></span>(int&nbsp;queryReturnLimit)</code>
+<div class="block">Sets the query return limit, forcing <code>SELECT</code>
+ statements to not return more than the given amount.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#setQueryTimeout-int-">setQueryTimeout</a></span>(int&nbsp;queryTimeout)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseOptions.html#setQueryTimeout-int-">setQueryTimeout</a></span>(int&nbsp;queryTimeout)</code>
+<div class="block">Sets the default timeout for all queries in milliseconds, any query that
+ takes longer then the specified time will throw an SQLTimeoutException.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -228,6 +250,14 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setDefaultEngine</h4>
 <pre>public&nbsp;void&nbsp;setDefaultEngine(<a href="../../../com/sendev/databasemanager/schema/DatabaseEngine.html" title="enum in com.sendev.databasemanager.schema">DatabaseEngine</a>&nbsp;engine)</pre>
+<div class="block">Sets the default database engine that should be used when inserting and creating data.
+ <p>
+ <strong>Note:</strong> It is not recommended that you change this from
+ the default(<code>InnoDB</code>) unless you know what you're doing.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>engine</code> - a database engine enumeration instance.</dd>
+</dl>
 </li>
 </ul>
 <a name="getEngine--">
@@ -237,6 +267,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getEngine</h4>
 <pre>public&nbsp;<a href="../../../com/sendev/databasemanager/schema/DatabaseEngine.html" title="enum in com.sendev.databasemanager.schema">DatabaseEngine</a>&nbsp;getEngine()</pre>
+<div class="block">Gets the database engine that should be used with <code>INSERT</code> and <code>CREATE</code> statements.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The database engine that should be used.</dd>
+</dl>
 </li>
 </ul>
 <a name="setQueryTimeout-int-">
@@ -246,6 +281,18 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setQueryTimeout</h4>
 <pre>public&nbsp;void&nbsp;setQueryTimeout(int&nbsp;queryTimeout)</pre>
+<div class="block">Sets the default timeout for all queries in milliseconds, any query that
+ takes longer then the specified time will throw an SQLTimeoutException.
+ <p>
+ <strong>Note:</strong> Setting the query timeout to -1 will use the
+ current database connections default fallback timeout value, which
+ will vary depending on the database type that is being used.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>queryTimeout</code> - the timeout in milliseconds.</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><code>SQLTimeoutException</code></dd>
+</dl>
 </li>
 </ul>
 <a name="getQueryTimeout--">
@@ -255,6 +302,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getQueryTimeout</h4>
 <pre>public&nbsp;int&nbsp;getQueryTimeout()</pre>
+<div class="block">Gets the query timeout length.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The timeout length.</dd>
+</dl>
 </li>
 </ul>
 <a name="setQueryReturnLimit-int-">
@@ -264,6 +316,20 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setQueryReturnLimit</h4>
 <pre>public&nbsp;void&nbsp;setQueryReturnLimit(int&nbsp;queryReturnLimit)</pre>
+<div class="block">Sets the query return limit, forcing <code>SELECT</code>
+ statements to not return more than the given amount.
+ <p>
+ <strong>Note:</strong> The executed query will still fetch as many rows as it can, if the returned
+ rows exceeds the return limit it will just cut off any rows that exceeded the limit, because of
+ this it is recommend that you use the SQL <code>LIMIT</code> statement, or something
+ equivalent to it when you want a limited amount of results back.
+ <p>
+ <strong>Note:</strong> Setting the query return limit to -1 will return it to the default settings,
+ of just fetching as much data as it can with no limit, unless one is specified in the query.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>queryReturnLimit</code> - The amount to limit <code>SELECT</code> statements returned results to.</dd>
+</dl>
 </li>
 </ul>
 <a name="getQueryReturnLimit--">
@@ -273,6 +339,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getQueryReturnLimit</h4>
 <pre>public&nbsp;int&nbsp;getQueryReturnLimit()</pre>
+<div class="block">Gets the query return limit.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The query return limit.</dd>
+</dl>
 </li>
 </ul>
 <a name="enableDebugMessages--">
@@ -282,6 +353,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>enableDebugMessages</h4>
 <pre>public&nbsp;void&nbsp;enableDebugMessages()</pre>
+<div class="block">This will enable the debug mode in the Database Manager, allowing the Database
+ Output to give more detailed information about what is going on within the
+ DBM, internal exceptions will also be printed out to the console.
+ <p>
+ <strong>Note:</strong> There are no reason to enable this on production servers.</div>
 </li>
 </ul>
 <a name="disableDebugMessages--">
@@ -291,6 +367,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>disableDebugMessages</h4>
 <pre>public&nbsp;void&nbsp;disableDebugMessages()</pre>
+<div class="block">This will disable the debug mode in the Database Manager.</div>
 </li>
 </ul>
 <a name="isDebugMessagesEnabled--">
@@ -300,6 +377,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isDebugMessagesEnabled</h4>
 <pre>public&nbsp;boolean&nbsp;isDebugMessagesEnabled()</pre>
+<div class="block">Checks to see if the debugging mode is enabled within the DBM.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if debugging is enabled, otherwise it will return false.</dd>
+</dl>
 </li>
 </ul>
 </li>

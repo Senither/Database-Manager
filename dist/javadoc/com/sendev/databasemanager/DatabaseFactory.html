@@ -148,7 +148,11 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/sendev/databasemanager/DatabaseManager.html" title="class in com.sendev.databasemanager">DatabaseManager</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseFactory.html#createNewInstance-org.bukkit.plugin.Plugin-">createNewInstance</a></span>(org.bukkit.plugin.Plugin&nbsp;plugin)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/DatabaseFactory.html#createNewInstance-org.bukkit.plugin.Plugin-">createNewInstance</a></span>(org.bukkit.plugin.Plugin&nbsp;plugin)</code>
+<div class="block">Creates a new Database Manager(DBM) instance, allowing you to communicate with databases easier,
+ using the DBM also gives you access to the Database Schema and Query Builder which makes it
+ even easier to create, delete, modify and update database records.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -196,6 +200,18 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>createNewInstance</h4>
 <pre>public static&nbsp;<a href="../../../com/sendev/databasemanager/DatabaseManager.html" title="class in com.sendev.databasemanager">DatabaseManager</a>&nbsp;createNewInstance(org.bukkit.plugin.Plugin&nbsp;plugin)</pre>
+<div class="block">Creates a new Database Manager(DBM) instance, allowing you to communicate with databases easier,
+ using the DBM also gives you access to the Database Schema and Query Builder which makes it
+ even easier to create, delete, modify and update database records.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>plugin</code> - The instance of the plugin that are going to use the DBM.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A new a fresh instance of the Database Manager.</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/sendev/databasemanager/query/QueryBuilder.html" title="class in com.sendev.databasemanager.query"><code>QueryBuilder</code></a>, 
+<a href="../../../com/sendev/databasemanager/schema/Schema.html" title="class in com.sendev.databasemanager.schema"><code>Schema</code></a></dd>
+</dl>
 </li>
 </ul>
 </li>

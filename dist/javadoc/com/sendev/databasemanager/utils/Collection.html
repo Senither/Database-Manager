@@ -134,7 +134,10 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#Collection-java.sql.ResultSet-">Collection</a></span>(java.sql.ResultSet&nbsp;result)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#Collection-java.sql.ResultSet-">Collection</a></span>(java.sql.ResultSet&nbsp;result)</code>
+<div class="block">Creates a new Collection instance, allowing you to the loop
+ and fetch data from a ResultSet object a lot easier.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -153,23 +156,37 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../../com/sendev/databasemanager/utils/DataRow.html" title="class in com.sendev.databasemanager.utils">DataRow</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#all--">all</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#all--">all</a></span>()</code>
+<div class="block">Gets all the <code>DataRow</code> items from the collection.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/sendev/databasemanager/utils/DataRow.html" title="class in com.sendev.databasemanager.utils">DataRow</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#first--">first</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#first--">first</a></span>()</code>
+<div class="block">Gets the first index of the collection.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#get-java.lang.String-">get</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#get-java.lang.String-">get</a></span>(java.lang.String&nbsp;name)</code>
+<div class="block">Gets every column with the given index, if the index doesn't
+ exists a <code>DatabaseException</code> will be thrown.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.HashMap&lt;java.lang.String,java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#getKeys--">getKeys</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#getKeys--">getKeys</a></span>()</code>
+<div class="block">Gets all the keys from the <code>ResultSet</code> object in the form of a
+ <code>HashMap</code>, where the key is the database table column
+ name, and the value is the database column type.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#getStrings-java.lang.String-">getStrings</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/sendev/databasemanager/utils/Collection.html#getStrings-java.lang.String-">getStrings</a></span>(java.lang.String&nbsp;name)</code>
+<div class="block">Gets every column with the given index, if the index doesn't
+ exists a <code>DatabaseException</code> will be thrown.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.Iterator&lt;<a href="../../../../com/sendev/databasemanager/utils/DataRow.html" title="class in com.sendev.databasemanager.utils">DataRow</a>&gt;</code></td>
@@ -212,9 +229,16 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 <h4>Collection</h4>
 <pre>public&nbsp;Collection(java.sql.ResultSet&nbsp;result)
            throws java.sql.SQLException</pre>
+<div class="block">Creates a new Collection instance, allowing you to the loop
+ and fetch data from a ResultSet object a lot easier.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>result</code> - The ResultSet to generate the collection from.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code></dd>
+<dd><code>java.sql.SQLException</code> - if a database access error occurs,
+                         this exception is thrown if the collection was unable to read
+                         form the database <code>ResultSet</code> object, or if the object
+                         didn't return a valid response.</dd>
 </dl>
 </li>
 </ul>
@@ -233,6 +257,12 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 <li class="blockList">
 <h4>first</h4>
 <pre>public&nbsp;<a href="../../../../com/sendev/databasemanager/utils/DataRow.html" title="class in com.sendev.databasemanager.utils">DataRow</a>&nbsp;first()</pre>
+<div class="block">Gets the first index of the collection.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>either (1) The first <code>DataRow</code> object, generated from the <code>ResultSet</code> object,
+         or (2) <code>NULL</code> if the collection doesn't have any items.</dd>
+</dl>
 </li>
 </ul>
 <a name="all--">
@@ -242,6 +272,11 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 <li class="blockList">
 <h4>all</h4>
 <pre>public&nbsp;java.util.List&lt;<a href="../../../../com/sendev/databasemanager/utils/DataRow.html" title="class in com.sendev.databasemanager.utils">DataRow</a>&gt;&nbsp;all()</pre>
+<div class="block">Gets all the <code>DataRow</code> items from the collection.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>All the <code>DataRow</code> items from the collection.</dd>
+</dl>
 </li>
 </ul>
 <a name="get-java.lang.String-">
@@ -251,6 +286,15 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 <li class="blockList">
 <h4>get</h4>
 <pre>public&nbsp;java.util.List&lt;java.lang.Object&gt;&nbsp;get(java.lang.String&nbsp;name)</pre>
+<div class="block">Gets every column with the given index, if the index doesn't
+ exists a <code>DatabaseException</code> will be thrown.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The index(name) to lookup.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>either (1) A list of objects with the given index,
+         or (2) <code>NULL</code> if the given index doesn't exists.</dd>
+</dl>
 </li>
 </ul>
 <a name="getStrings-java.lang.String-">
@@ -260,6 +304,14 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 <li class="blockList">
 <h4>getStrings</h4>
 <pre>public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getStrings(java.lang.String&nbsp;name)</pre>
+<div class="block">Gets every column with the given index, if the index doesn't
+ exists a <code>DatabaseException</code> will be thrown.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The index(name) to lookup.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A list of strings with the given index.</dd>
+</dl>
 </li>
 </ul>
 <a name="getKeys--">
@@ -269,6 +321,13 @@ implements java.lang.Cloneable, java.lang.Iterable&lt;<a href="../../../../com/s
 <li class="blockList">
 <h4>getKeys</h4>
 <pre>public&nbsp;java.util.HashMap&lt;java.lang.String,java.lang.String&gt;&nbsp;getKeys()</pre>
+<div class="block">Gets all the keys from the <code>ResultSet</code> object in the form of a
+ <code>HashMap</code>, where the key is the database table column
+ name, and the value is the database column type.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A map of all the database keys.</dd>
+</dl>
 </li>
 </ul>
 <a name="iterator--">

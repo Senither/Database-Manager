@@ -17,6 +17,17 @@ public class Collection implements Cloneable, Iterable<DataRow>
     private final HashMap<String, String> keys;
     private final List<DataRow> items;
 
+    /**
+     * Creates a new Collection instance, allowing you to the loop
+     * and fetch data from a ResultSet object a lot easier.
+     *
+     * @param result The ResultSet to generate the collection from.
+     *
+     * @exception SQLException if a database access error occurs,
+     *                         this exception is thrown if the collection was unable to read
+     *                         form the database <code>ResultSet</code> object, or if the object
+     *                         didn't return a valid response.
+     */
     public Collection(ResultSet result) throws SQLException
     {
         ResultSetMetaData meta = result.getMetaData();
@@ -39,6 +50,12 @@ public class Collection implements Cloneable, Iterable<DataRow>
         }
     }
 
+    /**
+     * Gets the first index of the collection.
+     *
+     * @return either (1) The first <code>DataRow</code> object, generated from the <code>ResultSet</code> object,
+     *         or (2) <code>NULL</code> if the collection doesn't have any items.
+     */
     public DataRow first()
     {
         if (items.isEmpty()) {
@@ -48,15 +65,29 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items.get(0);
     }
 
+    /**
+     * Gets all the <code>DataRow</code> items from the collection.
+     *
+     * @return All the <code>DataRow</code> items from the collection.
+     */
     public List<DataRow> all()
     {
         return items;
     }
 
+    /**
+     * Gets every column with the given index, if the index doesn't
+     * exists a <code>DatabaseException</code> will be thrown.
+     *
+     * @param name The index(name) to lookup.
+     *
+     * @return either (1) A list of objects with the given index,
+     *         or (2) <code>NULL</code> if the given index doesn't exists.
+     */
     public List<Object> get(String name)
     {
         if (!keys.containsKey(name)) {
-            throw new DatabaseException("");
+            return null;
         }
 
         List<Object> objects = new ArrayList<>();
@@ -68,6 +99,14 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return objects;
     }
 
+    /**
+     * Gets every column with the given index, if the index doesn't
+     * exists a <code>DatabaseException</code> will be thrown.
+     *
+     * @param name The index(name) to lookup.
+     *
+     * @return A list of strings with the given index.
+     */
     public List<String> getStrings(String name)
     {
         if (!keys.containsKey(name)) {
@@ -83,6 +122,13 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return objects;
     }
 
+    /**
+     * Gets all the keys from the <code>ResultSet</code> object in the form of a
+     * <code>HashMap</code>, where the key is the database table column
+     * name, and the value is the database column type.
+     *
+     * @return A map of all the database keys.
+     */
     public HashMap<String, String> getKeys()
     {
         return keys;

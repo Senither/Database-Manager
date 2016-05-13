@@ -138,22 +138,35 @@ extends java.lang.Enum&lt;<a href="../../../com/sendev/databasemanager/Connectio
 <th class="colOne" scope="col">Enum Constant and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#DEFAULT">DEFAULT</a></span></code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#DEFAULT">DEFAULT</a></span></code>
+<div class="block">The default value will always be used before any other
+ level, it's level is -1 but it isn't actually used.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#HIGEST">HIGEST</a></span></code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#HIGH">HIGH</a></span></code>
+<div class="block">High connection level.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#HIGH">HIGH</a></span></code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#HIGHEST">HIGHEST</a></span></code>
+<div class="block">Highest connection level.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#LOW">LOW</a></span></code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#LOW">LOW</a></span></code>
+<div class="block">Low connection level.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#LOWEST">LOWEST</a></span></code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#LOWEST">LOWEST</a></span></code>
+<div class="block">Lowest connection level.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#MEDIUM">MEDIUM</a></span></code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/sendev/databasemanager/ConnectionLevel.html#MEDIUM">MEDIUM</a></span></code>
+<div class="block">Medium connection level.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -223,15 +236,25 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DEFAULT</h4>
 <pre>public static final&nbsp;<a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a> DEFAULT</pre>
+<div class="block">The default value will always be used before any other
+ level, it's level is -1 but it isn't actually used.
+ <p>
+ For any other connection level, the higher it is the
+ higher priority it would be equivalent to.
+ <p>
+ Level: -1</div>
 </li>
 </ul>
-<a name="HIGEST">
+<a name="HIGHEST">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>HIGEST</h4>
-<pre>public static final&nbsp;<a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a> HIGEST</pre>
+<h4>HIGHEST</h4>
+<pre>public static final&nbsp;<a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a> HIGHEST</pre>
+<div class="block">Highest connection level.
+ <p>
+ Level: 10</div>
 </li>
 </ul>
 <a name="HIGH">
@@ -241,6 +264,9 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>HIGH</h4>
 <pre>public static final&nbsp;<a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a> HIGH</pre>
+<div class="block">High connection level.
+ <p>
+ Level: 7</div>
 </li>
 </ul>
 <a name="MEDIUM">
@@ -250,6 +276,9 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MEDIUM</h4>
 <pre>public static final&nbsp;<a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a> MEDIUM</pre>
+<div class="block">Medium connection level.
+ <p>
+ Level: 5</div>
 </li>
 </ul>
 <a name="LOW">
@@ -259,6 +288,9 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>LOW</h4>
 <pre>public static final&nbsp;<a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a> LOW</pre>
+<div class="block">Low connection level.
+ <p>
+ Level: 3</div>
 </li>
 </ul>
 <a name="LOWEST">
@@ -268,6 +300,9 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>LOWEST</h4>
 <pre>public static final&nbsp;<a href="../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a> LOWEST</pre>
+<div class="block">Lowest connection level.
+ <p>
+ Level: 0</div>
 </li>
 </ul>
 </li>

@@ -118,11 +118,17 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ConnectionContainer.</span><code><span class="memberNameLink"><a href="../../../../../com/sendev/databasemanager/ConnectionContainer.html#getConnection-java.lang.String-">getConnection</a></span>(java.lang.String&nbsp;connection)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">ConnectionContainer.</span><code><span class="memberNameLink"><a href="../../../../../com/sendev/databasemanager/ConnectionContainer.html#getConnection-java.lang.String-">getConnection</a></span>(java.lang.String&nbsp;connection)</code>
+<div class="block">Gets the database connection associated with the given name, if there isn't any database
+ connection with the given name, <code>NULL</code> will be returned instead.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ConnectionContainer.</span><code><span class="memberNameLink"><a href="../../../../../com/sendev/databasemanager/ConnectionContainer.html#getDefaultConnection--">getDefaultConnection</a></span>()</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">ConnectionContainer.</span><code><span class="memberNameLink"><a href="../../../../../com/sendev/databasemanager/ConnectionContainer.html#getDefaultConnection--">getDefaultConnection</a></span>()</code>
+<div class="block">Returns the default database connection, if there are not default connection the
+ database with the highest database connection level will be returned instead.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -137,7 +143,10 @@
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">ConnectionContainer.</span><code><span class="memberNameLink"><a href="../../../../../com/sendev/databasemanager/ConnectionContainer.html#addConnection-java.lang.String-com.sendev.databasemanager.ConnectionLevel-com.sendev.databasemanager.contracts.Database-">addConnection</a></span>(java.lang.String&nbsp;name,
              <a href="../../../../../com/sendev/databasemanager/ConnectionLevel.html" title="enum in com.sendev.databasemanager">ConnectionLevel</a>&nbsp;level,
-             <a href="../../../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a>&nbsp;connection)</code>&nbsp;</td>
+             <a href="../../../../../com/sendev/databasemanager/contracts/Database.html" title="class in com.sendev.databasemanager.contracts">Database</a>&nbsp;connection)</code>
+<div class="block">Adds a database connection to the connections container, allowing
+ queries to be run against the connection.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -180,9 +189,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/sendev/databasemanager/connections/MySQL.html" title="class in com.sendev.databasemanager.connections">MySQL</a></span></code>
-<div class="block">test</div>
-</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../com/sendev/databasemanager/connections/MySQL.html" title="class in com.sendev.databasemanager.connections">MySQL</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>

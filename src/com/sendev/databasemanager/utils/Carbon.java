@@ -97,6 +97,18 @@ public final class Carbon implements Cloneable
 
     private static Calendar time;
 
+    /**
+     * Attempts to create a new Carbon instance from the given time string,
+     * the string must be a valid date to be parsed correctly.
+     * <p>
+     * The string will be parsed through the <code>SimpleDateFormat</code>'s parser.
+     *
+     * @see java.text.SimpleDateFormat
+     *
+     * @param time The date string to parse.
+     *
+     * @throws ParseException if the date string given doesn't match the format
+     */
     public Carbon(String time) throws ParseException
     {
         Carbon.time = Calendar.getInstance();
@@ -105,6 +117,11 @@ public final class Carbon implements Cloneable
         Carbon.time.setTime(format.parse(time));
     }
 
+    /**
+     * Creates a new Carbon instance with the current date and time.
+     *
+     * @return a Carbon instance with the current date and time.
+     */
     public static Carbon now()
     {
         try {
@@ -118,11 +135,21 @@ public final class Carbon implements Cloneable
         return null;
     }
 
+    /**
+     * Creates a new Carbon instance with the date and time set to tomorrow.
+     *
+     * @return a Carbon instance with the date and time set to tomorrows date.
+     */
     public static Carbon tomorrow()
     {
         return now().addDay();
     }
 
+    /**
+     * Creates a new Carbon instance with the date and time set to yesterday.
+     *
+     * @return a Carbon instance with the date and time set to yesterdays date.
+     */
     public static Carbon yesterday()
     {
         return now().subDay();
