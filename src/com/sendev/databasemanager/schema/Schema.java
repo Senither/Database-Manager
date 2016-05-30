@@ -22,7 +22,7 @@ public class Schema
     public boolean hasTable(String table) throws SQLException
     {
         dbm.output().debug("Schema::hasTable was called on \"%s\"", table);
-        
+
         return dbm.getConnections().getDefaultConnection().hasTable(table);
     }
 

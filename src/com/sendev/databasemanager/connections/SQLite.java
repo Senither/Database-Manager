@@ -22,6 +22,11 @@ public class SQLite extends FilenameDatabase
     {
     }
 
+    public SQLite(String directory, String database)
+    {
+        super(directory, database.split(".")[0], database.split(".")[1]);
+    }
+
     /**
      * Creates a new SQLite database connection.
      *
@@ -47,7 +52,7 @@ public class SQLite extends FilenameDatabase
     }
 
     @Override
-    public boolean open()
+    public boolean open() throws SQLException
     {
         if (initialize()) {
             try {
@@ -55,9 +60,10 @@ public class SQLite extends FilenameDatabase
 
                 return true;
             } catch (SQLException e) {
-                getLogger().log(Level.SEVERE, "DBM - Could not establish an SQLite connection, SQLException: {0}", e.getMessage());
+                String reason = "DBM - Could not establish an SQLite connection, SQLException: " + e.getMessage();
 
-                return false;
+                dbm.output().exception(reason, e);
+                throw new SQLException(reason);
             }
         }
 

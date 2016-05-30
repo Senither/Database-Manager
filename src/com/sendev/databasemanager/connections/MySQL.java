@@ -52,7 +52,7 @@ public class MySQL extends HostnameDatabase
     }
 
     @Override
-    public boolean open()
+    public boolean open() throws SQLException
     {
         try {
             String url = String.format("jdbc:mysql://%s:%d/%s", getHostname(), getPort(), getDatabase());
@@ -62,9 +62,11 @@ public class MySQL extends HostnameDatabase
 
                 return true;
             }
-
         } catch (SQLException e) {
-            dbm.output().exception("Could not establish a MySQL connection, SQLException: %s", e, e.getMessage());
+            String reason = "Could not establish a MySQL connection, SQLException: " + e.getMessage();
+
+            dbm.output().exception(reason, e);
+            throw new SQLException(reason);
         }
 
         return false;
@@ -114,15 +116,13 @@ public class MySQL extends HostnameDatabase
         try {
             DatabaseMetaData md = getConnection().getMetaData();
 
-            try (ResultSet tables = md.getTables(null, null, table, null)) {
+            try (ResultSet tables = md.getTables(null, null, table, new String[]{"TABLE"})) {
                 if (tables.next()) {
                     tables.close();
 
                     return true;
                 }
             }
-
-            return true;
         } catch (SQLException e) {
             dbm.output().exception("Failed to check if table exists \"%s\": %s", e, table, e.getMessage());
         }

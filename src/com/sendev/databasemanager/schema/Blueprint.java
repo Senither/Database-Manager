@@ -146,8 +146,8 @@ public class Blueprint
 
     public void Timestamps()
     {
-        makeField("created_at", FieldType.DATETIME).defaultValue(new DefaultSQLAction("NOW()"));
-        makeField("updated_at", FieldType.DATETIME).defaultValue(new DefaultSQLAction("NOW() ON UPDATE NOW()"));
+        makeField("created_at", FieldType.DATETIME).defaultValue(new DefaultSQLAction("CURRENT_TIMESTAMP"));
+        makeField("updated_at", FieldType.DATETIME).defaultValue(new DefaultSQLAction("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     }
 
     private Field makeField(String field, FieldType type)

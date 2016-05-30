@@ -90,8 +90,9 @@ public abstract class Database implements DatabaseContract
      * to open the connection for you.
      *
      * @return Connection
+     * @throws java.sql.SQLException
      */
-    public final Connection getConnection()
+    public final Connection getConnection() throws SQLException
     {
         if (!isOpen()) {
             open();
@@ -105,7 +106,7 @@ public abstract class Database implements DatabaseContract
      *
      * @return Boolean
      */
-    public final boolean isOpen()
+    public final boolean isOpen() 
     {
         return isOpen(1);
     }

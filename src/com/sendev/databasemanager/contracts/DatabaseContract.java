@@ -1,6 +1,7 @@
 package com.sendev.databasemanager.contracts;
 
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 
 public interface DatabaseContract
 {
@@ -11,8 +12,14 @@ public interface DatabaseContract
      * to the database, and false otherwise.
      *
      * @return true if the database connection is open, false otherwise.
+     *
+     * @exception SQLException        if a database access error occurs or the url is {@code null}
+     * @throws SQLTimeoutException when the driver has determined that the
+     *                             timeout value specified by the {@code setLoginTimeout} method
+     *                             has been exceeded and has at least tried to cancel the
+     *                             current database connection attempt
      */
-    public abstract boolean open();
+    public abstract boolean open() throws SQLException, SQLTimeoutException;
 
     /**
      * Attempts to get the database statement from the query.
