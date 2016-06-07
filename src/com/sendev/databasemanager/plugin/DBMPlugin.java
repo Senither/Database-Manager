@@ -1,7 +1,7 @@
 package com.sendev.databasemanager.plugin;
 
+import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
-import java.security.InvalidParameterException;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,10 +28,6 @@ public class DBMPlugin extends JavaPlugin
      */
     public DatabaseManager createNewInstance(Plugin plugin)
     {
-        if (plugin == null) {
-            throw new InvalidParameterException("The plugin parameter must be an instance of the Bukkit Plugin instance!");
-        }
-
-        return new DatabaseManager(plugin);
+        return DatabaseFactory.createNewInstance(plugin);
     }
 }
