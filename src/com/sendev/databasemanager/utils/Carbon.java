@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +94,20 @@ public final class Carbon implements Cloneable
 
     private static final SimpleDateFormat format = new SimpleDateFormat(DEFAULT_TO_STRING_FORMAT);
 
-    private static Calendar time;
+    private final Calendar time;
+
+    /**
+     * Attempts to create a new Carbon instance with the current date and time.
+     *
+     * @see java.text.SimpleDateFormat
+     */
+    public Carbon()
+    {
+        this.time = Calendar.getInstance();
+
+        this.time.setFirstDayOfWeek(weekStartsAt.getId());
+        this.time.setTime(Calendar.getInstance().getTime());
+    }
 
     /**
      * Attempts to create a new Carbon instance from the given time string,
@@ -111,10 +123,10 @@ public final class Carbon implements Cloneable
      */
     public Carbon(String time) throws ParseException
     {
-        Carbon.time = Calendar.getInstance();
+        this.time = Calendar.getInstance();
 
-        Carbon.time.setFirstDayOfWeek(weekStartsAt.getId());
-        Carbon.time.setTime(format.parse(time));
+        this.time.setFirstDayOfWeek(weekStartsAt.getId());
+        this.time.setTime(format.parse(time));
     }
 
     /**
@@ -124,15 +136,7 @@ public final class Carbon implements Cloneable
      */
     public static Carbon now()
     {
-        try {
-            Date date = Calendar.getInstance().getTime();
-
-            return new Carbon(format.format(date));
-        } catch (ParseException ex) {
-            Logger.getLogger(Carbon.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
+        return new Carbon();
     }
 
     /**
