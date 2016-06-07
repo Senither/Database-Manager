@@ -1,6 +1,5 @@
 *
 !/.gitignore
 !/readme.md
-!/dist
 !/src
 dist/DatabaseManager.jar
