@@ -17,6 +17,12 @@ public class Collection implements Cloneable, Iterable<DataRow>
     private final HashMap<String, String> keys;
     private final List<DataRow> items;
 
+    public Collection()
+    {
+        this.keys = new HashMap<>();
+        this.items = new ArrayList<>();
+    }
+
     /**
      * Creates a new Collection instance, allowing you to the loop
      * and fetch data from a ResultSet object a lot easier.

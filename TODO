@@ -5,9 +5,9 @@ Database Manager:
     ✔ Checks should be made to make sure the parsed query is actually a INSERT query, if that's not the case a *DatabaseException* should be thrown. @done (12/06/16 17:08)
 
 Database Factory:
-  ☐ Add a *PluginContainer* class where all plugin info should be stored for any plugin that has created an instance of DBM.
-    ☐ If a plugin requests to create a new DBM instance, but a PluginContainer instance was already found, return the existing instance instead.
-    ☐ Create a dynamic lookup on the main instance of the plugin description, allowing us to create a dynamic search that would allow us to remove the DBM instance from Eloquent and the Query Builder, making the database connection random.
+  ✔ Add a *PluginContainer* class where all plugin info should be stored for any plugin that has created an instance of DBM. @done (12/06/16 17:43)
+    ✔ If a plugin requests to create a new DBM instance, but a PluginContainer instance was already found, return the existing instance instead. @done (12/06/16 17:43)
+    ✔ Create a dynamic lookup on the main instance of the plugin description, allowing us to create a dynamic search that would allow us to remove the DBM instance from Eloquent and the Query Builder, making the database connection random. @done (12/06/16 23:37)
 
 Query Builder:
   The followin methods should be created and added under the "Ordering, Grouping, Limit, & Offset" in the wiki, 
