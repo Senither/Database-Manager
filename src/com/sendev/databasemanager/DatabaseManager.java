@@ -8,8 +8,12 @@ import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Schema;
 import com.sendev.databasemanager.utils.Collection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 import org.bukkit.plugin.Plugin;
 
 public final class DatabaseManager
@@ -314,5 +318,194 @@ public final class DatabaseManager
     public int queryUpdate(QueryBuilder query) throws SQLException
     {
         return queryUpdate(query.toSQL());
+    }
+
+    /**
+     * Generates a prepared statement object and executes the SQL statement, which must be an SQL Data
+     * Manipulation Language (DML) statement, such as <code>INSERT</code>, <code>UPDATE</code> or
+     * <code>DELETE</code>; or an SQL statement that returns nothing, such as a DDL statement.
+     *
+     * @param connection a specific database connection name that the query should be run against.
+     * @param query      an SQL statement to be sent to the database, typically a static SQL DML statement
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @exception SQLException        if a database access error occurs;
+     *                                this method is called on a closed  <code>PreparedStatement</code>
+     *                                or the SQL statement returns a <code>ResultSet</code> object
+     * @throws SQLTimeoutException when the driver has determined that the
+     *                             timeout value that was specified by the {@code setQueryTimeout}
+     *                             method has been exceeded and has at least attempted to cancel
+     *                             the currently running {@code Statement}
+     */
+    public int queryUpdate(String connection, String query) throws SQLException
+    {
+        output.debug("DatabaseManager::queryUpdate was called on the connection \"%s\" with the following SQL statement: %s", connection, query);
+
+        Database db = connections.getConnection(connection);
+
+        if (db == null) {
+            throw new DatabaseException("Invalid connection, there are no connection with the name \"" + connection + "\"");
+        }
+
+        return db.prepare(query).executeUpdate();
+    }
+
+    /**
+     * Generates a prepared statement object and executes the SQL statement, which must be an SQL Data
+     * Manipulation Language (DML) statement, such as <code>INSERT</code>, <code>UPDATE</code> or
+     * <code>DELETE</code>; or an SQL statement that returns nothing, such as a DDL statement.
+     *
+     * @param connection a specific database connection name that the query should be run against.
+     * @param query      a QueryBuilder instance that should be sent to the database, typically a
+     *                   static SQL DML statement
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @exception SQLException        if a database access error occurs;
+     *                                this method is called on a closed  <code>PreparedStatement</code>
+     *                                or the SQL statement returns a <code>ResultSet</code> object
+     * @throws SQLTimeoutException when the driver has determined that the
+     *                             timeout value that was specified by the {@code setQueryTimeout}
+     *                             method has been exceeded and has at least attempted to cancel
+     *                             the currently running {@code Statement}
+     */
+    public int queryUpdate(String connection, QueryBuilder query) throws SQLException
+    {
+        return queryUpdate(connection, query.toSQL());
+    }
+
+    /**
+     * Generates a prepared statement object and executes the SQL statement, which must be an SQL INSERT
+     * statement, such as <code>INSERT</code>; After the query has been executed the prepared statement
+     * will be used to generate a set of keys, referring to the IDs of the inserted rows.
+     *
+     * @param query an SQL statement to be sent to the database, typically a static SQL INSERT statement
+     *
+     * @return a set of IDs referring to the insert rows
+     *
+     * @exception SQLException        if a database access error occurs;
+     *                                this method is called on a closed  <code>PreparedStatement</code>
+     *                                or the SQL statement returns a <code>ResultSet</code> object
+     * @throws SQLTimeoutException when the driver has determined that the
+     *                             timeout value that was specified by the {@code setQueryTimeout}
+     *                             method has been exceeded and has at least attempted to cancel
+     *                             the currently running {@code Statement}
+     */
+    public Set<Integer> queryInsert(String query) throws SQLException
+    {
+        output.debug("DatabaseManager::queryInsert was called with the following SQL statement: %s", query);
+
+        if (!query.startsWith("INSERT INTO")) {
+            throw new DatabaseException("queryInsert was called with a query without an INSERT statement!");
+        }
+
+        PreparedStatement stmt = connections.getDefaultConnection().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        stmt.executeUpdate();
+
+        Set<Integer> ids = new HashSet<>();
+
+        ResultSet keys = stmt.getGeneratedKeys();
+        while (keys.next()) {
+            ids.add(keys.getInt(1));
+        }
+
+        return ids;
+    }
+
+    /**
+     * Generates a prepared statement object and executes the SQL statement, which must be an SQL INSERT
+     * statement, such as <code>INSERT</code>; After the query has been executed the prepared statement
+     * will be used to generate a set of keys, referring to the IDs of the inserted rows.
+     *
+     * @param query a QueryBuilder instance that should be sent to the database, typically a
+     *              static SQL INSERT statement
+     *
+     * @return a set of IDs referring to the insert rows
+     *
+     * @exception SQLException        if a database access error occurs;
+     *                                this method is called on a closed  <code>PreparedStatement</code>
+     *                                or the SQL statement returns a <code>ResultSet</code> object
+     * @throws SQLTimeoutException when the driver has determined that the
+     *                             timeout value that was specified by the {@code setQueryTimeout}
+     *                             method has been exceeded and has at least attempted to cancel
+     *                             the currently running {@code Statement}
+     */
+    public Set<Integer> queryInsert(QueryBuilder query) throws SQLException
+    {
+        return queryInsert(query.toSQL());
+    }
+
+    /**
+     * Generates a prepared statement object and executes the SQL statement, which must be an SQL INSERT
+     * statement, such as <code>INSERT</code>; After the query has been executed the prepared statement
+     * will be used to generate a set of keys, referring to the IDs of the inserted rows.
+     *
+     * @param connection a specific database connection name that the query should be run against.
+     * @param query      an SQL statement to be sent to the database, typically a static SQL INSERT statement
+     *
+     * @return a set of IDs referring to the insert rows
+     *
+     * @exception SQLException        if a database access error occurs;
+     *                                this method is called on a closed  <code>PreparedStatement</code>
+     *                                or the SQL statement returns a <code>ResultSet</code> object
+     * @throws SQLTimeoutException when the driver has determined that the
+     *                             timeout value that was specified by the {@code setQueryTimeout}
+     *                             method has been exceeded and has at least attempted to cancel
+     *                             the currently running {@code Statement}
+     */
+    public Set<Integer> queryInsert(String connection, String query) throws SQLException
+    {
+        output.debug("DatabaseManager::queryInsert was called on the connection \"%s\" with the following SQL statement: %s", connection, query);
+
+        if (!query.startsWith("INSERT INTO")) {
+            throw new DatabaseException("queryInsert was called with a query without an INSERT statement!");
+        }
+
+        Database db = connections.getConnection(connection);
+
+        if (db == null) {
+            throw new DatabaseException("Invalid connection, there are no connection with the name \"" + connection + "\"");
+        }
+
+        PreparedStatement stmt = db.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        stmt.executeUpdate();
+
+        Set<Integer> ids = new HashSet<>();
+
+        ResultSet keys = stmt.getGeneratedKeys();
+        while (keys.next()) {
+            ids.add(keys.getInt(1));
+        }
+
+        return ids;
+    }
+
+    /**
+     * Generates a prepared statement object and executes the SQL statement, which must be an SQL INSERT
+     * statement, such as <code>INSERT</code>; After the query has been executed the prepared statement
+     * will be used to generate a set of keys, referring to the IDs of the inserted rows.
+     *
+     * @param connection a specific database connection name that the query should be run against.
+     * @param query      a QueryBuilder instance that should be sent to the database, typically a
+     *                   static SQL INSERT statement
+     *
+     * @return a set of IDs referring to the insert rows
+     *
+     * @exception SQLException        if a database access error occurs;
+     *                                this method is called on a closed  <code>PreparedStatement</code>
+     *                                or the SQL statement returns a <code>ResultSet</code> object
+     * @throws SQLTimeoutException when the driver has determined that the
+     *                             timeout value that was specified by the {@code setQueryTimeout}
+     *                             method has been exceeded and has at least attempted to cancel
+     *                             the currently running {@code Statement}
+     */
+    public Set<Integer> queryInsert(String connection, QueryBuilder query) throws SQLException
+    {
+        return queryInsert(connection, query.toSQL());
     }
 }

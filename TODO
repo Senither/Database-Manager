@@ -1,8 +1,8 @@
 Database Manager:
-  ☐ Add a *queryUpdate* method that access the custom connection name value.
+  ✔ Add a *queryUpdate* method that access the custom connection name value. @done (12/06/16 17:00)
 
-  ☐ Add a *queryInsert* method that allows user to do the same as *queryUpdate*, but instead it will return a Set<Integer> object, where each index reprecent a ID value of the row that was inserted.
-    ☐ Checks should be made to make sure the parsed query is actually a INSERT query, if that's not the case a *DatabaseException* should be thrown.
+  ✔ Add a *queryInsert* method that allows user to do the same as *queryUpdate*, but instead it will return a Set<Integer> object, where each index reprecent a ID value of the row that was inserted. @done (12/06/16 17:08)
+    ✔ Checks should be made to make sure the parsed query is actually a INSERT query, if that's not the case a *DatabaseException* should be thrown. @done (12/06/16 17:08)
 
 Database Factory:
   ☐ Add a *PluginContainer* class where all plugin info should be stored for any plugin that has created an instance of DBM.
@@ -15,8 +15,8 @@ Query Builder:
     ✔ inRandomOrder @done (12/06/16 16:34)
     ☐ having
     ☐ havingRaw
-    ☐ skip 
-    ☐ take
+    ✔ skip  @done (12/06/16 16:51)
+    ✔ take @done (12/06/16 16:51)
 
   ☐ Create a Conditional Statements when method, allowing the user to parse it their own logic for a when statement.
     Information can be found here https://laravel.com/docs/5.2/queries#conditional-statements
