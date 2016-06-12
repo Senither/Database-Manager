@@ -102,11 +102,22 @@ public class SelectGrammar extends TableGrammar
             removeLast(2);
         }
 
-        if (builder.getLimit() <= 0) {
+        if (builder.getTake() <= 0) {
             return query.trim() + ";";
         }
 
-        addPart(String.format(" LIMIT %d;", builder.getLimit()));
+        if (builder.getTake() > 0) {
+            addPart(String.format(" LIMIT %d", builder.getLimit()));
+
+            // The skip clause is placed inside the limit statement because LIMIT is 
+            // required for the OFFSET to be regonized by the SQL server, placing
+            // it outside will throw a Syntex Exception due to the missing limit.
+            if (builder.getSkip() > 0) {
+                addPart(String.format(" OFFSET %d", builder.getSkip()));
+            }
+        }
+
+        addPart(";");
 
         return query;
     }

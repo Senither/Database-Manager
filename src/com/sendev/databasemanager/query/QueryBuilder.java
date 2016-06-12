@@ -16,7 +16,8 @@ public final class QueryBuilder
 
     private String table = null;
 
-    private int limit = -1;
+    private int take = -1;
+    private int skip = -1;
 
     private final List<QueryOrder> order = new ArrayList<>();
 
@@ -93,7 +94,7 @@ public final class QueryBuilder
 
     public QueryBuilder limit(int limit)
     {
-        this.limit = Math.max(limit, 0);
+        this.take = Math.max(limit, 0);
 
         return this;
     }
@@ -105,7 +106,45 @@ public final class QueryBuilder
 
     public int getLimit()
     {
-        return limit;
+        return take;
+    }
+
+    public QueryBuilder skip(int skip)
+    {
+        this.skip = Math.max(skip, 0);
+
+        return this;
+    }
+
+    public QueryBuilder removeSkip()
+    {
+        this.skip = -1;
+
+        return this;
+    }
+
+    public int getSkip()
+    {
+        return skip;
+    }
+
+    public QueryBuilder take(int take)
+    {
+        this.take = Math.max(take, 0);
+
+        return this;
+    }
+
+    public QueryBuilder removeTake()
+    {
+        this.take = -1;
+
+        return this;
+    }
+
+    public int getTake()
+    {
+        return take;
     }
 
     public QueryBuilder where(String column, Object field)
