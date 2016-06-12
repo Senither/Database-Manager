@@ -5,6 +5,7 @@ import com.sendev.databasemanager.query.Clause;
 import com.sendev.databasemanager.query.JoinClause;
 import com.sendev.databasemanager.query.OperatorType;
 import com.sendev.databasemanager.query.QueryBuilder;
+import com.sendev.databasemanager.query.QueryOrder;
 import java.util.List;
 
 public class SelectGrammar extends TableGrammar
@@ -82,17 +83,19 @@ public class SelectGrammar extends TableGrammar
         if (!builder.getOrder().isEmpty()) {
             addPart(" ORDER BY ");
 
-            List<String> orders = builder.getOrder();
+            for (QueryOrder order : builder.getOrder()) {
+                if (order.getField() == null) {
+                    continue;
+                }
 
-            for (int i = 0; i < orders.size(); i++) {
-                String field = orders.get(i);
+                if (order.isRawSQL()) {
+                    addPart(" %s , ", order.getField());
 
-                addPart(String.format(" %s ",
-                orderOperators.contains(field.toUpperCase()) ? field.toUpperCase() : formatField(field))
-                );
+                    continue;
+                }
 
-                if ((i + 1) % 2 == 0) {
-                    addPart(", ");
+                if (order.getType() != null) {
+                    addPart(" %s %s, ", formatField(order.getField()), order.getType().toUpperCase());
                 }
             }
 

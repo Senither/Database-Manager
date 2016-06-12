@@ -18,7 +18,7 @@ public final class QueryBuilder
 
     private int limit = -1;
 
-    private final List<String> order = new ArrayList<>();
+    private final List<QueryOrder> order = new ArrayList<>();
 
     private final List<Clause> wheres = new ArrayList<>();
 
@@ -156,12 +156,19 @@ public final class QueryBuilder
 
     public QueryBuilder orderBy(String field, String type)
     {
-        order.addAll(Arrays.asList(field, type));
+        order.add(new QueryOrder(field, type));
 
         return this;
     }
 
-    public List<String> getOrder()
+    public QueryBuilder inRandomOrder()
+    {
+        order.add(new QueryOrder("RAND()", null, true));
+
+        return this;
+    }
+
+    public List<QueryOrder> getOrder()
     {
         return order;
     }
