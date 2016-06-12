@@ -32,28 +32,28 @@ Schematics(Schema):
     ☐ An *AlterGrammar* grammar class should be created in order to format update table information.
 
 Carbon:
-  ☐ Implement more output methods for different known datetime types.
-    ☐ toDateString:                | 1975-12-25
-    ☐ toFormattedDateString        | Dec 25, 1975
-    ☐ toTimeString                 | 14:15:16
-    ☐ toDateTimeString             | 1975-12-25 14:15:16
-    ☐ toDayDateTimeString          | Thu, Dec 25, 1975 2:15 PM
-    ☐ toAtomString                 | 1975-12-25T14:15:16-05:00
-    ☐ toCookieString               | Thursday, 25-Dec-1975 14:15:16 EST
-    ☐ toIso8601String              | 1975-12-25T14:15:16-0500
-    ☐ toRfc822String               | Thu, 25 Dec 75 14:15:16 -0500
-    ☐ toRfc850String               | Thursday, 25-Dec-75 14:15:16 EST
-    ☐ toRfc1036String              | Thu, 25 Dec 75 14:15:16 -0500
-    ☐ toRfc1123String              | Thu, 25 Dec 1975 14:15:16 -0500
-    ☐ toRfc2822String              | Thu, 25 Dec 1975 14:15:16 -0500
-    ☐ toRfc3339String              | 1975-12-25T14:15:16-05:00
-    ☐ toRssString                  | Thu, 25 Dec 1975 14:15:16 -0500
-    ☐ toW3cString                  | 1975-12-25T14:15:16-05:00
+  ✔ Implement more output methods for different known datetime types. @done (12/06/16 15:48)
+    ✔ toDateString:                | 1975-12-25 @done (12/06/16 14:15)
+    ✔ toFormattedDateString        | Dec 25, 1975 @done (12/06/16 14:23)
+    ✔ toTimeString                 | 14:15:16 @done (12/06/16 14:24)
+    ✔ toDateTimeString             | 1975-12-25 14:15:16 @done (12/06/16 14:26)
+    ✔ toDayDateTimeString          | Thu, Dec 25, 1975 2:15 PM @done (12/06/16 14:29)
+    ✔ toAtomString                 | 1975-12-25T14:15:16-05:00 @done (12/06/16 14:44)
+    ✔ toCookieString               | Thursday, 25-Dec-1975 14:15:16 EST @done (12/06/16 14:52)
+    ✔ toIso8601String              | 1975-12-25T14:15:16-0500 @done (12/06/16 14:54)
+    ✔ toRfc822String               | Thu, 25 Dec 75 14:15:16 -0500 @done (12/06/16 14:59)
+    ✔ toRfc850String               | Thursday, 25-Dec-75 14:15:16 EST @done (12/06/16 15:02)
+    ✔ toRfc1036String              | Thu, 25 Dec 75 14:15:16 -0500 @done (12/06/16 15:05)
+    ✘ toRfc1123String              | Thu, 25 Dec 1975 14:15:16 -0500 @cancelled (12/06/16 15:09)
+    ✘ toRfc2822String              | Thu, 25 Dec 1975 14:15:16 -0500 @cancelled (12/06/16 15:09)
+    ✔ toRfc3339String              | 1975-12-25T14:15:16-05:00 @done (12/06/16 15:11)
+    ✔ toRssString                  | Thu, 25 Dec 1975 14:15:16 -0500 @done (12/06/16 15:17)
+    ✔ toW3cString                  | 1975-12-25T14:15:16-05:00 @done (12/06/16 15:48)
 
-  ☐ Implement a *format* method, allowing the user to parse in their own datetime string that should be generated.
+  ✔ Implement a *format* method, allowing the user to parse in their own datetime string that should be generated. @done (12/06/16 14:15)
 
 Collection:
-  ☐ Fix the DatabaseException thrown in the *getStrings* method so it just reutnrs NULL if nothing is found with the provided key.
+  ☐ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key.
 
   ☐ Create a way to make a new *Collection* instance without having to parse in a ResultSet, for example having the keys as the first paramater, and the items as the second.
 

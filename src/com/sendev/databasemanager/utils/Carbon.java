@@ -587,10 +587,195 @@ public final class Carbon implements Cloneable
         return setMonth(Time.MONTHS_PER_YEAR.getTime()).endOfMonth();
     }
 
+    ///////////////////////////////////////////////////////////////////
+    ////////////////////////// OUTPUT FORMAT //////////////////////////
+    ///////////////////////////////////////////////////////////////////
     @Override
     public String toString()
     {
         return format.format(time.getTime());
+    }
+
+    /**
+     * Generates a date string, example:
+     *
+     * 1975-12-25
+     *
+     * @return The generated date string
+     */
+    public String toDateString()
+    {
+        return format("yyyy-MM-dd");
+    }
+
+    /**
+     * Generates a formatted date string, example:
+     * <p>
+     * Dec 25, 1975
+     *
+     * @return The generated formatted date string
+     */
+    public String toFormattedDateString()
+    {
+        return format("MMMMM dd, yyyy");
+    }
+
+    /**
+     * Generates a time string, example:
+     *
+     * 14:15:16
+     *
+     * @return The generated time string
+     */
+    public String toTimeString()
+    {
+        return format("HH:mm:ss");
+    }
+
+    /**
+     * Generates a date time string, example:
+     *
+     * 1975-12-25 14:15:16
+     *
+     * @return The generated date time string
+     */
+    public String toDateTimeString()
+    {
+        return format("yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * Generates a day date time string, example:
+     * <p>
+     * Thu, Dec 25, 1975 2:15 PM
+     *
+     * @return The generated day date time string
+     */
+    public String toDayDateTimeString()
+    {
+        return format("EEE, MMM dd, yyyy h:mm aaa");
+    }
+
+    /**
+     * Generates an atomic time string, example:
+     * <p>
+     * 1975-12-25T14:15:16-05:00
+     *
+     * @return The generated atomic time string
+     */
+    public String toAtomicString()
+    {
+        return String.format("%sT%s", format("yyyy-MM-dd"), format("HH:mm:ssXXX"));
+    }
+
+    /**
+     * Generates a cookie time string, example:
+     * <p>
+     * Thursday, 25-Dec-1975 14:15:16 EST
+     *
+     * @return The generated cookie time string
+     */
+    public String toCookieString()
+    {
+        return format("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z");
+    }
+
+    /**
+     * Generates a ISO 8601 time string, example:
+     * <p>
+     * 1975-12-25T14:15:16-0500
+     *
+     * @return The generated ISO 8601 time string
+     */
+    public String toIso8601String()
+    {
+        return String.format("%sT%s", format("yyyy-MM-dd"), format("HH:mm:ssZ"));
+    }
+
+    /**
+     * Generates a RFC 822 time string, example:
+     * <p>
+     * Thu, 25 Dec 1975 14:15:16 -0500
+     *
+     * @return The generated RFC 822 time string
+     */
+    public String toRfc822String()
+    {
+        return format("EEE, dd MMM yyyy HH:mm:ss Z");
+    }
+
+    /**
+     * Generates a RFC 850 time string, example:
+     * <p>
+     * Thursday, 25-Dec-1975 14:15:16 EST
+     *
+     * @return The generated RFC 850 time string
+     */
+    public String toRfc850String()
+    {
+        return format("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z");
+    }
+
+    /**
+     * Generates a RFC 1036 time string, example:
+     * <p>
+     * 1975-12-25T14:15:16-05:00
+     *
+     * @return The generated RFC 1036 time string
+     */
+    public String toRfc1036String()
+    {
+        return format("EEE, dd MMM yyyy HH:mm:ssXXX");
+    }
+
+    /**
+     * Generates a RFC 850 time string, example:
+     * <p>
+     * Thu, 25 Dec 1975 14:15:16 -0500
+     *
+     * @return The generated RFC 850 time string
+     */
+    public String toRfc3339String()
+    {
+        return String.format("%sT%s", format("yyyy-MM-dd"), format("HH:mm:ssZ"));
+    }
+
+    /**
+     * Generates a RSS time string, example:
+     * <p>
+     * Thu, 25 Dec 1975 14:15:16 -0500
+     *
+     * @return The generated RSS time string
+     */
+    public String toRssString()
+    {
+        return format("EEE, dd MMM yyyy HH:mm:ss Z");
+    }
+
+    /**
+     * Generates a W3C time string, example:
+     * <p>
+     * 1975-12-25T14:15:16-05:00
+     *
+     * @return The generated W3C time string
+     */
+    public String toW3cString()
+    {
+        return String.format("%sT%s", format("yyyy-mm-dd"), format("HH:mm:ssXXX"));
+    }
+
+    /**
+     * Formats the datetime object and prints out the formatted time string.
+     *
+     * @param format
+     *
+     * @return
+     */
+    public String format(String format)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+
+        return sdf.format(time.getTime());
     }
 
     @Override
