@@ -87,8 +87,6 @@ public class Field
 
     public Field defaultValue(int value)
     {
-        defaultIsSQLAction = false;
-
         defaultValue = String.valueOf(value);
 
         return this;
@@ -96,8 +94,6 @@ public class Field
 
     public Field defaultValue(long value)
     {
-        defaultIsSQLAction = false;
-
         defaultValue = String.valueOf(value);
 
         return this;
@@ -105,8 +101,6 @@ public class Field
 
     public Field defaultValue(double value)
     {
-        defaultIsSQLAction = false;
-
         defaultValue = String.valueOf(value);
 
         return this;
@@ -114,15 +108,11 @@ public class Field
 
     public Field defaultValue(boolean value)
     {
-        defaultValue = String.valueOf(value);
-
         return this;
     }
 
     public Field defaultValue(Carbon value)
     {
-        defaultIsSQLAction = false;
-
         if (value == null) {
             return setDefaultToNull();
         }
@@ -134,8 +124,6 @@ public class Field
 
     public Field defaultValue(String value)
     {
-        defaultIsSQLAction = false;
-
         if (value == null) {
             return setDefaultToNull();
         }
@@ -147,8 +135,6 @@ public class Field
 
     public Field defaultValue(Object value)
     {
-        defaultIsSQLAction = false;
-
         if (value == null) {
             return setDefaultToNull();
         }
