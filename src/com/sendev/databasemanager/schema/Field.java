@@ -108,7 +108,11 @@ public class Field
 
     public Field defaultValue(boolean value)
     {
-        return this;
+        if (value) {
+            return defaultValue(new DefaultSQLAction("true"));
+        }
+
+        return defaultValue(new DefaultSQLAction("false"));
     }
 
     public Field defaultValue(Carbon value)
