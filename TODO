@@ -53,68 +53,69 @@ Carbon:
   ✔ Implement a *format* method, allowing the user to parse in their own datetime string that should be generated. @done (12/06/16 14:15)
 
 Collection:
-  ☐ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key.
+  ✔ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key. @done (13/06/16 15:53)
+      This was fixed by removing them compeltely since the methods wasen't actually needed anyway.
 
-  ☐ Create a way to make a new *Collection* instance without having to parse in a ResultSet, for example having the keys as the first paramater, and the items as the second.
+  ✔ Create a way to make a new *Collection* instance without having to parse in a ResultSet, for example having the keys as the first paramater, and the items as the second. @done (13/06/16 15:53)
 
-  ☐ Implement more *Collection* methods, allowing users to do more things with the collection method itself.
+  ✔ Implement more *Collection* methods, allowing users to do more things with the collection method itself. @done (13/06/16 15:53)
     Information for all of the methods can be found here: https://laravel.com/docs/5.2/collections#available-methods
     Note that some of the methods might not actually be usless in a Java case, so some might have to be removed.
-      ☐ avg
-      ☐ chunk
-      ☐ collapse
-      ☐ combine
-      ☐ contains
-      ☐ count
-      ☐ diff
-      ☐ diffKeys
-      ☐ each
-      ☐ every
-      ☐ except
-      ☐ filter
-      ☐ flip
-      ☐ forget
-      ☐ groupBy
-      ☐ has
-      ☐ implode
-      ☐ intersect
-      ☐ isEmpty
-      ☐ keyBy
-      ☐ keys
-      ☐ last
-      ☐ map
-      ☐ max
-      ☐ merge
-      ☐ min
-      ☐ only
-      ☐ pluck
-      ☐ pop
-      ☐ prepend
-      ☐ pull
-      ☐ push
-      ☐ put
-      ☐ random
-      ☐ reduce
-      ☐ reject
-      ☐ reverse
-      ☐ search
-      ☐ shift
-      ☐ shuffle
-      ☐ slice
-      ☐ sort
-      ☐ sortBy
-      ☐ sortByDesc
-      ☐ splice
-      ☐ sum
-      ☐ take
-      ☐ toArray
-      ☐ toJson
-      ☐ transform
-      ☐ union
-      ☐ unique
-      ☐ values
-      ☐ where
-      ☐ whereLoose
-      ☐ WhereIn
-      ☐ whereInLoose
-      ☐ zip
+      ✔ avg @done (13/06/16 04:08)
+      ✔ chunk @done (13/06/16 15:50)
+      ✘ collapse @cancelled (13/06/16 15:50)
+      ✘ combine @cancelled (13/06/16 15:50)
+      ✘ contains @cancelled (13/06/16 15:51)
+      ✔ size @done (13/06/16 15:52)
+      ✘ diff @cancelled (13/06/16 15:52)
+      ✘ diffKeys @cancelled (13/06/16 15:52)
+      ✘ each @cancelled (13/06/16 15:52)
+      ✘ every @cancelled (13/06/16 15:52)
+      ✘ except @cancelled (13/06/16 15:52)
+      ✘ filter @cancelled (13/06/16 15:52)
+      ✘ flip @cancelled (13/06/16 15:52)
+      ✘ forget @cancelled (13/06/16 15:52)
+      ✘ groupBy @cancelled (13/06/16 15:52)
+      ✔ has @done (13/06/16 15:52)
+      ✘ implode @cancelled (13/06/16 15:52)
+      ✘ intersect @cancelled (13/06/16 15:52)
+      ✔ isEmpty @done (13/06/16 04:03)
+      ✘ keyBy @cancelled (13/06/16 15:52)
+      ✔ keys @done (13/06/16 15:52)
+      ✔ last @done (13/06/16 15:52)
+      ✘ map @cancelled (13/06/16 15:52)
+      ✔ max @done (13/06/16 15:52)
+      ✘ merge @cancelled (13/06/16 15:52)
+      ✔ min @done (13/06/16 15:52)
+      ✘ only @cancelled (13/06/16 15:52)
+      ✘ pluck @cancelled (13/06/16 15:52)
+      ✔ pop @done (13/06/16 15:52)
+      ✘ prepend @cancelled (13/06/16 15:52)
+      ✘ pull @cancelled (13/06/16 15:52)
+      ✘ push @cancelled (13/06/16 15:52)
+      ✘ put @cancelled (13/06/16 15:52)
+      ✔ random @done (13/06/16 15:52)
+      ✘ reduce @cancelled (13/06/16 15:52)
+      ✘ reject @cancelled (13/06/16 15:52)
+      ✔ reverse @done (13/06/16 15:52)
+      ✘ search @cancelled (13/06/16 15:52)
+      ✘ shift @cancelled (13/06/16 15:52)
+      ✘ shuffle @cancelled (13/06/16 15:52)
+      ✘ slice @cancelled (13/06/16 15:52)
+      ✘ sort @cancelled (13/06/16 15:52)
+      ✘ sortBy @cancelled (13/06/16 15:52)
+      ✘ sortByDesc @cancelled (13/06/16 15:52)
+      ✘ splice @cancelled (13/06/16 15:52)
+      ✔ sum @done (13/06/16 15:52)
+      ✘ take @cancelled (13/06/16 15:52)
+      ✘ toArray @cancelled (13/06/16 15:52)
+      ✔ toJson @done (13/06/16 15:52)
+      ✘ transform @cancelled (13/06/16 15:53)
+      ✘ union @cancelled (13/06/16 15:53)
+      ✘ unique @cancelled (13/06/16 15:53)
+      ✘ values @cancelled (13/06/16 15:53)
+      ✔ where @done (13/06/16 15:53)
+      ✔ whereLoose @done (13/06/16 15:53)
+      ✘ WhereIn @cancelled (13/06/16 15:53)
+      ✘ whereInLoose @cancelled (13/06/16 15:53)
+      ✘ zip @cancelled (13/06/16 15:53)
