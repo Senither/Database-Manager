@@ -1,6 +1,5 @@
 package com.sendev.databasemanager.utils;
 
-import com.sendev.databasemanager.exceptions.DatabaseException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -79,53 +78,6 @@ public class Collection implements Cloneable, Iterable<DataRow>
     public List<DataRow> all()
     {
         return items;
-    }
-
-    /**
-     * Gets every column with the given index, if the index doesn't
-     * exists a <code>DatabaseException</code> will be thrown.
-     *
-     * @param name The index(name) to lookup.
-     *
-     * @return either (1) A list of objects with the given index,
-     *         or (2) <code>NULL</code> if the given index doesn't exists.
-     */
-    public List<Object> get(String name)
-    {
-        if (!keys.containsKey(name)) {
-            return null;
-        }
-
-        List<Object> objects = new ArrayList<>();
-
-        items.stream().forEach(( row ) -> {
-            objects.add(row.get(name));
-        });
-
-        return objects;
-    }
-
-    /**
-     * Gets every column with the given index, if the index doesn't
-     * exists a <code>DatabaseException</code> will be thrown.
-     *
-     * @param name The index(name) to lookup.
-     *
-     * @return A list of strings with the given index.
-     */
-    public List<String> getStrings(String name)
-    {
-        if (!keys.containsKey(name)) {
-            throw new DatabaseException("");
-        }
-
-        List<String> objects = new ArrayList<>();
-
-        items.stream().forEach(( row ) -> {
-            objects.add((String) row.get(name));
-        });
-
-        return objects;
     }
 
     /**
