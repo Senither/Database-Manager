@@ -41,22 +41,17 @@ public abstract class DBMCommand
         return new ArrayList<>();
     }
 
-    public boolean requireTriggers()
-    {
-        return true;
-    }
-
     public boolean displayOnHelp()
     {
         return true;
     }
 
-    protected final boolean sendDescriptionMessage(Player player)
+    public final boolean sendDescriptionMessage(Player player)
     {
         return sendDescriptionMessage(player, true);
     }
 
-    protected final boolean sendDescriptionMessage(Player player, boolean sendDescription)
+    public final boolean sendDescriptionMessage(Player player, boolean sendDescription)
     {
         if (getTriggers().isEmpty()) {
             return false;
@@ -89,7 +84,7 @@ public abstract class DBMCommand
     {
         chat().sendMessage(player, "%s &b%s", plugin.getPrefix('3', 'b'), message);
     }
-    
+
     protected final void sendMessage(CommandSender sender, String message)
     {
         chat().sendMessage(sender, "%s &b%s", plugin.getPrefix('3', 'b'), message);

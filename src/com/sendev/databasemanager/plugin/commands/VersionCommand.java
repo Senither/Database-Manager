@@ -7,17 +7,11 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class AdminVersionCommand extends DBMCommand
+public class VersionCommand extends DBMCommand
 {
-    public AdminVersionCommand(DBMPlugin plugin)
+    public VersionCommand(DBMPlugin plugin)
     {
         super(plugin);
-    }
-
-    @Override
-    public String getPermission()
-    {
-        return "databasemanager.admin";
     }
 
     @Override
@@ -27,9 +21,9 @@ public class AdminVersionCommand extends DBMCommand
     }
 
     @Override
-    public boolean requireTriggers()
+    public List<String> getDescription()
     {
-        return false;
+        return Arrays.asList("Displays the version and a few help links for DBM.");
     }
 
     @Override
@@ -37,7 +31,7 @@ public class AdminVersionCommand extends DBMCommand
     {
         String version = plugin.getDescription().getVersion();
 
-        sendMessage(player, "&7The server is using DatabaseManager &3v" + version);
+        sendMessage(player, "&7The server is running DatabaseManager &3v" + version);
         sendMessage(player, "&7Created by &3Alexis Tan &b[&3Senither&b]");
         sendMessage(player, "&7Site: &3https://bitbucket.org/Senither/database-manager");
 
@@ -49,7 +43,7 @@ public class AdminVersionCommand extends DBMCommand
     {
         String version = plugin.getDescription().getVersion();
 
-        chat().sendMessage(sender, "The server is using DatabaseManager v" + version);
+        chat().sendMessage(sender, "The server is running DatabaseManager v" + version);
         chat().sendMessage(sender, "Created by Alexis Tan [Senither] (https://bitbucket.org/Senither/database-manager)");
 
         return true;

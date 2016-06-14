@@ -14,12 +14,14 @@ public class CommandHandler implements CommandExecutor
     private final DBMPlugin plugin;
 
     private final List<DBMCommand> commands;
+    private final List<DBMCommand> defaultCommands;
 
     public CommandHandler(DBMPlugin plugin)
     {
         this.plugin = plugin;
 
         commands = new ArrayList<>();
+        defaultCommands = new ArrayList<>();
     }
 
     public void registerCommand(DBMCommand command)
@@ -31,6 +33,21 @@ public class CommandHandler implements CommandExecutor
         commands.add(command);
     }
 
+    public void registerCommand(DBMCommand command, boolean defaultCommand)
+    {
+        registerCommand(command);
+
+        if (!defaultCommand) {
+            return;
+        }
+
+        if (defaultCommands.contains(command)) {
+            return;
+        }
+
+        defaultCommands.add(command);
+    }
+
     public List<DBMCommand> getCommands()
     {
         return commands;
@@ -40,11 +57,7 @@ public class CommandHandler implements CommandExecutor
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
         if (args.length == 0) {
-            for (DBMCommand cmd : commands) {
-                if (cmd.requireTriggers()) {
-                    continue;
-                }
-
+            for (DBMCommand cmd : defaultCommands) {
                 if (!cmd.hasPermission()) {
                     return parseCommand(cmd, sender, args);
                 }
