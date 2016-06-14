@@ -5,13 +5,18 @@ import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.plugin.commands.AdminVersionCommand;
 import com.sendev.databasemanager.plugin.commands.CommandHandler;
 import com.sendev.databasemanager.plugin.commands.DefaultVersionCommand;
+import com.sendev.databasemanager.plugin.tasks.VersionTask;
 import com.sendev.databasemanager.plugin.utils.ChatFormatter;
+import com.sendev.databasemanager.plugin.utils.VersionFetcher;
+import java.io.IOException;
+import java.util.logging.Level;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DBMPlugin extends JavaPlugin
 {
 
+    private VersionTask version;
     private final ChatFormatter chat = new ChatFormatter();
     private final CommandHandler command = new CommandHandler(this);
 
@@ -20,10 +25,38 @@ public class DBMPlugin extends JavaPlugin
     @Override
     public void onEnable()
     {
+        String currentVersion = getDescription().getVersion();
+        String latestVersion = currentVersion;
+
+        try {
+            latestVersion = VersionFetcher.fetch();
+        } catch (IOException ex) {
+            getLogger().info("Failed to make a version check with SenDevelopment, the site might be down.");
+        }
+
+        version = new VersionTask(this, latestVersion);
+
+        getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        getLogger().log(Level.INFO, "Plugin: Database Manager v{0}", currentVersion);
+        getLogger().log(Level.INFO, "Author: Alexis Tan (Senither) ");
+        getLogger().log(Level.INFO, "Site: http://sen-dev.com/");
+        getLogger().log(Level.INFO, "Wiki: https://bitbucket.org/Senither/database-manager");
+
+        if (!currentVersion.equals(latestVersion)) {
+            getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+            getLogger().log(Level.INFO, "There is a new version of DBM avaliable!");
+            getLogger().log(Level.INFO, "Version avaliable: v{0}", latestVersion);
+            getLogger().log(Level.INFO, "Current version:   v{0}", currentVersion);
+        }
+
+        getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+
         command.registerCommand(new AdminVersionCommand(this));
         command.registerCommand(new DefaultVersionCommand(this));
 
         getCommand("databasemanager").setExecutor(command);
+
+        version.startTask();
     }
 
     /**
