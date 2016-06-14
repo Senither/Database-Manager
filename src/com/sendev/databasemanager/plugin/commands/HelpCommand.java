@@ -41,13 +41,9 @@ public class HelpCommand extends DBMCommand
         "Database Manager", info.getVersion()
         );
 
-        for (DBMCommand command : plugin.getCommand().getCommands()) {
-            if (!command.displayOnHelp()) {
-                continue;
-            }
-
+        plugin.getCommand().getCommands().stream().filter(( command ) -> !(!command.displayOnHelp())).forEach(( command ) -> {
             command.sendDescriptionMessage(player);
-        }
+        });
 
         return false;
     }
