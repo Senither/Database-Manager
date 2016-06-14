@@ -14,7 +14,7 @@ public abstract class AlterGrammar extends Grammar
      * @return String
      */
     public abstract String format(Blueprint blueprint);
-    
+
     /**
      * Adds the last few touches the query needs to be ready to be executed.
      *
