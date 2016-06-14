@@ -35,10 +35,10 @@ public class HelpCommand extends DBMCommand
     @Override
     public boolean runPlayerCommand(Player player, String[] args)
     {
-        PluginDescriptionFile info = plugin.getDescription();
+        PluginDescriptionFile desc = plugin.getDescription();
 
-        plugin.getChat().sendMessage(player, "&3&l]&3&l&m--------&3&l[ &b%s &3v&7%s &3&l]&3&l&m--------&3&l[",
-        "Database Manager", info.getVersion()
+        chat().sendMessage(player, "&3&l]&3&l&m--------&3&l[ &b%s &3v&7%s &3&l]&3&l&m--------&3&l[",
+        "Database Manager", desc.getVersion()
         );
 
         plugin.getCommand().getCommands().stream().filter(( command ) -> !(!command.displayOnHelp())).forEach(( command ) -> {
