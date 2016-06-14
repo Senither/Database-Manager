@@ -4,6 +4,7 @@ import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.plugin.commands.CommandHandler;
 import com.sendev.databasemanager.plugin.commands.HelpCommand;
+import com.sendev.databasemanager.plugin.commands.PluginsCommand;
 import com.sendev.databasemanager.plugin.commands.VersionCommand;
 import com.sendev.databasemanager.plugin.listeners.ServerListener;
 import com.sendev.databasemanager.plugin.tasks.VersionTask;
@@ -19,6 +20,7 @@ public class DBMPlugin extends JavaPlugin
 
     private VersionTask version;
     private final ChatFormatter chat = new ChatFormatter();
+    private final DatabaseFactory factory = new DatabaseFactory();
     private final CommandHandler command = new CommandHandler(this);
 
     private final String prefix = "&%s[&%sDBM&%s]";
@@ -54,9 +56,10 @@ public class DBMPlugin extends JavaPlugin
 
         command.registerCommand(new HelpCommand(this));
         command.registerCommand(new VersionCommand(this), true);
+        command.registerCommand(new PluginsCommand(this));
 
         getCommand("databasemanager").setExecutor(command);
-        
+
         getServer().getPluginManager().registerEvents(new ServerListener(this), this);
 
         version.startTask();
@@ -75,6 +78,11 @@ public class DBMPlugin extends JavaPlugin
         return String.format(prefix, dark, light, dark);
     }
 
+    public VersionTask getVersion()
+    {
+        return version;
+    }
+
     public ChatFormatter getChat()
     {
         return chat;
@@ -85,9 +93,9 @@ public class DBMPlugin extends JavaPlugin
         return command;
     }
 
-    public VersionTask getVersion()
+    public DatabaseFactory getFactory()
     {
-        return version;
+        return factory;
     }
 
     /**

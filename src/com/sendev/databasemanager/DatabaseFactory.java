@@ -19,6 +19,11 @@ public class DatabaseFactory
     private static final String ORIGIN_INTERFACE = "com.sendev.databasemanager.contracts.DatabaseOriginLookup";
     private static final Map<String, PluginContainer> containers = new HashMap<>();
 
+    public Map<String, PluginContainer> getContainers()
+    {
+        return containers;
+    }
+
     /**
      * Creates a new Database Manager(DBM) instance, allowing you to communicate with databases easier,
      * using the DBM also gives you access to the Database Schema and Query Builder which makes it

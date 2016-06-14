@@ -139,7 +139,7 @@ Commands:
   ✔ Crete a default version message that should be sent to the player or console running the command @done (14/06/16 14:58)
     ✔ Create a HTTP client that sends a GET request to http://javadoc.sen-dev.com/DatabaseManager/version to get the latest version, if it doesn't match the version the current DBM is running on, an update message should be sent.  @done (14/06/16 15:49)
       ✔ Create a scheduled check for the update in the background as an async task, this should run every 30 minutes. @done (14/06/16 15:49)
-  ☐ Create a stats command that requires a permission node to run, the stats command should list the following
+  ✔ Create a stats command that requires a permission node to run, the stats command should list the following @done (14/06/16 21:20)
     Make the permission node **databasemanager.admin**
-    ☐ How many plugins are using DBM
-    ☐ How many connections each plugin has
+    ✔ How many plugins are using DBM @done (14/06/16 21:20)
+    ✔ How many connections each plugin has @done (14/06/16 21:20)

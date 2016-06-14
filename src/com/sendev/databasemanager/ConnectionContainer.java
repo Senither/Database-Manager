@@ -109,4 +109,9 @@ public class ConnectionContainer
 
         return connection.getConnection();
     }
+
+    public Map<String, Connection> getConnections()
+    {
+        return connections;
+    }
 }
