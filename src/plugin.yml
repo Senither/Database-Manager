@@ -1,3 +1,15 @@
 name: DatabaseManager
 main: com.sendev.databasemanager.plugin.DBMPlugin
 version: 0.8.1052
+
+author: [Senither]
+authors: [Senither, Alexis]
+
+description: 'A simple database solution, build by developers for developers.'
+website: 'https://bitbucket.org/Senither/database-manager'
+
+commands:
+  databasemanager:
+    description: Database Manager
+    aliases: [dbmanager, dbm]
+        

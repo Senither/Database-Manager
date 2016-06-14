@@ -30,6 +30,13 @@ Schematics(Schema):
 
   ☐ Add a *updateTable* method which will function the same way as the *createTable* method, however it will just update a existing table instead of making a new one.
     ☐ An *AlterGrammar* grammar class should be created in order to format update table information.
+  
+  ☐ addd a **createUser** method that will create a user with a set of permissions
+    ☐ create a **permissionNode** method that should contain all the permissions that the user will end up with
+    ☐ if no **permissionNode** object is parsed, by default the user account should have full access to all databases called 'username_'
+
+  ☐ add a **createDatabase** method that will create a new database
+    ☐ Make sure that the
 
 Carbon:
   ✔ Implement more output methods for different known datetime types. @done (12/06/16 15:48)
@@ -51,6 +58,9 @@ Carbon:
     ✔ toW3cString                  | 1975-12-25T14:15:16-05:00 @done (12/06/16 15:48)
 
   ✔ Implement a *format* method, allowing the user to parse in their own datetime string that should be generated. @done (12/06/16 14:15)
+  ✔ Add a **startOfWeek** and **endOfWeek** modifieres @done (14/06/16 10:06)
+  
+  ☐ Add javadoc comments to all the methods.
 
 Collection:
   ✔ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key. @done (13/06/16 15:53)
@@ -119,3 +129,17 @@ Collection:
       ✘ WhereIn @cancelled (13/06/16 15:53)
       ✘ whereInLoose @cancelled (13/06/16 15:53)
       ✘ zip @cancelled (13/06/16 15:53)
+
+Commands:
+  ✔ Add a command system to DBM, and register the following commands to DBM  @done (14/06/16 14:58)
+    ✔ DatabaseManager @done (14/06/16 14:58)
+    ✔ DBManager @done (14/06/16 14:58)
+    ✔ DBM @done (14/06/16 14:58)
+
+  ✔ Crete a default version message that should be sent to the player or console running the command @done (14/06/16 14:58)
+    ☐ Create a HTTP client that sends a GET request to http://javadoc.sen-dev.com/DatabaseManager/version to get the latest version, if it doesn't match the version the current DBM is running on, an update message should be sent. 
+      ☐ Create a scheduled check for the update in the background as an async task, this should run every 30 minutes.
+  ☐ Create a stats command that requires a permission node to run, the stats command should list the following
+    Make the permission node **databasemanager.admin**
+    ☐ How many plugins are using DBM
+    ☐ How many connections each plugin has
