@@ -5,6 +5,7 @@ import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.plugin.commands.CommandHandler;
 import com.sendev.databasemanager.plugin.commands.HelpCommand;
 import com.sendev.databasemanager.plugin.commands.VersionCommand;
+import com.sendev.databasemanager.plugin.listeners.ServerListener;
 import com.sendev.databasemanager.plugin.tasks.VersionTask;
 import com.sendev.databasemanager.plugin.utils.ChatFormatter;
 import com.sendev.databasemanager.plugin.utils.VersionFetcher;
@@ -55,6 +56,8 @@ public class DBMPlugin extends JavaPlugin
         command.registerCommand(new VersionCommand(this), true);
 
         getCommand("databasemanager").setExecutor(command);
+        
+        getServer().getPluginManager().registerEvents(new ServerListener(this), this);
 
         version.startTask();
     }
@@ -80,6 +83,11 @@ public class DBMPlugin extends JavaPlugin
     public CommandHandler getCommand()
     {
         return command;
+    }
+
+    public VersionTask getVersion()
+    {
+        return version;
     }
 
     /**
