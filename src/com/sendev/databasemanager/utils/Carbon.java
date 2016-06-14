@@ -88,9 +88,9 @@ public final class Carbon implements Cloneable
 
     private static final String DEFAULT_TO_STRING_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    private static final Day weekStartsAt = Day.MONDAY;
-    private static final Day weekEndsAt = Day.SUNDAY;
-    private static final List<Day> weekendDays = Arrays.asList(Day.SATURDAY, Day.SUNDAY);
+    private static final Day WEEK_START_AT = Day.MONDAY;
+    private static final Day WEEK_END_AT = Day.SUNDAY;
+    private static final List<Day> WEEKEND_DAYS = Arrays.asList(Day.SATURDAY, Day.SUNDAY);
 
     private static final SimpleDateFormat format = new SimpleDateFormat(DEFAULT_TO_STRING_FORMAT);
 
@@ -105,7 +105,7 @@ public final class Carbon implements Cloneable
     {
         this.time = Calendar.getInstance();
 
-        this.time.setFirstDayOfWeek(weekStartsAt.getId());
+        this.time.setFirstDayOfWeek(WEEK_START_AT.getId());
         this.time.setTime(Calendar.getInstance().getTime());
     }
 
@@ -125,7 +125,7 @@ public final class Carbon implements Cloneable
     {
         this.time = Calendar.getInstance();
 
-        this.time.setFirstDayOfWeek(weekStartsAt.getId());
+        this.time.setFirstDayOfWeek(WEEK_START_AT.getId());
         this.time.setTime(format.parse(time));
     }
 
@@ -448,6 +448,11 @@ public final class Carbon implements Cloneable
         return !isPast();
     }
 
+    public boolean isWeekend()
+    {
+        return WEEKEND_DAYS.stream().anyMatch(( day ) -> (day.getId() == getDay()));
+    }
+
     public long diff()
     {
         long current = System.currentTimeMillis();
@@ -563,6 +568,16 @@ public final class Carbon implements Cloneable
     public Carbon endOfDay()
     {
         return setHour(23).setMinute(59).setSecond(59);
+    }
+
+    public Carbon startOfWeek()
+    {
+        return setDay(WEEK_START_AT.getId()).startOfDay();
+    }
+
+    public Carbon endOfWeek()
+    {
+        return setDay(WEEK_END_AT.getId()).endOfDay();
     }
 
     public Carbon startOfMonth()
