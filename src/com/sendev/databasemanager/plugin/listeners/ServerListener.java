@@ -36,8 +36,10 @@ public class ServerListener implements Listener
             return;
         }
 
-        plugin.getChat().sendMessage(player, "%s &7There is a new version of DBM available!", plugin.getPrefix('2', 'a'));
-        plugin.getChat().sendMessage(player, "%s &7Server is running &2v%s &7new version is &2v%s", plugin.getPrefix('2', 'a'), version, plugin.getVersion().getLastVersionRecived());
-        plugin.getChat().sendMessage(player, "%s &7Site: &2https://bitbucket.org/Senither/database-manager");
+        String prefix = plugin.getPrefix('2', 'a');
+
+        plugin.getChat().sendMessage(player, "%s &7There is a new version of DBM available!", prefix);
+        plugin.getChat().sendMessage(player, "%s &7Server is running &2v%s &7new version is &2v%s", prefix, version, plugin.getVersion().getLastVersionRecived());
+        plugin.getChat().sendMessage(player, "%s &7Site: &2https://bitbucket.org/Senither/database-manager", prefix);
     }
 }
