@@ -1,6 +1,6 @@
 package com.sendev.databasemanager.utils;
 
-import java.text.ParseException;
+import com.sendev.databasemanager.exceptions.InvalidFormatException;
 import java.util.Map;
 import java.util.Set;
 
@@ -281,7 +281,7 @@ public class DataRow
             String time = getString(name);
 
             return new Carbon(time);
-        } catch (ParseException ex) {
+        } catch (InvalidFormatException ex) {
             return def;
         }
     }

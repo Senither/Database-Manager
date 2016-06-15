@@ -1,9 +1,11 @@
 package com.sendev.databasemanager.utils;
 
+import com.sendev.databasemanager.exceptions.InvalidFormatException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -109,13 +111,56 @@ public final class Carbon implements Cloneable
         }
     }
 
-    private static final String DEFAULT_TO_STRING_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private enum SupportedFormat
+    {
+        DATE("yyyy-MM-dd"),
+        FORMATTED_DATE("MMMMM dd, yyyy"),
+        TIME("HH:mm:ss"),
+        TIME_OFFSET("HH:mm:ssXXX"),
+        DATE_TIME("yyyy-MM-dd HH:mm:ss"),
+        DAY_DATE_TIME("EEE, MMM dd, yyyy h:mm aaa"),
+        COOKIE("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z"),
+        RFC_822("EEE, dd MMM yyyy HH:mm:ss Z"),
+        RFC_850("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z"),
+        RFC_1036("EEE, dd MMM yyyy HH:mm:ssXXX"),
+        RSS("EEE, dd MMM yyyy HH:mm:ss Z");
+
+        private final String string;
+
+        private SupportedFormat(String string)
+        {
+            this.string = string;
+        }
+
+        public String getFormat()
+        {
+            return string;
+        }
+
+        public SimpleDateFormat make()
+        {
+            return new SimpleDateFormat(string);
+        }
+
+        public Date parse(String time) throws ParseException
+        {
+            return make().parse(time);
+        }
+
+        @Override
+        public String toString()
+        {
+            return string;
+        }
+    }
+
+    private static final SupportedFormat DEFAULT_TO_STRING_FORMAT = SupportedFormat.DATE_TIME;
 
     private static final Day WEEK_START_AT = Day.MONDAY;
     private static final Day WEEK_END_AT = Day.SUNDAY;
     private static final List<Day> WEEKEND_DAYS = Arrays.asList(Day.SATURDAY, Day.SUNDAY);
 
-    private static final SimpleDateFormat format = new SimpleDateFormat(DEFAULT_TO_STRING_FORMAT);
+    private static final SimpleDateFormat format = DEFAULT_TO_STRING_FORMAT.make();
 
     private final Calendar time;
 
@@ -142,14 +187,24 @@ public final class Carbon implements Cloneable
      *
      * @param time The date string to parse.
      *
-     * @throws ParseException if the date string given doesn't match the format
+     * @throws InvalidFormatException if the date string given doesn't match any of the supported formats
      */
-    public Carbon(String time) throws ParseException
+    public Carbon(String time) throws InvalidFormatException
     {
         this.time = Calendar.getInstance();
 
         this.time.setFirstDayOfWeek(WEEK_START_AT.getId());
-        this.time.setTime(format.parse(time));
+
+        for (SupportedFormat supportedFormat : SupportedFormat.values()) {
+            try {
+                this.time.setTime(supportedFormat.parse(time));
+
+                return;
+            } catch (ParseException ex) {
+            }
+        }
+
+        throw new InvalidFormatException("'%s' does not follow any of the supported time formats, failed to creae Carbon instance.", time);
     }
 
     /**
@@ -769,7 +824,7 @@ public final class Carbon implements Cloneable
     }
 
     /**
-     * Get the difference between now and the carbon instance time in a human readable format.
+     * Get the difference between now and the carbon instance time in a human readable string.
      *
      * @return
      */
@@ -970,7 +1025,7 @@ public final class Carbon implements Cloneable
      */
     public String toDateString()
     {
-        return format("yyyy-MM-dd");
+        return format(SupportedFormat.DATE);
     }
 
     /**
@@ -982,7 +1037,7 @@ public final class Carbon implements Cloneable
      */
     public String toFormattedDateString()
     {
-        return format("MMMMM dd, yyyy");
+        return format(SupportedFormat.FORMATTED_DATE);
     }
 
     /**
@@ -994,7 +1049,19 @@ public final class Carbon implements Cloneable
      */
     public String toTimeString()
     {
-        return format("HH:mm:ss");
+        return format(SupportedFormat.TIME);
+    }
+
+    /**
+     * Generates a time offset time string, example:
+     * <p>
+     * 14:15:16-05:00
+     *
+     * @return The generated time offset time string
+     */
+    public String toTimeOffsetString()
+    {
+        return format(SupportedFormat.TIME_OFFSET);
     }
 
     /**
@@ -1006,7 +1073,7 @@ public final class Carbon implements Cloneable
      */
     public String toDateTimeString()
     {
-        return format("yyyy-MM-dd HH:mm:ss");
+        return format(SupportedFormat.DATE_TIME);
     }
 
     /**
@@ -1018,7 +1085,7 @@ public final class Carbon implements Cloneable
      */
     public String toDayDateTimeString()
     {
-        return format("EEE, MMM dd, yyyy h:mm aaa");
+        return format(SupportedFormat.DAY_DATE_TIME);
     }
 
     /**
@@ -1030,7 +1097,7 @@ public final class Carbon implements Cloneable
      */
     public String toAtomicString()
     {
-        return String.format("%sT%s", format("yyyy-MM-dd"), format("HH:mm:ssXXX"));
+        return String.format("%sT%s", toDateString(), toTimeOffsetString());
     }
 
     /**
@@ -1042,7 +1109,7 @@ public final class Carbon implements Cloneable
      */
     public String toCookieString()
     {
-        return format("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z");
+        return format(SupportedFormat.COOKIE);
     }
 
     /**
@@ -1054,7 +1121,7 @@ public final class Carbon implements Cloneable
      */
     public String toIso8601String()
     {
-        return String.format("%sT%s", format("yyyy-MM-dd"), format("HH:mm:ssZ"));
+        return String.format("%sT%s", toDateString(), format("HH:mm:ssZ"));
     }
 
     /**
@@ -1066,7 +1133,7 @@ public final class Carbon implements Cloneable
      */
     public String toRfc822String()
     {
-        return format("EEE, dd MMM yyyy HH:mm:ss Z");
+        return format(SupportedFormat.RFC_822);
     }
 
     /**
@@ -1078,7 +1145,7 @@ public final class Carbon implements Cloneable
      */
     public String toRfc850String()
     {
-        return format("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z");
+        return format(SupportedFormat.RFC_850);
     }
 
     /**
@@ -1090,7 +1157,7 @@ public final class Carbon implements Cloneable
      */
     public String toRfc1036String()
     {
-        return format("EEE, dd MMM yyyy HH:mm:ssXXX");
+        return format(SupportedFormat.RFC_1036);
     }
 
     /**
@@ -1102,7 +1169,7 @@ public final class Carbon implements Cloneable
      */
     public String toRfc3339String()
     {
-        return String.format("%sT%s", format("yyyy-MM-dd"), format("HH:mm:ssZ"));
+        return String.format("%sT%s", toDateString(), format("HH:mm:ssZ"));
     }
 
     /**
@@ -1114,7 +1181,7 @@ public final class Carbon implements Cloneable
      */
     public String toRssString()
     {
-        return format("EEE, dd MMM yyyy HH:mm:ss Z");
+        return format(SupportedFormat.RSS);
     }
 
     /**
@@ -1126,13 +1193,13 @@ public final class Carbon implements Cloneable
      */
     public String toW3cString()
     {
-        return String.format("%sT%s", format("yyyy-mm-dd"), format("HH:mm:ssXXX"));
+        return String.format("%sT%s", format("yyyy-mm-dd"), toTimeOffsetString());
     }
 
     /**
      * Formats the datetime object and prints out the formatted time string.
      *
-     * @param format the format to use to generate the time string
+     * @param format the string to use to generate the time string
      *
      * @return the formatted datetime string
      */
@@ -1143,12 +1210,24 @@ public final class Carbon implements Cloneable
         return sdf.format(time.getTime());
     }
 
+    /**
+     * Formats the datetime object and prints out the formatted time string.
+     *
+     * @param format the string to use to generate the time string
+     *
+     * @return the formatted datetime string
+     */
+    public String format(SupportedFormat format)
+    {
+        return format(format.getFormat());
+    }
+
     @Override
     public Carbon clone()
     {
         try {
             return new Carbon(toString());
-        } catch (ParseException ex) {
+        } catch (InvalidFormatException ex) {
             Logger.getLogger(Carbon.class.getName()).log(Level.SEVERE, null, ex);
         }
 

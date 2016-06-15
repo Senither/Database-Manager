@@ -71,7 +71,8 @@ Carbon:
   
   ✔ Add javadoc comments to all the methods. @done (15/06/16 14:13)
 
-  ☐ Implement a way to parse in different supported time formats when creating a new Carbon instance.
+  ✔ Implement a way to parse in different supported time formats when creating a new Carbon instance. @done (15/06/16 15:04)
+    ✔ Add a **InvalidFormatException* exception that should be thrown when creating a Carbon instance if the format given is not supported. @done (15/06/16 15:05)
 
 Collection:
   ✔ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key. @done (13/06/16 15:53)
