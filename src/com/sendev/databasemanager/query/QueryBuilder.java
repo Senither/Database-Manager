@@ -2,10 +2,8 @@ package com.sendev.databasemanager.query;
 
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
-import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
 import com.sendev.databasemanager.contracts.TableGrammar;
 import com.sendev.databasemanager.exceptions.DatabaseException;
-import com.sendev.databasemanager.exceptions.OriginException;
 import com.sendev.databasemanager.utils.Collection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class QueryBuilder implements DatabaseOriginLookup
+public final class QueryBuilder
 {
 
     private QueryType type;
@@ -432,11 +430,5 @@ public final class QueryBuilder implements DatabaseOriginLookup
     public String toString()
     {
         return toSQL();
-    }
-
-    @Override
-    public void throwsOriginException() throws OriginException
-    {
-        throw new OriginException();
     }
 }
