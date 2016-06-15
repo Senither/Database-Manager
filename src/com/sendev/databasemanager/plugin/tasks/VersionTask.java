@@ -18,7 +18,12 @@ public class VersionTask extends Task
         this.lastVersionRecived = lastVersionRecived;
     }
 
-    public String getLastVersionRecived()
+    /**
+     * Gets the last received version from the version fetcher.
+     *
+     * @return the last received version from the version fetcher
+     */
+    public String getLastVersionReceived()
     {
         return lastVersionRecived;
     }

@@ -15,6 +15,9 @@ public abstract class Task implements Runnable
         this.plugin = plugin;
     }
 
+    /**
+     * Starts the task by using the Bukkit scheduler.
+     */
     public void startTask()
     {
         if (task == null) {
@@ -22,6 +25,10 @@ public abstract class Task implements Runnable
         }
     }
 
+    /**
+     * Stops/Cancels the task using the Bukkit scheduler, the task can be
+     * restarted by using the {@link #startTask() startTask} method.
+     */
     public void stopTask()
     {
         if (task != null) {
@@ -31,5 +38,11 @@ public abstract class Task implements Runnable
         }
     }
 
+    /**
+     * The delay at which the task should repeat at, the delay should
+     * be declared in Minecraft ticks, 20 ticks per real second.
+     *
+     * @return delay the task should repeat at
+     */
     public abstract int delay();
 }

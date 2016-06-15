@@ -41,16 +41,34 @@ public final class Carbon implements Cloneable
             this.id = id;
         }
 
+        /**
+         * Gets the day name.
+         *
+         * @return the day name
+         */
         public String getName()
         {
             return name;
         }
 
+        /**
+         * Gets the day ID.
+         *
+         * @return the day id
+         */
         public int getId()
         {
             return id;
         }
 
+        /**
+         * Gets the day from the id, if an invalid id was
+         * given, <code>NULL</code> will returned instead.
+         *
+         * @param id the id to match with the day
+         *
+         * @return the day that match the provided id
+         */
         public static Day fromId(int id)
         {
             if (days.containsKey(id)) {
@@ -80,6 +98,11 @@ public final class Carbon implements Cloneable
             this.time = time;
         }
 
+        /**
+         * Gets the time.
+         *
+         * @return the integer time value
+         */
         public int getTime()
         {
             return time;
@@ -162,6 +185,13 @@ public final class Carbon implements Cloneable
     ///////////////////////////////////////////////////////////////////
     ///////////////////////// GETTERS AND SETTERS /////////////////////
     ///////////////////////////////////////////////////////////////////
+    /**
+     * Sets the second to the datetime object.
+     *
+     * @param second the seconds to set
+     *
+     * @return the Carbon instance
+     */
     public Carbon setSecond(int second)
     {
         time.set(Calendar.SECOND, second);
@@ -169,11 +199,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Gets the second from the datetime object.
+     *
+     * @return the second of the datetime object
+     */
     public int getSecond()
     {
         return time.get(Calendar.SECOND);
     }
 
+    /**
+     * Sets the minute to the datetime object.
+     *
+     * @param minute the minute to set
+     *
+     * @return the Carbon instance
+     */
     public Carbon setMinute(int minute)
     {
         time.set(Calendar.MINUTE, minute);
@@ -181,11 +223,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Gets the minute from the datetime object.
+     *
+     * @return the minute of the datetime object
+     */
     public int getMinute()
     {
         return time.get(Calendar.MINUTE);
     }
 
+    /**
+     * Sets the hour to the datetime object.
+     *
+     * @param hour the hour to set
+     *
+     * @return the Carbon instance
+     */
     public Carbon setHour(int hour)
     {
         time.set(Calendar.HOUR, hour);
@@ -193,11 +247,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Gets the hour from the datetime object.
+     *
+     * @return the hour of the datetime object
+     */
     public int getHour()
     {
         return time.get(Calendar.HOUR);
     }
 
+    /**
+     * Sets the day to the datetime object.
+     *
+     * @param day the day to set
+     *
+     * @return the Carbon instance
+     */
     public Carbon setDay(int day)
     {
         time.set(Calendar.DAY_OF_MONTH, day);
@@ -205,11 +271,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Gets the day from the datetime object.
+     *
+     * @return the day of the datetime object
+     */
     public int getDay()
     {
         return time.get(Calendar.HOUR);
     }
 
+    /**
+     * Sets the week to the datetime object.
+     *
+     * @param week the week to set
+     *
+     * @return the Carbon instance
+     */
     public Carbon setWeek(int week)
     {
         time.set(Calendar.WEEK_OF_MONTH, week);
@@ -217,11 +295,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Gets the week from the datetime object.
+     *
+     * @return the week of the datetime object
+     */
     public int getWeek()
     {
         return time.get(Calendar.WEEK_OF_MONTH);
     }
 
+    /**
+     * Sets the month to the datetime object.
+     *
+     * @param month the month to set
+     *
+     * @return the Carbon instance
+     */
     public Carbon setMonth(int month)
     {
         time.set(Calendar.MONTH, month);
@@ -229,11 +319,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Gets the month from the datetime object.
+     *
+     * @return the month of the datetime object
+     */
     public int getMonth()
     {
         return time.get(Calendar.MONTH);
     }
 
+    /**
+     * Sets the year to the datetime object.
+     *
+     * @param year the year to set
+     *
+     * @return the Carbon instance
+     */
     public Carbon setYear(int year)
     {
         time.set(Calendar.YEAR, year);
@@ -241,6 +343,11 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Gets the year from the datetime object.
+     *
+     * @return the year of the datetime object
+     */
     public int getYear()
     {
         return time.get(Calendar.YEAR);
@@ -249,11 +356,23 @@ public final class Carbon implements Cloneable
     ///////////////////////////////////////////////////////////////////
     /////////////////// ADDITIONS AND SUBTRACTIONS ////////////////////
     ///////////////////////////////////////////////////////////////////
+    /**
+     * Adds one second to the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon addSecond()
     {
         return addSeconds(1);
     }
 
+    /**
+     * Adds the given amount of seconds to the datetime object.
+     *
+     * @param seconds the amount of seconds to add
+     *
+     * @return the Carbon instance
+     */
     public Carbon addSeconds(int seconds)
     {
         time.add(Calendar.SECOND, getPositive(seconds));
@@ -261,11 +380,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Subtracts one second from the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon subSecond()
     {
         return subSeconds(1);
     }
 
+    /**
+     * Subtracts the given amount of seconds from the datetime object.
+     *
+     * @param seconds the amount of seconds to subtract
+     *
+     * @return the Carbon instance
+     */
     public Carbon subSeconds(int seconds)
     {
         time.add(Calendar.SECOND, getNegative(seconds));
@@ -273,11 +404,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Adds one minute to the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon addMinute()
     {
         return addMinutes(1);
     }
 
+    /**
+     * Adds the given amount of minutes to the datetime object.
+     *
+     * @param minutes the amount of minutes to add
+     *
+     * @return the Carbon instance
+     */
     public Carbon addMinutes(int minutes)
     {
         time.add(Calendar.MINUTE, getPositive(minutes));
@@ -285,11 +428,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Subtracts one minute from the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon subMinute()
     {
         return subMinutes(1);
     }
 
+    /**
+     * Subtracts the given amount of minutes from the datetime object.
+     *
+     * @param minutes the amount of minutes to subtract
+     *
+     * @return the Carbon instance
+     */
     public Carbon subMinutes(int minutes)
     {
         time.add(Calendar.MINUTE, getNegative(minutes));
@@ -297,11 +452,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Adds one hour to the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon addHour()
     {
         return addHours(1);
     }
 
+    /**
+     * Adds the given amount of hours to the datetime object.
+     *
+     * @param hours the amount of hours to add
+     *
+     * @return the Carbon instance
+     */
     public Carbon addHours(int hours)
     {
         time.add(Calendar.HOUR, getPositive(hours));
@@ -309,11 +476,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Subtracts one hour from the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon subHour()
     {
         return subHours(1);
     }
 
+    /**
+     * Subtracts the given amount of hours from the datetime object.
+     *
+     * @param hours the amount of hours to subtract
+     *
+     * @return the Carbon instance
+     */
     public Carbon subHours(int hours)
     {
         time.add(Calendar.HOUR, getNegative(hours));
@@ -321,11 +500,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Adds one day to the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon addDay()
     {
         return addDays(1);
     }
 
+    /**
+     * Adds the given amount of days to the datetime object.
+     *
+     * @param days the amount of days to add
+     *
+     * @return the Carbon instance
+     */
     public Carbon addDays(int days)
     {
         time.add(Calendar.DAY_OF_MONTH, getPositive(days));
@@ -333,11 +524,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Subtracts one day from the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon subDay()
     {
         return subDays(1);
     }
 
+    /**
+     * Subtracts the given amount of days from the datetime object.
+     *
+     * @param days the amount of days to subtract
+     *
+     * @return the Carbon instance
+     */
     public Carbon subDays(int days)
     {
         time.add(Calendar.DAY_OF_MONTH, getNegative(days));
@@ -345,11 +548,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Adds one week to the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon addWeek()
     {
         return addWeeks(1);
     }
 
+    /**
+     * Adds the given amount of weeks to the datetime object.
+     *
+     * @param weeks the amount of weeks to add
+     *
+     * @return the Carbon instance
+     */
     public Carbon addWeeks(int weeks)
     {
         time.add(Calendar.WEEK_OF_MONTH, getPositive(weeks));
@@ -357,11 +572,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Subtracts one week from the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon subWeek()
     {
         return subWeeks(1);
     }
 
+    /**
+     * Subtracts the given amount of weeks from the datetime object.
+     *
+     * @param weeks the amount of weeks to subtract
+     *
+     * @return the Carbon instance
+     */
     public Carbon subWeeks(int weeks)
     {
         time.add(Calendar.WEEK_OF_MONTH, getNegative(weeks));
@@ -369,11 +596,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Adds one month to the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon addMonth()
     {
         return addMonths(1);
     }
 
+    /**
+     * Adds the given amount of months to the datetime object.
+     *
+     * @param months the amount of months to add
+     *
+     * @return the Carbon instance
+     */
     public Carbon addMonths(int months)
     {
         time.add(Calendar.MONTH, getPositive(months));
@@ -381,11 +620,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Subtracts one month from the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon subMonth()
     {
         return addMonths(1);
     }
 
+    /**
+     * Subtracts the given amount of months from the datetime object.
+     *
+     * @param months the amount of months to subtract
+     *
+     * @return the Carbon instance
+     */
     public Carbon subMonths(int months)
     {
         time.add(Calendar.MONTH, getNegative(months));
@@ -393,11 +644,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Adds one year to the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon addYear()
     {
         return addYears(1);
     }
 
+    /**
+     * Adds the given amount of years to the datetime object.
+     *
+     * @param years the amount of years to add
+     *
+     * @return the Carbon instance
+     */
     public Carbon addYears(int years)
     {
         time.add(Calendar.YEAR, getPositive(years));
@@ -405,11 +668,23 @@ public final class Carbon implements Cloneable
         return this;
     }
 
+    /**
+     * Subtracts one year from the datetime object.
+     *
+     * @return the Carbon instance
+     */
     public Carbon subYear()
     {
         return subYears(1);
     }
 
+    /**
+     * Subtracts the given amount of years from the datetime object.
+     *
+     * @param years the amount of years to subtract
+     *
+     * @return the Carbon instance
+     */
     public Carbon subYears(int years)
     {
         time.add(Calendar.YEAR, getNegative(years));
@@ -438,21 +713,51 @@ public final class Carbon implements Cloneable
     ///////////////////////////////////////////////////////////////////
     /////////////////////////// DIFFERENCES ///////////////////////////
     ///////////////////////////////////////////////////////////////////
+    /**
+     * Checks to see if the Carbon instance is currently set in the past.
+     *
+     * @return true if the carbon date is set in the past.
+     */
     public boolean isPast()
     {
         return Calendar.getInstance().getTimeInMillis() < time.getTimeInMillis();
     }
 
+    /**
+     * Checks to see if the Carbon instance is currently set in the future.
+     *
+     * @return true if the carbon date is set in the future.
+     */
     public boolean isFuture()
     {
         return !isPast();
     }
 
+    /**
+     * Checks to see if the Carbon instance date is currently set to a weekday.
+     *
+     * @return true if the carbon date is set to a weekday
+     */
+    public boolean isWeekday()
+    {
+        return !isWeekend();
+    }
+
+    /**
+     * Checks to see if the Carbon instance date is currently set to a weekend.
+     *
+     * @return true if the carbon date is set to a weekend
+     */
     public boolean isWeekend()
     {
         return WEEKEND_DAYS.stream().anyMatch(( day ) -> (day.getId() == getDay()));
     }
 
+    /**
+     * Gets the difference between now and the carbon instance in seconds.
+     *
+     * @return the difference between now and the carbon instance in seconds
+     */
     public long diff()
     {
         long current = System.currentTimeMillis();
@@ -463,6 +768,11 @@ public final class Carbon implements Cloneable
         return value >= 0 ? value : value * -1;
     }
 
+    /**
+     * Get the difference between now and the carbon instance time in a human readable format.
+     *
+     * @return
+     */
     public String diffForHumans()
     {
         long unix = diff();
@@ -560,31 +870,61 @@ public final class Carbon implements Cloneable
     ///////////////////////////////////////////////////////////////////
     //////////////////////////// MODIFIERS ////////////////////////////
     ///////////////////////////////////////////////////////////////////
+    /**
+     * Sets the carbon time to the start of the day.
+     *
+     * @return the Carbon instance
+     */
     public Carbon startOfDay()
     {
         return setHour(0).setMinute(0).setSecond(0);
     }
 
+    /**
+     * Sets the carbon time to the end of the day.
+     *
+     * @return the Carbon instance
+     */
     public Carbon endOfDay()
     {
         return setHour(23).setMinute(59).setSecond(59);
     }
 
+    /**
+     * Sets the carbon time to the start of the week.
+     *
+     * @return the Carbon instance
+     */
     public Carbon startOfWeek()
     {
         return setDay(WEEK_START_AT.getId()).startOfDay();
     }
 
+    /**
+     * Sets the carbon time to the end of the week.
+     *
+     * @return the Carbon instance
+     */
     public Carbon endOfWeek()
     {
         return setDay(WEEK_END_AT.getId()).endOfDay();
     }
 
+    /**
+     * Sets the carbon time to the start of the month.
+     *
+     * @return the Carbon instance
+     */
     public Carbon startOfMonth()
     {
         return startOfDay().setDay(1);
     }
 
+    /**
+     * Sets the carbon time to the end of the month.
+     *
+     * @return the Carbon instance
+     */
     public Carbon endOfMonth()
     {
         Calendar cal = new GregorianCalendar(getYear(), getMonth(), getDay());
@@ -592,11 +932,21 @@ public final class Carbon implements Cloneable
         return setDay(cal.getActualMaximum(Calendar.DAY_OF_MONTH)).endOfDay();
     }
 
+    /**
+     * Sets the carbon time to the start of the year.
+     *
+     * @return the Carbon instance
+     */
     public Carbon startOfYear()
     {
         return setMonth(1).startOfMonth();
     }
 
+    /**
+     * Sets the carbon time to the end of the year.
+     *
+     * @return the Carbon instance
+     */
     public Carbon endOfYear()
     {
         return setMonth(Time.MONTHS_PER_YEAR.getTime()).endOfMonth();
@@ -782,9 +1132,9 @@ public final class Carbon implements Cloneable
     /**
      * Formats the datetime object and prints out the formatted time string.
      *
-     * @param format
+     * @param format the format to use to generate the time string
      *
-     * @return
+     * @return the formatted datetime string
      */
     public String format(String format)
     {

@@ -110,6 +110,11 @@ public class ConnectionContainer
         return connection.getConnection();
     }
 
+    /**
+     * Returns a map of database connection instances.
+     *
+     * @return a map of database connection instances.
+     */
     public Map<String, Connection> getConnections()
     {
         return connections;

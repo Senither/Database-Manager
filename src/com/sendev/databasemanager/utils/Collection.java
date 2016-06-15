@@ -20,12 +20,20 @@ public class Collection implements Cloneable, Iterable<DataRow>
     private final HashMap<String, String> keys;
     private final List<DataRow> items;
 
+    /**
+     * Creates an empty collection.
+     */
     public Collection()
     {
         this.keys = new HashMap<>();
         this.items = new ArrayList<>();
     }
 
+    /**
+     * Creates a new Collection object from a multidimensional map.
+     *
+     * @param items the map of items to create the collection from
+     */
     public Collection(List<Map<String, Object>> items)
     {
         this.keys = new HashMap<>();
@@ -83,21 +91,35 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items;
     }
 
-    public double avg(String field)
+    /**
+     * Calculates the average for a field
+     *
+     * @param field the field to calculated the average of
+     *
+     * @return the average for the provided field
+     */
+    public double avgInt(String field)
     {
         if (isEmpty()) {
             return 0;
         }
 
-        double avg = 0;
+        int avg = 0;
 
         for (DataRow row : items) {
-            avg += row.getDouble(field);
+            avg += row.getInt(field);
         }
 
         return avg / items.size();
     }
 
+    /**
+     * Breaks the collection into multiple, smaller lists of the given size.
+     *
+     * @param size the size to chunk the collection down to
+     *
+     * @return the chunked down collection
+     */
     public List<List<DataRow>> chunk(int size)
     {
         List<List<DataRow>> chunk = new ArrayList<>();
@@ -136,6 +158,13 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items.get(0);
     }
 
+    /**
+     * Gets the result of the provided index.
+     *
+     * @param index the index to get from the collection
+     *
+     * @return the DataRow object in the provided index
+     */
     public DataRow get(int index)
     {
         if (items.isEmpty()) {
@@ -145,6 +174,13 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items.get(index);
     }
 
+    /**
+     * Checks to see the collection contains the provided field.
+     *
+     * @param field the field to check if exists
+     *
+     * @return ture if the field exists in the collection, false if it doesn't
+     */
     public boolean has(String field)
     {
         return keys.containsKey(field);
@@ -172,6 +208,11 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return keys;
     }
 
+    /**
+     * Gets the last DataRow of the collection.
+     *
+     * @return the last DataRow of the collection
+     */
     public DataRow last()
     {
         if (isEmpty()) {
@@ -181,6 +222,14 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items.get(items.size() - 1);
     }
 
+    /**
+     * Gets the max/highest integer value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the highest value from the provided field
+     *         or (2) <code>Integer.MIN_VALUE</code>
+     */
     public int maxInt(String field)
     {
         if (!has(field)) {
@@ -199,6 +248,14 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return max;
     }
 
+    /**
+     * Gets the min/lowest integer value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the lowest value from the provided field
+     *         or (2) <code>Integer.MAX_VALUE</code>
+     */
     public int minInt(String field)
     {
         if (!has(field)) {
@@ -217,6 +274,11 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return min;
     }
 
+    /**
+     * Removes and returns the last item of the collection.
+     *
+     * @return the last item of the collection
+     */
     public DataRow pop()
     {
         if (isEmpty()) {
@@ -226,6 +288,11 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items.remove(items.size() - 1);
     }
 
+    /**
+     * Gets a random item from the collection
+     *
+     * @return a random item from the collection
+     */
     public DataRow random()
     {
         if (isEmpty()) {
@@ -235,9 +302,18 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items.get(random.nextInt(items.size()));
     }
 
-    public int search(String key, Object value)
+    /**
+     * Search the collection where the field is equal to the value.
+     *
+     * @param field the field to check
+     * @param value the value to use
+     *
+     * @return either (1) the index of the item that matches the search
+     *         or (2) -1
+     */
+    public int search(String field, Object value)
     {
-        if (isEmpty() || !has(key)) {
+        if (isEmpty() || !has(field)) {
             return -1;
         }
 
@@ -246,7 +322,7 @@ public class Collection implements Cloneable, Iterable<DataRow>
         for (int index = 0; index < items.size(); index++) {
             DataRow row = get(index);
 
-            if (row.getString(key).equals(rValue)) {
+            if (row.getString(field).equals(rValue)) {
                 return index;
             }
         }
@@ -254,11 +330,23 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return -1;
     }
 
+    /**
+     * Gets the total number of items in the collection.
+     *
+     * @return the total number of items in the collection
+     */
     public int size()
     {
         return items.size();
     }
 
+    /**
+     * Calculates the sum of a list of integers.
+     *
+     * @param field the field to calculated the sum of
+     *
+     * @return the sum for the provided field
+     */
     public long sumInt(String field)
     {
         long sum = 0;

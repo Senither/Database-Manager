@@ -11,10 +11,10 @@ public class ChatFormatter
 {
 
     /**
-     * Colorize a message, using Bukkit/Spigots
+     * Colourize a message, using Bukkit/Spigots
      * standard and(&) symbol syntax.
      *
-     * @param message The message the colorize.
+     * @param message The message the colourize.
      *
      * @return String
      */
@@ -24,10 +24,10 @@ public class ChatFormatter
     }
 
     /**
-     * Colorize a list of messages, using Bukkit/Spigots
+     * Colourize a list of messages, using Bukkit/Spigots
      * and(&) standard symbol syntax.
      *
-     * @param messages The list of messages that should be colorized.
+     * @param messages The list of messages that should be colourized.
      *
      * @return List
      */
@@ -44,10 +44,10 @@ public class ChatFormatter
 
     /**
      * Decolorizes a message, this will remove all chat
-     * color code formating and return a plain
+     * colour code formating and return a plain
      * string with no formating.
      *
-     * @param message The message that should be decolorized.
+     * @param message The message that should be decolourized.
      *
      * @return String
      */
@@ -57,11 +57,11 @@ public class ChatFormatter
     }
 
     /**
-     * Decolorizes a list of messages, this will remove all
-     * chat color code formating and return an array
+     * Decolourizes a list of messages, this will remove all
+     * chat colour code formating and return an array
      * of plain strings with no formating.
      *
-     * @param messages The messages that should be decolorized.
+     * @param messages The messages that should be decolourized.
      *
      * @return String
      */

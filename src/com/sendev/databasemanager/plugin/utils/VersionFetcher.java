@@ -14,18 +14,30 @@ public class VersionFetcher
 
     private static String VERSION = null;
 
+    /**
+     * Gets the latest version retrieved by the version fetcher.
+     *
+     * @return either (1) the latest version retrieved by the version fetcher
+     *         or (2) <code>NULL</code> if nothing has been retrieved yet
+     */
     public static final String getVersion()
     {
         return VERSION;
     }
 
+    /**
+     * Fetches the latest version of DBM.
+     *
+     * @return the latest version of DBM
+     *
+     * @throws IOException if the HTTP connection times out, an unknown error
+     *                     occurs, or the connection returns an invalid response.
+     */
     public static final String fetch() throws IOException
     {
         HttpURLConnection connection = createConnection();
 
-        VERSION = readConnectionStream(connection.getInputStream()).trim();
-
-        return VERSION;
+        return setAndReturnVersion(readConnectionStream(connection.getInputStream()).trim());
     }
 
     private static HttpURLConnection createConnection() throws IOException
@@ -34,10 +46,7 @@ public class VersionFetcher
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-        // optional default is GET
         con.setRequestMethod("GET");
-
-        //add request header
         con.setRequestProperty("User-Agent", USER_AGENT);
 
         return con;
@@ -55,5 +64,12 @@ public class VersionFetcher
 
             return response.toString();
         }
+    }
+
+    private static String setAndReturnVersion(String version)
+    {
+        VERSION = version;
+
+        return VERSION;
     }
 }

@@ -50,6 +50,11 @@ public enum ConnectionLevel
         this.level = level;
     }
 
+    /**
+     * Returns the connection level.
+     *
+     * @return the connection level
+     */
     public int getLevel()
     {
         return level;

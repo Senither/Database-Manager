@@ -28,6 +28,7 @@ public class DBMPlugin extends JavaPlugin
     @Override
     public void onEnable()
     {
+        // Gets the latest, and current version of DBM
         String currentVersion = getDescription().getVersion();
         String latestVersion = currentVersion;
 
@@ -37,8 +38,7 @@ public class DBMPlugin extends JavaPlugin
             getLogger().info("Failed to make a version check with SenDevelopment, the site might be down.");
         }
 
-        version = new VersionTask(this, latestVersion);
-
+        // Send console plugin message
         getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         getLogger().log(Level.INFO, "Plugin: Database Manager v{0}", currentVersion);
         getLogger().log(Level.INFO, "Author: Alexis Tan (Senither) ");
@@ -54,15 +54,18 @@ public class DBMPlugin extends JavaPlugin
 
         getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 
+        // Register commands
         command.registerCommand(new HelpCommand(this));
         command.registerCommand(new VersionCommand(this), true);
         command.registerCommand(new PluginsCommand(this));
 
         getCommand("databasemanager").setExecutor(command);
 
+        // Register events
         getServer().getPluginManager().registerEvents(new ServerListener(this), this);
 
-        version.startTask();
+        // Register tasks
+        (version = new VersionTask(this, latestVersion)).startTask();
     }
 
     /**
@@ -78,21 +81,42 @@ public class DBMPlugin extends JavaPlugin
         return String.format(prefix, dark, light, dark);
     }
 
+    /**
+     * Gets the version task instance.
+     *
+     * @return the version task instance
+     */
     public VersionTask getVersion()
     {
         return version;
     }
 
+    /**
+     * Gets the chat formatter utility.
+     *
+     * @return the chat formatter
+     */
     public ChatFormatter getChat()
     {
         return chat;
     }
 
+    /**
+     * Gets the command handler, the handler will have two lists of commands,
+     * one for default(fallback) commands and one for all the other commands.
+     *
+     * @return the command handler instance
+     */
     public CommandHandler getCommand()
     {
         return command;
     }
 
+    /**
+     * Gets the database factory instance.
+     *
+     * @return the database factory instance
+     */
     public DatabaseFactory getFactory()
     {
         return factory;

@@ -19,6 +19,11 @@ public class DatabaseFactory
     private static final String ORIGIN_INTERFACE = "com.sendev.databasemanager.contracts.DatabaseOriginLookup";
     private static final Map<String, PluginContainer> containers = new HashMap<>();
 
+    /**
+     * Gets all the plugin containers currently existing in DBM.
+     *
+     * @return gets all the plugin containers currently existing in DBM
+     */
     public Map<String, PluginContainer> getContainers()
     {
         return containers;
@@ -54,6 +59,18 @@ public class DatabaseFactory
         return dbm;
     }
 
+    /**
+     * Makes a dynamic lookup on the class using java reflection, checking to see if the class follows the
+     * origin contract, if the class is found to follow the contract, reflection will be used to guess
+     * what plugin the class was instantiated from, and the DBM instance linked to that plugin will
+     * then be returned, if no DBM instance was found, or a reflection exception is thrown while
+     * doing the origin lookup, <code>NULL</code> will be returned instead.
+     *
+     * @param object the getClass() object to run the origin lookup on.
+     *
+     * @return either (1) The DBM instance belonging to the provided classes origin
+     *         or (2) NULL if something went wrong or the object doesn't follow the origin contract
+     */
     public static DatabaseManager getDynamicOrigin(Class<?> object)
     {
         if (!hasOriginInterface(object)) {

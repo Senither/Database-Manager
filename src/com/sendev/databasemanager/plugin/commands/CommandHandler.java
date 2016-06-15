@@ -24,6 +24,11 @@ public class CommandHandler implements CommandExecutor
         defaultCommands = new ArrayList<>();
     }
 
+    /**
+     * Registers a DBM command to the command lists as a normal command.
+     *
+     * @param command the command to register
+     */
     public void registerCommand(DBMCommand command)
     {
         if (commands.contains(command)) {
@@ -33,6 +38,14 @@ public class CommandHandler implements CommandExecutor
         commands.add(command);
     }
 
+    /**
+     * Registers a DBM command to the command lists, if the defaultCommand value is set
+     * to true, the command will also be registered in the default commands list, if
+     * defaultCommand is set to false, it will be registered as a normal command.
+     *
+     * @param command        the command to register
+     * @param defaultCommand the default value for the command
+     */
     public void registerCommand(DBMCommand command, boolean defaultCommand)
     {
         registerCommand(command);
@@ -48,6 +61,11 @@ public class CommandHandler implements CommandExecutor
         defaultCommands.add(command);
     }
 
+    /**
+     * Gets all of the registered commands, both normal and default.
+     *
+     * @return all of the registered commands
+     */
     public List<DBMCommand> getCommands()
     {
         return commands;

@@ -42,7 +42,7 @@ public class HelpCommand extends DBMCommand
         );
 
         plugin.getCommand().getCommands().stream().filter(( command ) -> !(!command.displayOnHelp())).forEach(( command ) -> {
-            command.sendDescriptionMessage(player);
+            command.sendCommandInformationMessage(player);
         });
 
         return false;

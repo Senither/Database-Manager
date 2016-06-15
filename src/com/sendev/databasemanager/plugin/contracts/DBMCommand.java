@@ -16,42 +16,90 @@ public abstract class DBMCommand
         this.plugin = plugin;
     }
 
+    /**
+     * Checks to see if the command has a permission node linked to it.
+     *
+     * @return checks if the command has a permission node linked to it
+     */
     public boolean hasPermission()
     {
         return getPermission() != null;
     }
 
+    /**
+     * Gets the permission node linked to the command, if no permission is
+     * linked with the command <code>NULL</code> will be returned instead.
+     *
+     * @return either (1) the permission node linked to the command
+     *         or (2) <code>NULL</code>
+     */
     public String getPermission()
     {
         return null;
     }
 
+    /**
+     * Gets the command triggers.
+     *
+     * @return the command triggers
+     */
     public List<String> getTriggers()
     {
         return new ArrayList<>();
     }
 
+    /**
+     * Gets the command description.
+     *
+     * @return the command description
+     */
     public List<String> getDescription()
     {
         return new ArrayList<>();
     }
 
+    /**
+     * Gets the command parameters.
+     *
+     * @return the command parameters
+     */
     public List<String> getParameters()
     {
         return new ArrayList<>();
     }
 
+    /**
+     * Determines if the command should be displayed on the help menu or not.
+     *
+     * @return ture if the command should be displayed on the help command
+     */
     public boolean displayOnHelp()
     {
         return true;
     }
 
-    public final boolean sendDescriptionMessage(Player player)
+    /**
+     * Sends the command information with the description to the player.
+     *
+     * @param player the player to send the message to
+     *
+     * @return ture if the information message was sent successfully.
+     */
+    public final boolean sendCommandInformationMessage(Player player)
     {
-        return sendDescriptionMessage(player, true);
+        return sendCommandInformationMessage(player, true);
     }
 
-    public final boolean sendDescriptionMessage(Player player, boolean sendDescription)
+    /**
+     * Sends the command information to the player.
+     *
+     * @param player          the player to send the message to
+     * @param sendDescription if true, the command description will be sent as-well,
+     *                        if false the command description will be omitted
+     *
+     * @return ture if the information message was sent successfully.
+     */
+    public final boolean sendCommandInformationMessage(Player player, boolean sendDescription)
     {
         if (getTriggers().isEmpty()) {
             return false;
@@ -80,31 +128,70 @@ public abstract class DBMCommand
         return true;
     }
 
+    /**
+     * Sends a prefixed message to the provided player.
+     *
+     * @param player  the player to send the message to
+     * @param message the message to send to the player
+     */
     protected final void sendMessage(Player player, String message)
     {
         chat().sendMessage(player, "%s &b%s", plugin.getPrefix('3', 'b'), message);
     }
 
+    /**
+     * Sends a prefixed message to the provided sender.
+     *
+     * @param sender  the sender to send the message to
+     * @param message the message to send to the sender
+     */
     protected final void sendMessage(CommandSender sender, String message)
     {
         chat().sendMessage(sender, "%s &b%s", plugin.getPrefix('3', 'b'), message);
     }
 
+    /**
+     * Sends a prefixed error message to the provided player.
+     *
+     * @param player  the player to send the message to
+     * @param message the message to send to the player
+     */
     protected final void sendErrorMessage(Player player, String message)
     {
         chat().sendMessage(player, "%s &c%s", plugin.getPrefix('4', 'c'), message);
     }
 
+    /**
+     * Gets the chat formatter utility.
+     *
+     * @return the chat formatter
+     */
     protected final ChatFormatter chat()
     {
         return plugin.getChat();
     }
 
+    /**
+     * Executes the given command, returning its success
+     *
+     * @param player the player running the command
+     * @param args   the argument parsed to the command
+     *
+     * @return true if a valid command, otherwise false
+     */
     public boolean runPlayerCommand(Player player, String[] args)
     {
         return false;
     }
 
+    /**
+     * Executes the given command, returning its success
+     *
+     * @param sender the sender running the command
+     * @param args   the argument parsed to the command
+     *
+     * @return true if a valid command, otherwise false
+     */
     public boolean runConsoleCommand(CommandSender sender, String[] args)
     {
         return false;
