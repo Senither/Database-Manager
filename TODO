@@ -47,6 +47,9 @@ Migration:
   ☐ Add a Migration contract that all migrations should abid by
     The contract should have an **up** and **down** method, both needs to take the Schema class as an argument.
 
+Seeder:
+  Faker seeder logic, from PHP
+
 Carbon:
   ✔ Implement more output methods for different known datetime types. @done (12/06/16 15:48)
     ✔ toDateString:                | 1975-12-25 @done (12/06/16 14:15)
