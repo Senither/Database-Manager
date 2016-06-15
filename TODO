@@ -36,7 +36,16 @@ Schematics(Schema):
     ☐ if no **permissionNode** object is parsed, by default the user account should have full access to all databases called 'username_'
 
   ☐ add a **createDatabase** method that will create a new database
-    ☐ Make sure that the
+
+Migration:
+  ☐ Add a **Migration** class and create a getter for it in the DBM main class.
+    ☐ Add a **up** method that should be used to roll all the non-migrated migrations to the database.
+    ☐ Add a **down** method that should be used to roll all the migrated migrations away from the database.
+    ☐ Add a **register** method that should register one or multiple migrations at a time. 
+    ☐ Add a **rollback** method that functions the same way as down, but takes in an integer argument for how many migrations should be rolled back. 
+
+  ☐ Add a Migration contract that all migrations should abid by
+    The contract should have an **up** and **down** method, both needs to take the Schema class as an argument.
 
 Carbon:
   ✔ Implement more output methods for different known datetime types. @done (12/06/16 15:48)
@@ -60,7 +69,9 @@ Carbon:
   ✔ Implement a *format* method, allowing the user to parse in their own datetime string that should be generated. @done (12/06/16 14:15)
   ✔ Add a **startOfWeek** and **endOfWeek** modifieres @done (14/06/16 10:06)
   
-  ☐ Add javadoc comments to all the methods.
+  ✔ Add javadoc comments to all the methods. @done (15/06/16 14:13)
+
+  ☐ Implement a way to parse in different supported time formats when creating a new Carbon instance.
 
 Collection:
   ✔ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key. @done (13/06/16 15:53)
