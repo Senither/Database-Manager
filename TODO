@@ -28,6 +28,8 @@ Query Builder:
   ☐ Create a *QueryWhereStatement* interface that allows users to parse is logic to create an advanced where statement.
     Information can be found here https://laravel.com/docs/5.2/queries#advanced-where-clauses
 
+  ✔ Fixed an issue where **where clause** **or** and **and** statements would repeat twice.  @done (16/06/16 13:14)
+
 Schematics(Schema):
   ✔ Fix the *defautValue* on the field class for booleans, parsing in a raw boolean seems to throw exceptions, so a SQL Action object should be used instead. @done (12/06/16 16:06)
 

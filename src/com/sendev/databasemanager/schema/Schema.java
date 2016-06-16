@@ -56,6 +56,11 @@ public class Schema
     {
         dbm.output().debug("Schema::createIfNotExists was called on \"%s\"! Calling blueprint to generate the query...", table);
 
+        if (dbm.getConnections().getDefaultConnection().hasTable(table)) {
+            dbm.output().debug("Schema::createIfNotExists table \"%s\" was found, returning false", table);
+            return false;
+        }
+
         Blueprint blueprint = createAndRunBlueprint(table, closure);
 
         CreateGrammar grammar = createGrammar(false);
@@ -64,7 +69,7 @@ public class Schema
 
         dbm.output().debug("Schema::createIfNotExists query was generated, executing query: %s", query);
 
-        return dbm.getConnections().getDefaultConnection().prepare(query).execute();
+        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
     }
 
     private Blueprint createAndRunBlueprint(String table, DatabaseClosure closure)

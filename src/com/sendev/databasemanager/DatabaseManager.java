@@ -3,6 +3,7 @@ package com.sendev.databasemanager;
 import com.sendev.databasemanager.contracts.Database;
 import com.sendev.databasemanager.contracts.DatabaseOutput;
 import com.sendev.databasemanager.exceptions.DatabaseException;
+import com.sendev.databasemanager.migrate.Migrations;
 import com.sendev.databasemanager.output.OutputMode;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Schema;
@@ -20,6 +21,7 @@ public final class DatabaseManager
 {
     private final Plugin plugin;
     private final Schema schema = new Schema(this);
+    private final Migrations migrations = new Migrations(this);
     private final DatabaseOptions options = new DatabaseOptions();
     private final ConnectionContainer connections = new ConnectionContainer(this);
 
@@ -69,6 +71,23 @@ public final class DatabaseManager
     public Schema schema()
     {
         return schema;
+    }
+
+    /**
+     * Gets the database migrations instance, allowing you to register
+     * migrations, roll the migrations out the database, roll back
+     * the migrations from the database.
+     * <p>
+     * All the migrations uses the schematic builder for manipulating
+     * the database and tables.
+     *
+     * @see com.sendev.databasemanager.schema.Schema;
+     *
+     * @return The database migrations manager instance.
+     */
+    public Migrations migrations()
+    {
+        return migrations;
     }
 
     /**
