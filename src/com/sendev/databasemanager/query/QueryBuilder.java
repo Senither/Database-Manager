@@ -173,7 +173,7 @@ public final class QueryBuilder
     {
         wheres.add(new Clause(column, identifier, field, OperatorType.AND));
 
-        return where(column, identifier, field);
+        return this;
     }
 
     public QueryBuilder orWhere(String column, Object field)
@@ -185,7 +185,7 @@ public final class QueryBuilder
     {
         wheres.add(new Clause(column, identifier, field, OperatorType.OR));
 
-        return where(column, identifier, field);
+        return this;
     }
 
     public List<Clause> getWhereClauses()
