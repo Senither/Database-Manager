@@ -408,6 +408,11 @@ public final class Carbon implements Cloneable
         return time.get(Calendar.YEAR);
     }
 
+    public Calendar getTime()
+    {
+        return time;
+    }
+
     ///////////////////////////////////////////////////////////////////
     /////////////////// ADDITIONS AND SUBTRACTIONS ////////////////////
     ///////////////////////////////////////////////////////////////////
@@ -763,6 +768,44 @@ public final class Carbon implements Cloneable
         }
 
         return x * -1;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+    /////////////////////////// COMPARISON ////////////////////////////
+    ///////////////////////////////////////////////////////////////////
+    public boolean eq(Carbon value)
+    {
+        return (time.getTimeInMillis() / 1000) == (value.getTime().getTimeInMillis() / 1000);
+    }
+
+    public boolean ne(Carbon value)
+    {
+        return !eq(value);
+    }
+
+    public boolean gt(Carbon value)
+    {
+        return time.after(value.getTime());
+    }
+
+    public boolean gte(Carbon value)
+    {
+        return gt(value) || eq(value);
+    }
+
+    public boolean lt(Carbon value)
+    {
+        return time.before(value.getTime());
+    }
+
+    public boolean lte(Carbon value)
+    {
+        return lt(value) || eq(value);
+    }
+
+    public boolean between(Carbon first, Carbon second)
+    {
+        return (time.before(first.getTime()) && time.after(second.getTime())) || (time.before(second.getTime()) && time.after(first.getTime()));
     }
 
     ///////////////////////////////////////////////////////////////////

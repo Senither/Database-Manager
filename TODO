@@ -4,6 +4,9 @@ Database Manager:
   ✔ Add a *queryInsert* method that allows user to do the same as *queryUpdate*, but instead it will return a Set<Integer> object, where each index reprecent a ID value of the row that was inserted. @done (12/06/16 17:08)
     ✔ Checks should be made to make sure the parsed query is actually a INSERT query, if that's not the case a *DatabaseException* should be thrown. @done (12/06/16 17:08)
 
+  ☐ Implement a **setPrefix** method, either in the DBM main class or the options(The options might be a better choice)
+    ☐ Make sure any time a table name is created, that the prefix is added infront of the table name dynamicly.
+
 Database Factory:
   ✔ Add a *PluginContainer* class where all plugin info should be stored for any plugin that has created an instance of DBM. @done (12/06/16 17:43)
     ✔ If a plugin requests to create a new DBM instance, but a PluginContainer instance was already found, return the existing instance instead. @done (12/06/16 17:43)
@@ -36,6 +39,7 @@ Schematics(Schema):
     ☐ if no **permissionNode** object is parsed, by default the user account should have full access to all databases called 'username_'
 
   ☐ add a **createDatabase** method that will create a new database
+  ☐ Implement a way to add a default character set for a given table or column field.
 
 Migration:
   ☐ Add a **Migration** class and create a getter for it in the DBM main class.
@@ -76,6 +80,15 @@ Carbon:
 
   ✔ Implement a way to parse in different supported time formats when creating a new Carbon instance. @done (15/06/16 15:04)
     ✔ Add a **InvalidFormatException* exception that should be thrown when creating a Carbon instance if the format given is not supported. @done (15/06/16 15:05)
+
+  ✔ Implement the following **Comparison** @done (16/06/16 02:59)
+    ✔ eq - Equal @done (16/06/16 01:31)
+    ✔ ne - Not Equal @done (16/06/16 01:34)
+    ✔ gt - Greater Than @done (16/06/16 02:59)
+    ✔ gte - Greather than or Equal to @done (16/06/16 02:59)
+    ✔ lt - Less than @done (16/06/16 02:59)
+    ✔ lte - Less than or Equal to @done (16/06/16 02:59)
+    ✔ between - This should take two arguments, both being carbon instances. @done (16/06/16 02:59)
 
 Collection:
   ✔ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key. @done (13/06/16 15:53)
