@@ -14,6 +14,11 @@ public enum OutputMode
         this.instance = instance;
     }
 
+    /**
+     * Returns the output mode as a object instance.
+     *
+     * @return the output mode as a object instance
+     */
     public <T> Class<T> getInstance()
     {
         return (Class<T>) instance;

@@ -16,8 +16,19 @@ public abstract class DatabaseOutput
         this.logger = dbm.plugin().getLogger();
     }
 
+    /**
+     * Determines if info messages should printed to the console.
+     *
+     * @return true if info messages should be printed to the console
+     */
     public abstract boolean info();
 
+    /**
+     * If the logger output is currently enabled for the INFO message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message the message to log to the console.
+     */
     public void info(String message)
     {
         if (info()) {
@@ -25,6 +36,13 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * If the logger output is currently enabled for the INFO message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message the message to log to the console.
+     * @param parms   array of parameters to the message
+     */
     public void info(String message, Object... parms)
     {
         if (info()) {
@@ -32,8 +50,19 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * Determines if warning messages should printed to the console.
+     *
+     * @return true if warning messages should be printed to the console
+     */
     public abstract boolean warning();
 
+    /**
+     * If the logger output is currently enabled for the WARNING message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message the message to log to the console.
+     */
     public void warning(String message)
     {
         if (warning()) {
@@ -41,6 +70,13 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * If the logger output is currently enabled for the WARNING message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message the message to log to the console.
+     * @param parms   array of parameters to the message
+     */
     public void warning(String message, Object... parms)
     {
         if (warning()) {
@@ -48,8 +84,19 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * Determines if error messages should printed to the console.
+     *
+     * @return true if error messages should be printed to the console
+     */
     public abstract boolean error();
 
+    /**
+     * If the logger output is currently enabled for the SEVERE message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message the message to log to the console.
+     */
     public void error(String message)
     {
         if (error()) {
@@ -57,6 +104,13 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * If the logger output is currently enabled for the SEVERE message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message the message to log to the console.
+     * @param parms   array of parameters to the message
+     */
     public void error(String message, Object... parms)
     {
         if (error()) {
@@ -64,6 +118,14 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * If debugging is enabled in the database options, then the given
+     * message is forwarded to all the registered output Handler objects.
+     *
+     * @see com.sendev.databasemanager.DatabaseOptions
+     *
+     * @param message the message to log to the console.
+     */
     public void debug(String message)
     {
         if (dbm.options().isDebugMessagesEnabled()) {
@@ -71,6 +133,15 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * If debugging is enabled in the database options, then the given
+     * message is forwarded to all the registered output Handler objects.
+     *
+     * @see com.sendev.databasemanager.DatabaseOptions
+     *
+     * @param message the message to log to the console.
+     * @param parms   array of parameters to the message
+     */
     public void debug(String message, Object... parms)
     {
         if (dbm.options().isDebugMessagesEnabled()) {
@@ -78,6 +149,13 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * If the logger output is currently enabled for the EXCEPTION message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message   the message to log to the console.
+     * @param exception the exception that are being thrown
+     */
     public void exception(String message, Exception exception)
     {
         if (dbm.options().isDebugMessagesEnabled()) {
@@ -85,6 +163,14 @@ public abstract class DatabaseOutput
         }
     }
 
+    /**
+     * If the logger output is currently enabled for the EXCEPTION message level then the
+     * given message is forwarded to all the registered output Handler objects.
+     *
+     * @param message   the message to log to the console.
+     * @param exception the exception that are being thrown
+     * @param parms     array of parameters to the message
+     */
     public void exception(String message, Exception exception, Object... parms)
     {
         if (dbm.options().isDebugMessagesEnabled()) {

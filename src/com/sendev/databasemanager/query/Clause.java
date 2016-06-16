@@ -15,7 +15,6 @@ public class Clause
         this.two = two;
 
         this.order = OperatorType.AND;
-
     }
 
     public Clause(String one, String identifier, Object two, OperatorType order)
