@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 
 public class DatabaseFactory
@@ -79,6 +77,10 @@ public class DatabaseFactory
 
         List<String> origins = getOriginPackages(object);
 
+        if (origins == null || origins.isEmpty()) {
+            return null;
+        }
+
         for (PluginContainer plugin : containers.values()) {
             if (plugin.hasBinding(origins)) {
                 return plugin.getInstance();
@@ -96,10 +98,10 @@ public class DatabaseFactory
             method.setAccessible(true);
 
             method.invoke(object.newInstance());
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException ex) {
-            Logger.getLogger(DatabaseFactory.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            System.out.println("Failed to create a new instace of the object type: " + ex.getMessage());
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InstantiationException ex) {
+//            Logger.getLogger(DatabaseFactory.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("Failed to create a new instace of the object type: " + ex.getMessage());
+            return null;
         } catch (InvocationTargetException ex) {
             if (ex.getCause() instanceof OriginException) {
                 StackTraceElement[] traces = ex.getStackTrace();

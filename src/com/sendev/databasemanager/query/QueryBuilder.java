@@ -2,8 +2,10 @@ package com.sendev.databasemanager.query;
 
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
 import com.sendev.databasemanager.contracts.TableGrammar;
 import com.sendev.databasemanager.exceptions.DatabaseException;
+import com.sendev.databasemanager.exceptions.OriginException;
 import com.sendev.databasemanager.utils.Collection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class QueryBuilder
+public final class QueryBuilder implements DatabaseOriginLookup
 {
 
     private QueryType type;
@@ -25,21 +27,34 @@ public final class QueryBuilder
     private int skip = -1;
 
     private final List<QueryOrder> order = new ArrayList<>();
-
     private final List<Clause> wheres = new ArrayList<>();
-
     private final List<String> columns = new ArrayList<>();
-
     private final List<JoinClause> joins = new ArrayList<>();
-
     private final List<Map<String, Object>> items = new ArrayList<>();
+
+    private final boolean ignoreDatabasePrefix;
 
     public QueryBuilder()
     {
+        this.ignoreDatabasePrefix = false;
+    }
+
+    public QueryBuilder(boolean ignoreDatabasePrefix)
+    {
+        this.ignoreDatabasePrefix = ignoreDatabasePrefix;
     }
 
     public QueryBuilder(String table)
     {
+        this.ignoreDatabasePrefix = false;
+
+        table(table);
+    }
+
+    public QueryBuilder(String table, boolean ignoreDatabasePrefix)
+    {
+        this.ignoreDatabasePrefix = ignoreDatabasePrefix;
+
         table(table);
     }
 
@@ -394,6 +409,11 @@ public final class QueryBuilder
         return items;
     }
 
+    public boolean isIgnoringDatabasePrefix()
+    {
+        return ignoreDatabasePrefix;
+    }
+
     public QueryBuilder delete()
     {
         type = QueryType.DELETE;
@@ -430,5 +450,11 @@ public final class QueryBuilder
     public String toString()
     {
         return toSQL();
+    }
+
+    @Override
+    public void throwsOriginException() throws OriginException
+    {
+        throw new OriginException();
     }
 }

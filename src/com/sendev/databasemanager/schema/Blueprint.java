@@ -1,13 +1,22 @@
 package com.sendev.databasemanager.schema;
 
+import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
+import com.sendev.databasemanager.exceptions.OriginException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Blueprint
+public class Blueprint implements DatabaseOriginLookup
 {
     private final String table;
     private final LinkedHashMap<String, Field> fields = new LinkedHashMap<>();
     private String engine = DatabaseEngine.InnoDB.toString();
+
+    public Blueprint()
+    {
+        // This is used for the orgin lookup, you should never make a Blueprint instance without a table.
+
+        this.table = null;
+    }
 
     public Blueprint(String table)
     {
@@ -175,5 +184,11 @@ public class Blueprint
         fields.put(field, obj);
 
         return obj;
+    }
+
+    @Override
+    public void throwsOriginException() throws OriginException
+    {
+        throw new OriginException();
     }
 }

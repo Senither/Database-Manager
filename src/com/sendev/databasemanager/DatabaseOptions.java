@@ -8,6 +8,7 @@ public final class DatabaseOptions
     private int queryTimeout = -1;
     private int queryReturnLimit = -1;
     private boolean debug;
+    private String prefix = "";
 
     /**
      * Sets the default database engine that should be used when inserting and creating data.
@@ -86,6 +87,20 @@ public final class DatabaseOptions
     public int getQueryReturnLimit()
     {
         return queryReturnLimit;
+    }
+
+    public void setPrefix(String prefix)
+    {
+        if (prefix == null) {
+            prefix = "";
+        }
+
+        this.prefix = prefix.trim();
+    }
+
+    public String getPrefix()
+    {
+        return prefix;
     }
 
     /**

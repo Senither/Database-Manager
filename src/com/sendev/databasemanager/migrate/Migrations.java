@@ -228,7 +228,7 @@ public class Migrations
             table.String("plugin");
             table.String("migration");
             table.Integer("batch");
-        });
+        }, true);
 
         if (created) {
             dbm.output().info("Migration table created successfully");
@@ -270,6 +270,6 @@ public class Migrations
 
     private QueryBuilder makeQuery()
     {
-        return new QueryBuilder(TABLE_NAME);
+        return new QueryBuilder(TABLE_NAME, true);
     }
 }

@@ -4,8 +4,8 @@ Database Manager:
   ✔ Add a *queryInsert* method that allows user to do the same as *queryUpdate*, but instead it will return a Set<Integer> object, where each index reprecent a ID value of the row that was inserted. @done (12/06/16 17:08)
     ✔ Checks should be made to make sure the parsed query is actually a INSERT query, if that's not the case a *DatabaseException* should be thrown. @done (12/06/16 17:08)
 
-  ☐ Implement a **setPrefix** method, either in the DBM main class or the options(The options might be a better choice)
-    ☐ Make sure any time a table name is created, that the prefix is added infront of the table name dynamicly.
+  ✔ Implement a **setPrefix** method, either in the DBM main class or the options(The options might be a better choice) @done (18/06/16 19:20)
+    ✔ Make sure any time a table name is created, that the prefix is added infront of the table name dynamicly. @done (18/06/16 19:20)
 
 Database Factory:
   ✔ Add a *PluginContainer* class where all plugin info should be stored for any plugin that has created an instance of DBM. @done (12/06/16 17:43)
@@ -44,13 +44,13 @@ Schematics(Schema):
   ☐ Implement a way to add a default character set for a given table or column field.
 
 Migration:
-  ☐ Add a **Migration** class and create a getter for it in the DBM main class.
-    ☐ Add a **up** method that should be used to roll all the non-migrated migrations to the database.
-    ☐ Add a **down** method that should be used to roll all the migrated migrations away from the database.
-    ☐ Add a **register** method that should register one or multiple migrations at a time. 
-    ☐ Add a **rollback** method that functions the same way as down, but takes in an integer argument for how many migrations should be rolled back. 
+  ✔ Add a **Migration** class and create a getter for it in the DBM main class. @done (18/06/16 19:20)
+    ✔ Add a **up** method that should be used to roll all the non-migrated migrations to the database. @done (18/06/16 19:20)
+    ✔ Add a **down** method that should be used to roll all the migrated migrations away from the database. @done (18/06/16 19:20)
+    ✔ Add a **register** method that should register one or multiple migrations at a time.  @done (18/06/16 19:20)
+    ✔ Add a **rollback** method that functions the same way as down, but takes in an integer argument for how many migrations should be rolled back.  @done (18/06/16 19:20)
 
-  ☐ Add a Migration contract that all migrations should abid by
+  ✔ Add a Migration contract that all migrations should abid by @done (18/06/16 19:20)
     The contract should have an **up** and **down** method, both needs to take the Schema class as an argument.
 
 Seeder:

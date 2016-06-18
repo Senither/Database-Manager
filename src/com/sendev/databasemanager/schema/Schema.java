@@ -6,9 +6,9 @@ import com.sendev.databasemanager.grammar.CreateGrammar;
 import com.sendev.databasemanager.query.QueryType;
 import com.sendev.databasemanager.schema.contracts.DatabaseClosure;
 import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Schema
 {
@@ -49,11 +49,50 @@ public class Schema
 
         dbm.output().debug("create query was generated, executing query: %s", query);
 
-        return dbm.getConnections().getDefaultConnection().prepare(query).execute();
+        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
+    }
+
+    public boolean create(String table, DatabaseClosure closure, boolean ignoreDatabasePrefix) throws SQLException
+    {
+        dbm.output().debug("Schema::create was called on \"%s\"! Calling blueprint to generate the query...", table);
+
+        Blueprint blueprint = createAndRunBlueprint(table, closure);
+
+        CreateGrammar grammar = createGrammar(true, ignoreDatabasePrefix);
+
+        String query = grammar.format(blueprint);
+
+        dbm.output().debug("create query was generated, executing query: %s", query);
+
+        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
     }
 
     public boolean createIfNotExists(String table, DatabaseClosure closure) throws SQLException
     {
+        dbm.output().debug("Schema::createIfNotExists was called on \"%s\"! Calling blueprint to generate the query...", table);
+
+        if (dbm.getConnections().getDefaultConnection().hasTable(prefixTable(table))) {
+            dbm.output().debug("Schema::createIfNotExists table \"%s\" was found, returning false", table);
+            return false;
+        }
+
+        Blueprint blueprint = createAndRunBlueprint(table, closure);
+
+        CreateGrammar grammar = createGrammar(false);
+
+        String query = grammar.format(blueprint);
+
+        dbm.output().debug("Schema::createIfNotExists query was generated, executing query: %s", query);
+
+        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
+    }
+
+    public boolean createIfNotExists(String table, DatabaseClosure closure, boolean ignoreDatabasePrefix) throws SQLException
+    {
+        if (!ignoreDatabasePrefix) {
+            return createIfNotExists(table, closure);
+        }
+
         dbm.output().debug("Schema::createIfNotExists was called on \"%s\"! Calling blueprint to generate the query...", table);
 
         if (dbm.getConnections().getDefaultConnection().hasTable(table)) {
@@ -63,7 +102,7 @@ public class Schema
 
         Blueprint blueprint = createAndRunBlueprint(table, closure);
 
-        CreateGrammar grammar = createGrammar(false);
+        CreateGrammar grammar = createGrammar(false, ignoreDatabasePrefix);
 
         String query = grammar.format(blueprint);
 
@@ -81,12 +120,18 @@ public class Schema
         return blueprint;
     }
 
-    private CreateGrammar createGrammar(boolean shouldExistingExistingTable)
+    private CreateGrammar createGrammar(boolean shouldIgnoreExistingTable)
+    {
+        return createGrammar(shouldIgnoreExistingTable, false);
+    }
+
+    private CreateGrammar createGrammar(boolean shouldIgnoreExistingTable, boolean shouldIgnoreDatabasePrefix)
     {
         try {
             CreateGrammar grammar = (CreateGrammar) QueryType.CREATE.getGrammar().newInstance();
 
-            grammar.ignoreExistingTable(shouldExistingExistingTable);
+            grammar.ignoreExistingTable(shouldIgnoreExistingTable);
+            grammar.ignoreDatabasePrefix(shouldIgnoreDatabasePrefix);
 
             return grammar;
         } catch (InstantiationException ex) {
@@ -100,23 +145,49 @@ public class Schema
 
     public boolean drop(String table) throws SQLException
     {
+        table = prefixTable(table);
+
         dbm.output().debug("Schema::drop was called on \"%s\"!", table);
 
-        return executeQuery(format("DROP TABLE `%s`;", table));
+        return alterQuery(format("DROP TABLE `%s`;", table));
+    }
+
+    public boolean drop(String table, boolean ignoreDatabasePrefix) throws SQLException
+    {
+        if (!ignoreDatabasePrefix) {
+            return drop(table);
+        }
+
+        dbm.output().debug("Schema::drop was called on \"%s\"!", table);
+
+        return alterQuery(format("DROP TABLE `%s`;", table));
     }
 
     public boolean dropIfExists(String table) throws SQLException
     {
+        table = prefixTable(table);
+
         dbm.output().debug("Schema::dropIfExists was called on \"%s\"!", table);
 
-        return executeQuery(format("DROP TABLE IF EXISTS `%s`;", table));
+        return alterQuery(format("DROP TABLE IF EXISTS `%s`;", table));
+    }
+
+    public boolean dropIfExists(String table, boolean ignoreDatabasePrefix) throws SQLException
+    {
+        if (!ignoreDatabasePrefix) {
+            return dropIfExists(table);
+        }
+
+        dbm.output().debug("Schema::dropIfExists was called on \"%s\"!", table);
+
+        return alterQuery(format("DROP TABLE IF EXISTS `%s`;", table));
     }
 
     public boolean rename(String from, String to) throws SQLException
     {
         dbm.output().debug("Schema::rename was called on \"%s\", renaming to \"%s\"", from, to);
 
-        return executeQuery(format("ALTER TABLE `%s` RENAME `%s`;", from, to));
+        return alterQuery(format("ALTER TABLE `%s` RENAME `%s`;", from, to));
     }
 
     public boolean renameIfExists(String from, String to) throws SQLException
@@ -130,11 +201,13 @@ public class Schema
         return rename(from, to);
     }
 
-    private boolean executeQuery(String query) throws SQLException
+    private boolean alterQuery(String query) throws SQLException
     {
-        PreparedStatement stmt = getDefaultConnection().getConnection().prepareStatement(query);
+        dbm.output().debug("DatabaseManager::alterQuery was called with the following SQL statement: %s", query);
 
-        return stmt.execute();
+        Statement stmt = getDefaultConnection().getConnection().createStatement();
+
+        return stmt.execute(query);
     }
 
     private String format(String query, Object... items)
@@ -150,5 +223,16 @@ public class Schema
     private Database getDefaultConnection()
     {
         return dbm.getConnections().getDefaultConnection();
+    }
+
+    private String prefixTable(String table)
+    {
+        String prefix = dbm.options().getPrefix();
+
+        if (prefix.length() > 0) {
+            table = prefix + table;
+        }
+
+        return table;
     }
 }

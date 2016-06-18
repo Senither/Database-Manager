@@ -8,6 +8,7 @@ import com.sendev.databasemanager.schema.FieldType;
 public class CreateGrammar extends AlterGrammar
 {
     private boolean ignoreExistingTable = true;
+    private boolean ignoreDatabasePrefix = false;
 
     public CreateGrammar()
     {
@@ -19,9 +20,16 @@ public class CreateGrammar extends AlterGrammar
         this.ignoreExistingTable = value;
     }
 
+    public void ignoreDatabasePrefix(boolean value)
+    {
+        this.ignoreDatabasePrefix = value;
+    }
+
     @Override
     public String format(Blueprint blueprint)
     {
+        dbm = getDBMFrom(blueprint);
+
         buildTable(blueprint);
 
         buildFields(blueprint);
@@ -47,7 +55,12 @@ public class CreateGrammar extends AlterGrammar
             addPart(" IF NOT EXISTS ");
         }
 
-        addPart(" %s (", formatField(blueprint.getTable()));
+        String table = blueprint.getTable();
+        if (!ignoreDatabasePrefix) {
+            table = buildTable(table);
+        }
+
+        addPart(" %s (", formatField(table));
     }
 
     private void buildFields(Blueprint blueprint)

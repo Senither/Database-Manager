@@ -19,7 +19,14 @@ public class InsertGrammar extends TableGrammar
     @Override
     public String format(QueryBuilder builder)
     {
-        addPart(String.format(" `%s`", builder.getTable()));
+        dbm = getDBMFrom(builder);
+
+        String table = builder.getTable();
+        if (!builder.isIgnoringDatabasePrefix()) {
+            table = buildTable(table);
+        }
+
+        addPart(String.format(" %s", formatField(table)));
 
         buildKeyset(builder);
 

@@ -1,10 +1,16 @@
 package com.sendev.databasemanager.contracts;
 
+import com.sendev.databasemanager.DatabaseFactory;
+import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.query.QueryBuilder;
+import com.sendev.databasemanager.schema.Blueprint;
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class Grammar
 {
+
+    protected DatabaseManager dbm;
 
     /**
      * The query SQL string, this string will be appended to
@@ -113,4 +119,28 @@ public abstract class Grammar
 
         return String.format("`%s`", field);
     }
+
+    protected String buildTable(String table)
+    {
+        if (dbm != null && dbm instanceof DatabaseManager) {
+            String prefix = dbm.options().getPrefix();
+
+            if (prefix.length() > 0) {
+                table = prefix + table;
+            }
+        }
+
+        return table;
+    }
+
+    protected DatabaseManager getDBMFrom(QueryBuilder query)
+    {
+        return DatabaseFactory.getDynamicOrigin(query.getClass());
+    }
+
+    protected DatabaseManager getDBMFrom(Blueprint blueprint)
+    {
+        return DatabaseFactory.getDynamicOrigin(blueprint.getClass());
+    }
+
 }

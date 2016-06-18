@@ -19,6 +19,8 @@ public class SelectGrammar extends TableGrammar
     @Override
     public String format(QueryBuilder builder)
     {
+        dbm = getDBMFrom(builder);
+
         buildColumns(builder);
 
         buildJoins(builder);
@@ -40,7 +42,12 @@ public class SelectGrammar extends TableGrammar
             removeLast(2);
         }
 
-        query += String.format(" FROM %s ", formatField(builder.getTable()));
+        String table = builder.getTable();
+        if (!builder.isIgnoringDatabasePrefix()) {
+            table = buildTable(table);
+        }
+
+        query += String.format(" FROM %s ", formatField(table));
     }
 
     private void buildJoins(QueryBuilder builder)
