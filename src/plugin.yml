@@ -12,4 +12,3 @@ commands:
   databasemanager:
     description: Database Manager
     aliases: [dbmanager, dbm]
-        

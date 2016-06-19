@@ -2,6 +2,7 @@ package com.sendev.databasemanager.plugin.commands;
 
 import com.sendev.databasemanager.plugin.DBMPlugin;
 import com.sendev.databasemanager.plugin.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.utils.StringMatcher;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.Command;
@@ -110,6 +111,23 @@ public class CommandHandler implements CommandExecutor
                 return parseCommand(cmd, sender, parm);
             }
         }
+
+        if (!sender.hasPermission("databasemanager.admin")) {
+            plugin.getChat().missingPermission(sender, "databasemanager.admin");
+
+            return false;
+        }
+
+        List<String> commandTriggers = new ArrayList<>();
+
+        commands.stream().filter(( cmd ) -> !(cmd.getTriggers().isEmpty())).forEach(( cmd ) -> {
+            commandTriggers.add(cmd.getTriggers().get(0));
+        });
+
+        String match = StringMatcher.match(commandTrigger, commandTriggers).getMatch();
+
+        plugin.getChat().sendMessage(sender, "%s &4%s &cwas not found! Did you mean...", plugin.getPrefix('4', 'c'), commandTrigger);
+        plugin.getChat().sendMessage(sender, "&4/&cDBM &4[&c%s&4]", match);
 
         return false;
     }
