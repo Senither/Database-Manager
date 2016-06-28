@@ -32,9 +32,9 @@ public abstract class HostnameDatabase extends Database
     private String password;
 
     /**
-     * Creates a new hostname database instance.
+     * Creates a new host name database instance.
      *
-     * @param hostname The hostname to connect to.
+     * @param hostname The host name to connect to.
      * @param port     The port the database is listing on.
      * @param database The database name to use.
      * @param username The login username.
@@ -50,9 +50,9 @@ public abstract class HostnameDatabase extends Database
     }
 
     /**
-     * Returns the hostname the database is listing on.
+     * Returns the host name the database is listing on.
      *
-     * @return String
+     * @return the database host name
      */
     public String getHostname()
     {
@@ -60,9 +60,9 @@ public abstract class HostnameDatabase extends Database
     }
 
     /**
-     * Sets the hostname the database is listing on.
+     * Sets the host name the database is listing on.
      *
-     * @param hostname
+     * @param hostname the database host name
      */
     public void setHostname(String hostname)
     {
@@ -72,7 +72,7 @@ public abstract class HostnameDatabase extends Database
     /**
      * Returns the port the database is listing on.
      *
-     * @return Integer
+     * @return the database port
      */
     public int getPort()
     {
@@ -83,7 +83,7 @@ public abstract class HostnameDatabase extends Database
      * Sets the port the database should be listing on,
      * the port has to be between 0 and 65535.
      *
-     * @param port
+     * @param port the database port
      */
     public void setPort(int port)
     {
@@ -97,7 +97,7 @@ public abstract class HostnameDatabase extends Database
     /**
      * Gets the name of the database that should be used.
      *
-     * @return String
+     * @return the database name
      */
     public String getDatabase()
     {
@@ -107,7 +107,7 @@ public abstract class HostnameDatabase extends Database
     /**
      * Sets the database name that should be used.
      *
-     * @param database
+     * @param database the database name
      */
     public void setDatabase(String database)
     {
@@ -117,7 +117,7 @@ public abstract class HostnameDatabase extends Database
     /**
      * Returns the database username login.
      *
-     * @return String
+     * @return the database username
      */
     public String getUsername()
     {
@@ -127,7 +127,7 @@ public abstract class HostnameDatabase extends Database
     /**
      * Sets the database username login.
      *
-     * @param username
+     * @param username the database username
      */
     public void setUsername(String username)
     {
@@ -137,7 +137,7 @@ public abstract class HostnameDatabase extends Database
     /**
      * Returns the database password login.
      *
-     * @return String
+     * @return the database password
      */
     public String getPassword()
     {
@@ -147,7 +147,7 @@ public abstract class HostnameDatabase extends Database
     /**
      * Sets the database password login.
      *
-     * @param password
+     * @param password the database password
      */
     public void setPassword(String password)
     {

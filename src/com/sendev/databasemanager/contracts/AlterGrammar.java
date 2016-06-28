@@ -11,7 +11,7 @@ public abstract class AlterGrammar extends Grammar
      *
      * @param blueprint The blueprint to build the query from.
      *
-     * @return String
+     * @return the formatted SQL query
      */
     public abstract String format(Blueprint blueprint);
 
@@ -20,7 +20,7 @@ public abstract class AlterGrammar extends Grammar
      *
      * @param builder The query builder to finalize.
      *
-     * @return String
+     * @return the finalized SQL query
      */
     protected abstract String finalize(Blueprint builder);
 }

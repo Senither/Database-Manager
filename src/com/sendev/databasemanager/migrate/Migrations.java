@@ -207,8 +207,15 @@ public class Migrations
      */
     public List<MigrationContainer> getOrderedMigrations(boolean orderByAsc)
     {
-        Collections.sort(migrations, new MigrationComparator(orderByAsc));
+        List<MigrationContainer> orderedMigrations = new ArrayList<>(migrations);
 
+        Collections.sort(orderedMigrations, new MigrationComparator(orderByAsc));
+
+        return orderedMigrations;
+    }
+
+    public List<MigrationContainer> getMigrations()
+    {
         return migrations;
     }
 

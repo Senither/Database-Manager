@@ -46,7 +46,8 @@ public abstract class Database implements DatabaseContract
      * Initialize the database abstraction, this should be
      * called by the open method if it's necessary.
      *
-     * @return Boolean
+     * @return either (1) <code>TRUE</code> if the initialization didn't throw any errors or exceptions
+     *         or (2) <code>FALSE</code> if something happened during the initialization
      */
     protected abstract boolean initialize();
 
@@ -56,16 +57,25 @@ public abstract class Database implements DatabaseContract
      *
      * @param paramStatement The statement to check.
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs,
+     *                      this method is called on a closed <code>Statement</code>, the given
+     *                      SQL statement produces anything other than a single
+     *                      <code>ResultSet</code> object, the method is called on a
+     *                      <code>PreparedStatement</code> or <code>CallableStatement</code>
      */
     protected abstract void queryValidation(StatementContract paramStatement) throws SQLException;
 
     /**
-     * Closes the database connection.
+     * Attempts to close the database connection.
      *
-     * @return Boolean
+     * @return either (1) <code>TRUE</code> if the database connection was closed successfully
+     *         or (2) <code>FALSE</code> if the connection is already close, or an exception was thrown
      *
-     * @throws java.sql.SQLException
+     * @throws SQLException if a database access error occurs,
+     *                      this method is called on a closed <code>Statement</code>, the given
+     *                      SQL statement produces anything other than a single
+     *                      <code>ResultSet</code> object, the method is called on a
+     *                      <code>PreparedStatement</code> or <code>CallableStatement</code>
      */
     public final boolean close() throws SQLException
     {
@@ -85,15 +95,18 @@ public abstract class Database implements DatabaseContract
     }
 
     /**
-     * Returns the current database connection, if the
-     * connection is not open/active, it will attempt
-     * to open the connection for you.
+     * Returns the current database connection, if the connection is not open/active, it
+     * will attempt to open the connection for you.
      *
-     * @return Connection
+     * @return the database connection
      *
-     * @throws java.sql.SQLException
+     * @throws SQLException if a database access error occurs,
+     *                      this method is called on a closed <code>Statement</code>, the given
+     *                      SQL statement produces anything other than a single
+     *                      <code>ResultSet</code> object, the method is called on a
+     *                      <code>PreparedStatement</code> or <code>CallableStatement</code>
      */
-    public final Connection getConnection() throws SQLException
+    public Connection getConnection() throws SQLException
     {
         if (!isOpen()) {
             open();
@@ -105,7 +118,8 @@ public abstract class Database implements DatabaseContract
     /**
      * Checks to see if the database connection is still valid.
      *
-     * @return Boolean
+     * @return either (1) <code>TRUE</code> if the database connection is open and valid
+     *         or (2) <code>FALSE</code> if the database connection is closed
      */
     public final boolean isOpen()
     {
@@ -117,7 +131,8 @@ public abstract class Database implements DatabaseContract
      *
      * @param seconds The amount of time to wait for the connection for.
      *
-     * @return Boolean
+     * @return either (1) <code>TRUE</code> if the database connection is open and valid
+     *         or (2) <code>FALSE</code> if the database connection is closed
      */
     public final boolean isOpen(int seconds)
     {
@@ -137,7 +152,7 @@ public abstract class Database implements DatabaseContract
      * Get the unix timestamp of the last time the class
      * communicated with the database.
      *
-     * @return Integer
+     * @return the last updated timestamp
      */
     public final int getLastUpdateCount()
     {
@@ -145,13 +160,16 @@ public abstract class Database implements DatabaseContract
     }
 
     /**
-     * Queries the database with the given query.
+     * Queries the database with the given query, the
+     * query should be a <code>SELECT</code> query.
      *
      * @param query The query to run.
      *
-     * @return ResultSet
+     * @return the current result as a <code>ResultSet</code> object or
+     *         <code>null</code> if the result is an update count or there are no more results
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs or this method is called on a
+     *                      closed <code>Statement</code>
      */
     public final synchronized ResultSet query(String query) throws SQLException
     {
@@ -171,9 +189,11 @@ public abstract class Database implements DatabaseContract
      *
      * @param builder The query to build.
      *
-     * @return ResultSet
+     * @return the current result as a <code>ResultSet</code> object or
+     *         <code>null</code> if the result is an update count or there are no more results
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs or this method is called on a
+     *                      closed <code>Statement</code>
      */
     public final synchronized ResultSet query(QueryBuilder builder) throws SQLException
     {
@@ -186,9 +206,11 @@ public abstract class Database implements DatabaseContract
      * @param query     The prepared statement to run.
      * @param statement The query statement.
      *
-     * @return ResultSet
+     * @return the current result as a <code>ResultSet</code> object or
+     *         <code>null</code> if the result is an update count or there are no more results
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs or this method is called on a
+     *                      closed <code>Statement</code>
      */
     public final synchronized ResultSet query(PreparedStatement query, StatementContract statement) throws SQLException
     {
@@ -206,9 +228,11 @@ public abstract class Database implements DatabaseContract
      *
      * @param query The prepared statement to run.
      *
-     * @return ResultSet
+     * @return the current result as a <code>ResultSet</code> object or
+     *         <code>null</code> if the result is an update count or there are no more results
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs or this method is called on a
+     *                      closed <code>Statement</code>
      */
     public final synchronized ResultSet query(PreparedStatement query) throws SQLException
     {
@@ -224,9 +248,11 @@ public abstract class Database implements DatabaseContract
      *
      * @param query The query to prepare.
      *
-     * @return PreparedStatement
+     * @return the current result as a <code>ResultSet</code> object or
+     *         <code>null</code> if the result is an update count or there are no more results
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs or this method is called on a
+     *                      closed <code>Statement</code>
      */
     public final synchronized PreparedStatement prepare(String query) throws SQLException
     {
@@ -239,14 +265,26 @@ public abstract class Database implements DatabaseContract
     }
 
     /**
-     * Stores data in the database from the given query, this
-     * will return a list of ids from the inserted rows.
+     * Executes the provided SQL statement as a <code>PreparedStatement</code> object,
+     * which must be an SQL Data Manipulation Language (DML) statement, such as <code>INSERT</code>, <code>UPDATE</code> or
+     * <code>DELETE</code>; or an SQL statement that returns nothing, such as a DDL statement.
+     * <p>
+     * After the query has been executed, all the auto-generated keys created as a result of executing the
+     * provided query will be retrieved. If the <code>Statement</code> object did not generate any keys, an
+     * empty <code>List</code> object is returned.
+     * <p>
+     * <B>Note:</B>If the columns which represent the auto-generated keys were not specified,
+     * the JDBC driver implementation will determine the columns which best represent the auto-generated keys.
      *
-     * @param query The query to run.
+     * @param query The query to run
      *
-     * @return ArrayList
+     * @return the list of auto-generated keys
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs,
+     *                      this method is called on a closed <code>Statement</code>, the given
+     *                      SQL statement produces anything other than a single
+     *                      <code>ResultSet</code> object, the method is called on a
+     *                      <code>PreparedStatement</code> or <code>CallableStatement</code>
      */
     public final synchronized ArrayList<Long> insert(String query) throws SQLException
     {
@@ -264,14 +302,26 @@ public abstract class Database implements DatabaseContract
     }
 
     /**
-     * Stores data in the database from the given prepared statement,
-     * this will return a list of ids from the inserted rows.
+     * Executes the provided SQL statement as a <code>PreparedStatement</code> object,
+     * which must be an SQL Data Manipulation Language (DML) statement, such as <code>INSERT</code>, <code>UPDATE</code> or
+     * <code>DELETE</code>; or an SQL statement that returns nothing, such as a DDL statement.
+     * <p>
+     * After the query has been executed, all the auto-generated keys created as a result of executing the
+     * provided query will be retrieved. If the <code>Statement</code> object did not generate any keys, an
+     * empty <code>List</code> object is returned.
+     * <p>
+     * <B>Note:</B>If the columns which represent the auto-generated keys were not specified,
+     * the JDBC driver implementation will determine the columns which best represent the auto-generated keys.
      *
-     * @param query The prepared statement to run.
+     * @param query The query to run
      *
-     * @return ArrayList
+     * @return the list of auto-generated keys
      *
-     * @throws SQLException
+     * @throws SQLException if a database access error occurs,
+     *                      this method is called on a closed <code>Statement</code>, the given
+     *                      SQL statement produces anything other than a single
+     *                      <code>ResultSet</code> object, the method is called on a
+     *                      <code>PreparedStatement</code> or <code>CallableStatement</code>
      */
     public final synchronized ArrayList<Long> insert(PreparedStatement query) throws SQLException
     {
@@ -291,12 +341,14 @@ public abstract class Database implements DatabaseContract
     {
         PreparedStatement statement = getConnection().prepareStatement(query);
 
-        if (dbm.options().getQueryTimeout() > 0) {
-            statement.setQueryTimeout(dbm.options().getQueryTimeout());
-        }
+        if (dbm != null) {
+            if (dbm.options().getQueryTimeout() > 0) {
+                statement.setQueryTimeout(dbm.options().getQueryTimeout());
+            }
 
-        if (dbm.options().getQueryReturnLimit() > 0) {
-            statement.setMaxRows(dbm.options().getQueryReturnLimit());
+            if (dbm.options().getQueryReturnLimit() > 0) {
+                statement.setMaxRows(dbm.options().getQueryReturnLimit());
+            }
         }
 
         return statement;
@@ -306,12 +358,14 @@ public abstract class Database implements DatabaseContract
     {
         PreparedStatement statement = getConnection().prepareStatement(query, autoGeneratedKeys);
 
-        if (dbm.options().getQueryTimeout() > 0) {
-            statement.setQueryTimeout(dbm.options().getQueryTimeout());
-        }
+        if (dbm != null) {
+            if (dbm.options().getQueryTimeout() > 0) {
+                statement.setQueryTimeout(dbm.options().getQueryTimeout());
+            }
 
-        if (dbm.options().getQueryReturnLimit() > 0) {
-            statement.setMaxRows(dbm.options().getQueryReturnLimit());
+            if (dbm.options().getQueryReturnLimit() > 0) {
+                statement.setMaxRows(dbm.options().getQueryReturnLimit());
+            }
         }
 
         return statement;

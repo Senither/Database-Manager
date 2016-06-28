@@ -12,7 +12,7 @@ public interface Migration
      * <p>
      * The time format can be any of the supported carbon time formats.
      *
-     * @see com.sendev.databasemanager.utils.Carbon;
+     * @see com.sendev.databasemanager.utils.Carbon
      *
      * @return the carbon time string
      */

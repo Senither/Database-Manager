@@ -43,7 +43,8 @@ public abstract class Grammar
      *
      * @param string The string to check.
      *
-     * @return Boolean
+     * @return either (1) <code>TRUE</code> if the provided string is numeric
+     *         or (2) <code>FALSE</code> if the provided string isn't numeric
      */
     protected boolean isNumeric(String string)
     {
@@ -91,7 +92,7 @@ public abstract class Grammar
      *
      * @param field The field to format.
      *
-     * @return String
+     * @return the formated field
      */
     protected String formatField(String field)
     {

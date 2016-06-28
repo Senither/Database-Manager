@@ -12,7 +12,7 @@ public abstract class TableGrammar extends Grammar
      *
      * @param builder The query builder to format.
      *
-     * @return String
+     * @return the formatted query
      */
     public abstract String format(QueryBuilder builder);
 
@@ -21,10 +21,15 @@ public abstract class TableGrammar extends Grammar
      *
      * @param builder The query builder to finalize.
      *
-     * @return String
+     * @return the finalized query
      */
     protected abstract String finalize(QueryBuilder builder);
 
+    /**
+     * builds the where clauses for the provided query builder.
+     *
+     * @param builder the query builder to build the where clauses from
+     */
     protected void buildWhereClause(QueryBuilder builder)
     {
         if (builder.getWhereClauses().isEmpty()) {
@@ -37,9 +42,7 @@ public abstract class TableGrammar extends Grammar
         for (Clause clause : builder.getWhereClauses()) {
 
             String string = String.format(" %s %s",
-            /*
-             * >_>
-             */ formatField(clause.getOne()), clause.getIdentifier()
+            formatField(clause.getOne()), clause.getIdentifier()
             );
 
             if (clause.getOrder() == null) {

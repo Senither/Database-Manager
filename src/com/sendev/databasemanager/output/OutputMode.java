@@ -17,6 +17,8 @@ public enum OutputMode
     /**
      * Returns the output mode as a object instance.
      *
+     * @param <T> the class instance that is parsed
+     *
      * @return the output mode as a object instance
      */
     public <T> Class<T> getInstance()

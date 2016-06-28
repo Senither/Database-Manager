@@ -3,6 +3,7 @@ package com.sendev.databasemanager.connections;
 import com.sendev.databasemanager.contracts.FilenameDatabase;
 import com.sendev.databasemanager.contracts.StatementContract;
 import com.sendev.databasemanager.exceptions.DatabaseException;
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ public class SQLite extends FilenameDatabase
 
     public SQLite(String directory, String database)
     {
-        super(directory, database.split(".")[0], database.split(".")[1]);
+        super(directory, database.split("\\.")[0], database.split("\\.")[1]);
     }
 
     /**
@@ -74,6 +75,14 @@ public class SQLite extends FilenameDatabase
     protected void queryValidation(StatementContract paramStatement) throws SQLException
     {
         // This does nothing for SQLite
+    }
+
+    @Override
+    public Connection getConnection() throws SQLException
+    {
+        open();
+
+        return connection;
     }
 
     @Override

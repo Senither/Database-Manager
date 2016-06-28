@@ -869,7 +869,7 @@ public final class Carbon implements Cloneable
     /**
      * Get the difference between now and the carbon instance time in a human readable string.
      *
-     * @return
+     * @return the difference between now and the carbon instance in a human readable string
      */
     public String diffForHumans()
     {

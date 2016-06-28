@@ -4,7 +4,7 @@ import com.sendev.databasemanager.schema.DatabaseEngine;
 
 public final class DatabaseOptions
 {
-    private DatabaseEngine engine = null;
+    private DatabaseEngine engine = DatabaseEngine.InnoDB;
     private int queryTimeout = -1;
     private int queryReturnLimit = -1;
     private boolean debug;

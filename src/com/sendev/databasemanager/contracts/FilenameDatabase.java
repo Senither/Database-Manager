@@ -49,7 +49,7 @@ public abstract class FilenameDatabase extends Database
     /**
      * Returns the folder name the database is stored in.
      *
-     * @return String
+     * @return the database directory
      */
     public String getDirectory()
     {
@@ -59,7 +59,7 @@ public abstract class FilenameDatabase extends Database
     /**
      * Sets the folder name the database is stored in.
      *
-     * @param directory
+     * @param directory the directory the database is stored in
      */
     public void setDirectory(String directory)
     {
@@ -69,7 +69,7 @@ public abstract class FilenameDatabase extends Database
     /**
      * Returns the database file name.
      *
-     * @return String
+     * @return the database file name
      */
     public String getFilename()
     {
@@ -79,7 +79,7 @@ public abstract class FilenameDatabase extends Database
     /**
      * Sets the database file name.
      *
-     * @param filename
+     * @param filename the database file name
      */
     public void setFilename(String filename)
     {
@@ -89,7 +89,7 @@ public abstract class FilenameDatabase extends Database
     /**
      * Returns the database extension of the file name.
      *
-     * @return String
+     * @return the database extension
      */
     public String getExtension()
     {
@@ -99,7 +99,7 @@ public abstract class FilenameDatabase extends Database
     /**
      * Sets the database file name extension.
      *
-     * @param extension
+     * @param extension the database extension
      */
     public void setExtension(String extension)
     {

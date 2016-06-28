@@ -81,7 +81,7 @@ public final class DatabaseManager
      * All the migrations uses the schematic builder for manipulating
      * the database and tables.
      *
-     * @see com.sendev.databasemanager.schema.Schema;
+     * @see com.sendev.databasemanager.schema.Schema
      *
      * @return The database migrations manager instance.
      */

@@ -16,7 +16,7 @@ public class ConnectionContainer
      *
      * @see com.sendev.databasemanager.DatabaseManager
      *
-     * @param dbm
+     * @param dbm DatabaseManager instance.
      */
     public ConnectionContainer(DatabaseManager dbm)
     {

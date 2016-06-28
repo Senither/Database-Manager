@@ -12,11 +12,11 @@ public class ChatFormatter
 
     /**
      * Colourize a message, using Bukkit/Spigots
-     * standard and(&) symbol syntax.
+     * standard and(&amp;) symbol syntax.
      *
      * @param message The message the colourize.
      *
-     * @return String
+     * @return the colorized message
      */
     public String colorize(String message)
     {
@@ -25,11 +25,11 @@ public class ChatFormatter
 
     /**
      * Colourize a list of messages, using Bukkit/Spigots
-     * and(&) standard symbol syntax.
+     * and(&amp;) standard symbol syntax.
      *
      * @param messages The list of messages that should be colourized.
      *
-     * @return List
+     * @return the list of colorized messages
      */
     public List<String> colorize(List<String> messages)
     {
@@ -49,7 +49,7 @@ public class ChatFormatter
      *
      * @param message The message that should be decolourized.
      *
-     * @return String
+     * @return the decolorized message
      */
     public String decolorize(String message)
     {
@@ -63,7 +63,7 @@ public class ChatFormatter
      *
      * @param messages The messages that should be decolourized.
      *
-     * @return String
+     * @return the list of decolorized messages
      */
     public List<String> decolorize(List<String> messages)
     {
@@ -101,7 +101,7 @@ public class ChatFormatter
     }
 
     /**
-     * Send a message to a player or console
+     * Sends a message to a command sender(terminal/console or player)
      *
      * @param player  Command Sender object (Console)
      * @param message Message to send
@@ -111,30 +111,43 @@ public class ChatFormatter
         player.sendMessage(colorize(message));
     }
 
-    public void sendMessage(CommandSender player, String message, Object... paramaters)
+    /**
+     * Sends a message to a command sender(terminal/console or player)
+     *
+     * @param sender     The command sender to send the message to
+     * @param message    The message to send to the sender
+     * @param parameters Any parameters that needs to replace placeholders in the provided message
+     */
+    public void sendMessage(CommandSender sender, String message, Object... parameters)
     {
-        player.sendMessage(colorize(String.format(message, paramaters)));
+        sender.sendMessage(colorize(String.format(message, parameters)));
     }
 
     /**
-     * Send a message to a player or console
+     * Send a message to a player.
      *
-     * @param player  Player object
-     * @param message Message to send
+     * @param player  The player to send the message to
+     * @param message The message to send to the player
      */
     public void sendMessage(Player player, String message)
     {
         player.sendMessage(colorize(message));
     }
 
-    public void sendMessage(Player player, String message, Object... paramaters)
+    /**
+     * Send a message to a player.
+     *
+     * @param player     The player to send the message to
+     * @param message    The message to send to the player
+     * @param parameters Any parameters that needs to replace placeholders in the provided message
+     */
+    public void sendMessage(Player player, String message, Object... parameters)
     {
-        player.sendMessage(colorize(String.format(message, paramaters)));
+        player.sendMessage(colorize(String.format(message, parameters)));
     }
 
     /**
-     * Broadcasts a message to all players
-     * currently online on the server.
+     * Broadcasts a message to all players currently online on the server.
      *
      * @param message The message that should be broadcasted
      */
@@ -148,15 +161,14 @@ public class ChatFormatter
     }
 
     /**
-     * Broadcasts a message to all players currently online,
-     * but only if they have the given permission node.
+     * Broadcasts a message to all players currently online who has the provided permission node.
      *
-     * @param message The message that should be broadcasted.
-     * @param node    The permission node that the player should have to see the broadcast.
+     * @param message    The message that should be broadcasted.
+     * @param permission The permission node that the player should have to see the broadcast.
      */
-    public void broadcast(String message, String node)
+    public void broadcast(String message, String permission)
     {
-        if (node == null) {
+        if (permission == null) {
             broadcast(message);
             return;
         }
@@ -164,7 +176,7 @@ public class ChatFormatter
         message = colorize(message);
 
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            if (player.hasPermission(node)) {
+            if (player.hasPermission(permission)) {
                 player.sendMessage(message);
             }
         }
