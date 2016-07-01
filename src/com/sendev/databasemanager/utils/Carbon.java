@@ -873,12 +873,80 @@ public final class Carbon implements Cloneable
      */
     public String diffForHumans()
     {
+        return diffForHumans(false);
+    }
+
+    /**
+     * Get the difference between now and the carbon instance time in a human readable string.
+     *
+     * @param removeModifiers Determines if the modifiers "from now" and "ago" should be removed
+     *
+     * @return the difference between now and the carbon instance in a human readable string
+     */
+    public String diffForHumans(boolean removeModifiers)
+    {
         long unix = diff();
 
         if (unix == 0) {
             return "now";
         }
 
+        StringBuilder builder = parseDiffForHumans(unix);
+
+        if (!removeModifiers) {
+            if (isPast()) {
+                builder.append(" from now");
+            } else {
+                builder.append(" ago");
+            }
+        }
+
+        return builder.toString().trim();
+    }
+
+    /**
+     * Get the difference between the provided Carbon instance and the carbon instance time in a human readable string.
+     *
+     * @param other The carbon instance to compare with
+     *
+     * @return the difference between the provided Carbon instance and the carbon instance in a human readable string
+     */
+    public String diffForHumans(Carbon other)
+    {
+        return diffForHumans(other, false);
+    }
+
+    /**
+     * Get the difference between the provided Carbon instance and the carbon instance time in a human readable string.
+     *
+     * @param other           The carbon instance to compare with
+     * @param removeModifiers Determines if the modifiers "from now" and "ago" should be removed
+     *
+     * @return the difference between the provided Carbon instance and the carbon instance in a human readable string
+     */
+    public String diffForHumans(Carbon other, boolean removeModifiers)
+    {
+        long unix = other.diff();
+
+        if (unix == 0) {
+            return "now";
+        }
+
+        StringBuilder builder = parseDiffForHumans(unix);
+
+        if (!removeModifiers) {
+            if (isPast()) {
+                builder.append(" after");
+            } else {
+                builder.append(" before");
+            }
+        }
+
+        return builder.toString().trim();
+    }
+
+    private StringBuilder parseDiffForHumans(long unix)
+    {
         StringBuilder sb = new StringBuilder();
 
         long sec = (unix >= 60 ? unix % 60 : unix);
@@ -956,13 +1024,7 @@ public final class Carbon implements Cloneable
             sb.append("about ").append(sec).append(" seconds");
         }
 
-        if (isPast()) {
-            sb.append(" from now");
-        } else {
-            sb.append(" ago");
-        }
-
-        return sb.toString().trim();
+        return sb;
     }
 
     ///////////////////////////////////////////////////////////////////
