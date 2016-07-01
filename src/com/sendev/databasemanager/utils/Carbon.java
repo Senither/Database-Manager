@@ -111,7 +111,7 @@ public final class Carbon implements Cloneable
         }
     }
 
-    private enum SupportedFormat
+    public enum SupportedFormat
     {
         DATE("yyyy-MM-dd"),
         FORMATTED_DATE("MMMMM dd, yyyy"),
