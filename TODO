@@ -96,6 +96,9 @@ Carbon:
     ✔ lte - Less than or Equal to @done (16/06/16 02:59)
     ✔ between - This should take two arguments, both being carbon instances. @done (16/06/16 02:59)
 
+  ✔ Implement **setDayOfWeek** and **getDayOfWeek** methods. @done (02/07/16 01:07)
+  ✔ Implement timezone support @done (02/07/16 15:49)
+
 Collection:
   ✔ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key. @done (13/06/16 15:53)
       This was fixed by removing them compeltely since the methods wasen't actually needed anyway.
