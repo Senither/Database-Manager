@@ -10,17 +10,85 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+/**
+ * Carbon is the equivalent of Javas Date and Calendar utilities on steroids, the idea for
+ * Carbon was give by <i>Brian Nesbitt</i> at <a href="nesbot.com">nesbot.com</a> who
+ * created <a href="http://carbon.nesbot.com/">Carbon for PHP</a> first.
+ * <p>
+ * Carbon works as a standalone utility that runs along side DBM, it's used to help
+ * format <code>DATETIME</code> and other date fields in the database, and gives
+ * you a quick and easy way to interact with the dates and calendars.
+ *
+ * @author Alexis Tan
+ * @version 0.9.1
+ */
 public final class Carbon
 {
+    private enum Time
+    {
+        YEARS_PER_CENTURY(100),
+        YEARS_PER_DECADE(10),
+        MONTHS_PER_YEAR(12),
+        WEEKS_PER_YEAR(52),
+        DAYS_PER_WEEK(7),
+        HOURS_PER_DAY(24),
+        MINUTES_PER_HOUR(60),
+        SECONDS_PER_MINUTE(60);
+
+        private final int time;
+
+        private Time(int time)
+        {
+            this.time = time;
+        }
+
+        /**
+         * Gets the time.
+         *
+         * @return the integer time value
+         */
+        public int getTime()
+        {
+            return time;
+        }
+    }
 
     public enum Day
     {
+        /**
+         * Value of the {@link java.util.Calendar#DAY_OF_WEEK} field indicating
+         * Monday.
+         */
         MONDAY("Monday", Calendar.MONDAY),
+        /**
+         * Value of the {@link java.util.Calendar#DAY_OF_WEEK} field indicating
+         * Tuesday.
+         */
         TUESDAY("Tuesday", Calendar.TUESDAY),
+        /**
+         * Value of the {@link java.util.Calendar#DAY_OF_WEEK} field indicating
+         * Wednesday.
+         */
         WEDNESDAY("Wednesday", Calendar.WEDNESDAY),
+        /**
+         * Value of the {@link java.util.Calendar#DAY_OF_WEEK} field indicating
+         * Thursday.
+         */
         THURSDAY("Thursday", Calendar.THURSDAY),
+        /**
+         * Value of the {@link java.util.Calendar#DAY_OF_WEEK} field indicating
+         * Friday.
+         */
         FRIDAY("Friday", Calendar.FRIDAY),
+        /**
+         * Value of the {@link java.util.Calendar#DAY_OF_WEEK} field indicating
+         * Saturday.
+         */
         SATURDAY("Saturday", Calendar.SATURDAY),
+        /**
+         * Value of the {@link java.util.Calendar#DAY_OF_WEEK} field indicating
+         * Sunday.
+         */
         SUNDAY("Sunday", Calendar.SUNDAY);
 
         private final String name;
@@ -73,7 +141,7 @@ public final class Carbon
         {
             int day = getId() + 1;
 
-            return day > 7 ? SUNDAY : fromId(id);
+            return day > 7 ? SUNDAY : fromId(day);
         }
 
         /**
@@ -97,48 +165,73 @@ public final class Carbon
 
     }
 
-    private enum Time
-    {
-
-        YEARS_PER_CENTURY(100),
-        YEARS_PER_DECADE(10),
-        MONTHS_PER_YEAR(12),
-        WEEKS_PER_YEAR(52),
-        DAYS_PER_WEEK(7),
-        HOURS_PER_DAY(24),
-        MINUTES_PER_HOUR(60),
-        SECONDS_PER_MINUTE(60);
-
-        private final int time;
-
-        private Time(int time)
-        {
-            this.time = time;
-        }
-
-        /**
-         * Gets the time.
-         *
-         * @return the integer time value
-         */
-        public int getTime()
-        {
-            return time;
-        }
-    }
-
     public enum SupportedFormat
     {
+        /**
+         * Generates a date time string, example:
+         * <p>
+         * 1975-12-25 14:15:16
+         */
         DATE_TIME("yyyy-MM-dd HH:mm:ss"),
+        /**
+         * Generates a date string, example:
+         * <p>
+         * 1975-12-25
+         */
         DATE("yyyy-MM-dd"),
+        /**
+         * Generates a formatted date string, example:
+         * <p>
+         * Dec 25, 1975
+         */
         FORMATTED_DATE("MMMMM dd, yyyy"),
+        /**
+         * Generates a time string, example:
+         * <p>
+         * 14:15:16
+         */
         TIME("HH:mm:ss"),
+        /**
+         * Generates a time offset time string, example:
+         * <p>
+         * 14:15:16-05:00
+         */
         TIME_OFFSET("HH:mm:ssXXX"),
+        /**
+         * Generates a day date time string, example:
+         * <p>
+         * Thu, Dec 25, 1975 2:15 PM
+         */
         DAY_DATE_TIME("EEE, MMM dd, yyyy h:mm aaa"),
+        /**
+         * Generates a cookie time string, example:
+         * <p>
+         * Thursday, 25-Dec-1975 14:15:16 EST
+         */
         COOKIE("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z"),
+        /**
+         * Generates a RFC 822 time string, example:
+         * <p>
+         * Thu, 25 Dec 1975 14:15:16 -0500
+         */
         RFC_822("EEE, dd MMM yyyy HH:mm:ss Z"),
+        /**
+         * Generates a RFC 850 time string, example:
+         * <p>
+         * Thursday, 25-Dec-1975 14:15:16 EST
+         */
         RFC_850("EEEEEEEE, dd-MMM-yyyy HH:mm:ss z"),
+        /**
+         * Generates a RFC 1036 time string, example:
+         * <p>
+         * 1975-12-25T14:15:16-05:00
+         */
         RFC_1036("EEE, dd MMM yyyy HH:mm:ssXXX"),
+        /**
+         * Generates a RSS time string, example:
+         * <p>
+         * Thu, 25 Dec 1975 14:15:16 -0500
+         */
         RSS("EEE, dd MMM yyyy HH:mm:ss Z");
 
         private final String string;
@@ -148,16 +241,35 @@ public final class Carbon
             this.string = string;
         }
 
+        /**
+         * Gets the {@link java.text.SimpleDateFormat} format as a string.
+         *
+         * @return the {@link java.text.SimpleDateFormat} format as a string.
+         */
         public String getFormat()
         {
             return string;
         }
 
+        /**
+         * Creates a {@link java.text.SimpleDateFormat} object from the format string.
+         *
+         * @return the {@link java.text.SimpleDateFormat} format what was created.
+         */
         public SimpleDateFormat make()
         {
             return new SimpleDateFormat(string);
         }
 
+        /**
+         * Attempts to parse the provided time string with the format.
+         *
+         * @param time The time string to try and parse
+         *
+         * @return the created {@link java.util.Date} object from the time string.
+         *
+         * @throws ParseException if the provided time doesn't match the provided format.
+         */
         public Date parse(String time) throws ParseException
         {
             return make().parse(time);
@@ -182,9 +294,8 @@ public final class Carbon
     private TimeZone timezone;
 
     /**
-     * Attempts to create a new Carbon instance with the current date and time.
-     *
-     * @see java.text.SimpleDateFormat
+     * Creates a new new Carbon instance with the current date and time,
+     * this is the same as the {@link Carbon#now() static now()} method.
      */
     public Carbon()
     {
@@ -452,6 +563,27 @@ public final class Carbon
         return now().subDay().startOfDay().setTimezone(timezone);
     }
 
+    /**
+     * Creates a new Carbon instance from the provided date information, the
+     * date information is provided in the form of a varargs object.
+     * <p>
+     * The arguments can be formatted as followed:
+     * <ol>
+     * <li>Year - Can be a integer or <code>NULL</code></li>
+     * <li>Month - Can be a integer or <code>NULL</code></li>
+     * <li>Day of Month - Can be a integer or <code>NULL</code></li>
+     * <li>TimeZone - Can be a String or <code>NULL</code></li>
+     * </ol>
+     * <p>
+     * If <code>NULL</code> is used for any of the arguments, the current
+     * date value for that filed will be used instead.
+     * <p>
+     * The time values will default to now.
+     *
+     * @param params The varargs object that contains the date information
+     *
+     * @return a Carbon instance with the provided date.
+     */
     public static Carbon createFromDate(Object... params)
     {
         Carbon carbon = new Carbon();
@@ -485,6 +617,27 @@ public final class Carbon
         return carbon;
     }
 
+    /**
+     * Creates a new Carbon instance from the provided time information, the
+     * time information is provided in the form of a varargs object.
+     * <p>
+     * The arguments can be formatted as followed:
+     * <ol>
+     * <li>Hour - Can be a integer or <code>NULL</code></li>
+     * <li>Minute - Can be a integer or <code>NULL</code></li>
+     * <li>Second - Can be a integer or <code>NULL</code></li>
+     * <li>TimeZone - Can be a String or <code>NULL</code></li>
+     * </ol>
+     * <p>
+     * If <code>NULL</code> is used for any of the arguments, the current
+     * time value for that filed will be used instead.
+     * <p>
+     * The date values will default to now.
+     *
+     * @param params The varargs object that contains the date information
+     *
+     * @return a Carbon instance with the provided time.
+     */
     public static Carbon createFromTime(Object... params)
     {
         Carbon carbon = new Carbon();
@@ -518,6 +671,29 @@ public final class Carbon
         return carbon;
     }
 
+    /**
+     * Creates a new Carbon instance from the provided date and time information,
+     * the date and time information is provided in the form of a varargs object.
+     * <p>
+     * The arguments can be formatted as followed:
+     * <ol>
+     * <li>Year - Can be a integer or <code>NULL</code></li>
+     * <li>Month - Can be a integer or <code>NULL</code></li>
+     * <li>Day of Month - Can be a integer or <code>NULL</code></li>
+     * <li>Hour - Can be a integer or <code>NULL</code></li>
+     * <li>Minute - Can be a integer or <code>NULL</code></li>
+     * <li>Second - Can be a integer or <code>NULL</code></li>
+     * <li>TimeZone - Can be a String or <code>NULL</code></li>
+     * </ol>
+     * <p>
+     * If <code>NULL</code> is used for any of the arguments, the current
+     * date or time value for that filed will be used instead.
+     * <p>
+     *
+     * @param params The varargs object that contains the date and time information
+     *
+     * @return a Carbon instance with the provided date and time.
+     */
     public static Carbon create(Object... params)
     {
         Carbon carbon = new Carbon();
@@ -563,6 +739,14 @@ public final class Carbon
         return carbon;
     }
 
+    /**
+     * Convert a object to an integer if possible.
+     *
+     * @param obj The object to convert to an integer
+     *
+     * @return either (1) the integer converted from the object
+     *         or (2) 0 if an error occurred or the object is <code>NULL</code>.
+     */
     private static int parseObj(Object obj)
     {
         if (obj == null) {
@@ -576,6 +760,20 @@ public final class Carbon
         }
     }
 
+    /**
+     * Creates a new Carbon instance from the provided time string
+     * and {@link java.text.SimpleDateFormat} string format, if
+     * the format is invalid an {@link IllegalArgumentException} will be thrown.
+     *
+     * @param format The {@link java.text.SimpleDateFormat} to use
+     * @param time   The time string that should be parsed
+     *
+     * @return a new Carbon instance from the provided time string and format.
+     *
+     * @throws ParseException           if the provided time doesn't match the provided format.
+     * @throws IllegalArgumentException if the provided {@link java.text.SimpleDateFormat}
+     *                                  string format is invalid.
+     */
     public static Carbon createFromFormat(String format, String time) throws ParseException
     {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -585,6 +783,21 @@ public final class Carbon
         return new Carbon(date);
     }
 
+    /**
+     * Creates a new Carbon instance from the provided time string
+     * and {@link java.text.SimpleDateFormat} string format, if
+     * the format is invalid an {@link IllegalArgumentException} will be thrown.
+     *
+     * @param format   The {@link java.text.SimpleDateFormat} to use
+     * @param time     The time string that should be parsed
+     * @param timezone The timezone that should be used
+     *
+     * @return a new Carbon instance from the provided time string and format.
+     *
+     * @throws ParseException           if the provided time doesn't match the provided format.
+     * @throws IllegalArgumentException if the provided {@link java.text.SimpleDateFormat}
+     *                                  string format is invalid.
+     */
     public static Carbon createFromFormat(String format, String time, String timezone) throws ParseException
     {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -594,6 +807,21 @@ public final class Carbon
         return new Carbon(date).setTimezone(timezone);
     }
 
+    /**
+     * Creates a new Carbon instance from the provided time string
+     * and {@link java.text.SimpleDateFormat} string format, if
+     * the format is invalid an {@link IllegalArgumentException} will be thrown.
+     *
+     * @param format   The {@link java.text.SimpleDateFormat} to use
+     * @param time     The time string that should be parsed
+     * @param timezone The timezone that should be used
+     *
+     * @return a new Carbon instance from the provided time string and format.
+     *
+     * @throws ParseException           if the provided time doesn't match the provided format.
+     * @throws IllegalArgumentException if the provided {@link java.text.SimpleDateFormat}
+     *                                  string format is invalid.
+     */
     public static Carbon createFromFormat(String format, String time, TimeZone timezone) throws ParseException
     {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -606,6 +834,18 @@ public final class Carbon
     ///////////////////////////////////////////////////////////////////
     ///////////////////////// GETTERS AND SETTERS /////////////////////
     ///////////////////////////////////////////////////////////////////
+    /**
+     * Sets the given calendar field to the given value. The value is not
+     * interpreted by this method regardless of the leniency mode.
+     *
+     * @param field the given calendar field.
+     * @param value the value to be set for the given calendar field.
+     *
+     * @throws ArrayIndexOutOfBoundsException if the specified field is out of range
+     *                                        (<code>field &lt; 0 || field &gt;= FIELD_COUNT</code>).
+     *
+     * @return the Carbon instance
+     */
     public Carbon set(int field, int value)
     {
         time.set(field, value);
@@ -613,6 +853,22 @@ public final class Carbon
         return this;
     }
 
+    /**
+     * Returns the value of the given calendar field. In lenient mode,
+     * all calendar fields are normalized. In non-lenient mode, all
+     * calendar fields are validated and this method throws an
+     * exception if any calendar fields have out-of-range values. The
+     * normalization and validation are handled by the
+     * {@link java.util.Calendar#complete()} method, which process is calendar
+     * system dependent.
+     *
+     * @param field the given calendar field.
+     *
+     * @return the value for the given calendar field.
+     *
+     * @throws ArrayIndexOutOfBoundsException if the specified field is out of range
+     *                                        (<code>field &lt; 0 || field &gt;= FIELD_COUNT</code>).
+     */
     public int get(int field)
     {
         return time.get(field);
@@ -737,7 +993,7 @@ public final class Carbon
      *
      * @see Day
      *
-     * @return
+     * @return the Day object that match the current day of the week.
      */
     public Day getDayOfWeek()
     {
@@ -833,26 +1089,53 @@ public final class Carbon
         return get(Calendar.YEAR);
     }
 
+    /**
+     * Gets the day of year from the carbon instance.
+     *
+     * @return the day of the year of the carbon instance.
+     */
     public int getDayOfYear()
     {
         return get(Calendar.DAY_OF_YEAR);
     }
 
+    /**
+     * Gets the week of the month from the carbon instance.
+     *
+     * @return the week of the month of the carbon instance.
+     */
     public int getWeekOfMonth()
     {
         return get(Calendar.WEEK_OF_MONTH);
     }
 
+    /**
+     * Gets the week of year from the carbon instance.
+     *
+     * @return the week of the year of the carbon instance.
+     */
     public int getWeekOfYear()
     {
         return get(Calendar.WEEK_OF_YEAR);
     }
 
+    /**
+     * Gets the numeric value of how many days there are in the current month.
+     *
+     * @return the numeric value of how many days there are in the current month.
+     */
     public int getDaysInMonth()
     {
         return time.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
+    /**
+     * Sets a timestamp to the current date and time, the timestamp should be in seconds.
+     *
+     * @param timestamp the time in seconds since epoch.
+     *
+     * @return the Carbon instance with the new date and time.
+     */
     public Carbon setTimestamp(long timestamp)
     {
         time.setTime(new Date(timestamp * 1000));
@@ -860,16 +1143,35 @@ public final class Carbon
         return this;
     }
 
+    /**
+     * Gets the current time since epoch in seconds.
+     *
+     * @return the current time since epoch in seconds.
+     */
     public long getTimestamp()
     {
         return time.getTimeInMillis() / 1000;
     }
 
+    /**
+     * Gets the current quarter of the year.
+     *
+     * @return the current quarter of the year.
+     */
     public int getQuarter()
     {
         return (get(Calendar.MONTH) / 3) + 1;
     }
 
+    /**
+     * Gets the age of the Carbon instance, it's just a fancy way of getting
+     * the difference between now and the carbon instances time.
+     * <p>
+     * <strong>Note:</strong> The method will always return a positive integer,
+     * even when the carbon instance is set into the future.
+     *
+     * @return the age of the carbon instance.
+     */
     public int getAge()
     {
         Carbon carbon = new Carbon();
@@ -887,6 +1189,14 @@ public final class Carbon
         return time;
     }
 
+    /**
+     * Sets the current timezone used to format the datetime outputs,
+     * if <code>NULL</code> parsed nothing will be set.
+     *
+     * @param timezone the timezone to use
+     *
+     * @return the Carbon instance.
+     */
     public Carbon setTimezone(TimeZone timezone)
     {
         if (timezone != null) {
@@ -896,16 +1206,39 @@ public final class Carbon
         return this;
     }
 
+    /**
+     * Sets the current timezone used to format the datetime outputs,
+     * if <code>NULL</code> parsed nothing will be set.
+     *
+     * @param timezone the timezone to use
+     *
+     * @return the Carbon instance.
+     */
     public Carbon setTimezone(String timezone)
     {
         return setTimezone(TimeZone.getTimeZone(timezone));
     }
 
+    /**
+     * Gets the current timezone used to format the datetime outputs.
+     *
+     * @return the current timezone used to format the datetime outputs.
+     */
     public TimeZone getTimezone()
     {
         return timezone;
     }
 
+    /**
+     * Sets the first day of the week, used by {@link #startOfWeek() } to
+     * set the date to the first day of the week.
+     * <p>
+     * The last day of the week will also be set using the {@link Day#getYesterday() } method.
+     *
+     * @param day The day to set as the first day of the week
+     *
+     * @return the Carbon instance.
+     */
     public Carbon setFirstDayOfWeek(Day day)
     {
         WEEK_START_AT = day;
@@ -914,6 +1247,16 @@ public final class Carbon
         return this;
     }
 
+    /**
+     * Sets the last day of the week, used by {@link #endOfWeek() } to
+     * set the date to the last day of the week.
+     * <p>
+     * The first day of the week will also be set using the {@link Day#getTomorrow() } method.
+     *
+     * @param day The day to set as the last day of the week.
+     *
+     * @return the Carbon instance.
+     */
     public Carbon setLastDayOfWeek(Day day)
     {
         WEEK_END_AT = day;
@@ -922,26 +1265,66 @@ public final class Carbon
         return this;
     }
 
+    /**
+     * Sets the carbon instances date to the provided year, month a day.
+     *
+     * @param year  The year to set
+     * @param month The month to set
+     * @param day   The day to set
+     *
+     * @return the Carbon instance.
+     */
     public Carbon setDate(int year, int month, int day)
     {
         return setYear(year).setMonth(month).setDay(day);
     }
 
+    /**
+     * Sets the carbon instance time to the provided hour, minute and second.
+     *
+     * @param hour   The hour to set
+     * @param minute The minute to set
+     * @param second The second to set
+     *
+     * @return the Carbon instance.
+     */
     public Carbon setTime(int hour, int minute, int second)
     {
         return setHour(hour).setMinute(minute).setSecond(second);
     }
 
+    /**
+     * Sets the carbon instances date and time to the provided year, month, day, hour, minute and second.
+     *
+     * @param year   The year to set
+     * @param month  The month to set
+     * @param day    The day to set
+     * @param hour   The hour to set
+     * @param minute The minute to set
+     * @param second The second to set
+     *
+     * @return the Carbon instance.
+     */
     public Carbon setDateTime(int year, int month, int day, int hour, int minute, int second)
     {
         return setDate(year, month, day).setTime(hour, minute, second);
     }
 
+    /**
+     * Sets the global {@link #toString() } format, by default
+     * the {@link SupportedFormat#DATE_TIME date time} is used.
+     *
+     * @param format The format to set
+     */
     public static void setToStringFormat(String format)
     {
         toStringFormat = format;
     }
 
+    /**
+     * Resets the global {@link #toString() } format back to the
+     * default {@link SupportedFormat#DATE_TIME date time} format.
+     */
     public static void resetToStringFormat()
     {
         toStringFormat = SupportedFormat.DATE_TIME.getFormat();
@@ -950,18 +1333,40 @@ public final class Carbon
     ///////////////////////////////////////////////////////////////////
     /////////////////// ADDITIONS AND SUBTRACTIONS ////////////////////
     ///////////////////////////////////////////////////////////////////
-    public Carbon add(int field, int value)
+    /**
+     * Adds the specified amount of time to the given calendar field,
+     * based on the calendar's rules. For example, to add 5 days to
+     * the current time of the calendar, you can achieve it by calling:
+     * <p>
+     * <code>add(Calendar.DAY_OF_MONTH, 5)</code>.
+     *
+     * @param field  the calendar field.
+     * @param amount the amount of date or time to be added to the field.
+     *
+     * @return the Carbon instance.
+     */
+    public Carbon add(int field, int amount)
     {
-//        System.out.println("getPositive: " + getPositive(value) + ":" + value);
-        time.add(field, getPositive(value));
+        time.add(field, getPositive(amount));
 
         return this;
     }
 
-    public Carbon sub(int field, int value)
+    /**
+     * Subtracts the specified amount of time from the given calendar field,
+     * based on the calendar's rules. For example, to subtract 5 days from
+     * the current time of the calendar, you can achieve it by calling:
+     * <p>
+     * <code>sub(Calendar.DAY_OF_MONTH, 5)</code>.
+     *
+     * @param field  the calendar field.
+     * @param amount the amount of date or time to be added to the field.
+     *
+     * @return the Carbon instance.
+     */
+    public Carbon sub(int field, int amount)
     {
-//        System.out.println("getNegative: " + getNegative(value) + ":" + value);
-        time.add(field, getNegative(value));
+        time.add(field, getNegative(amount));
 
         return this;
     }
@@ -1295,41 +1700,114 @@ public final class Carbon
     ///////////////////////////////////////////////////////////////////
     /////////////////////////// COMPARISON ////////////////////////////
     ///////////////////////////////////////////////////////////////////
+    /**
+     * Compares the provided carbon object with the carbon instances, to see if they're equal.
+     *
+     * @param value The carbon instance to compare with
+     *
+     * @return either (1) <code>TRUE</code> if the provided carbon instance matches
+     *         or (2) <code>FALSE</code> if they don't match.
+     */
     public boolean eq(Carbon value)
     {
         return getTimestamp() == value.getTimestamp();
     }
 
+    /**
+     * Compares the provided carbon object with the carbon instances, to see if they're not equal.
+     *
+     * @param value The carbon instance to compare with
+     *
+     * @return either (1) <code>TRUE</code> if the provided carbon instance matches
+     *         or (2) <code>FALSE</code> if they don't match.
+     */
     public boolean ne(Carbon value)
     {
         return !eq(value);
     }
 
+    /**
+     * Compares the provided carbon object with the carbon instances.
+     * Checks if the current carbon instance is greater than the provided instance.
+     *
+     * @param value The carbon instance to compare with
+     *
+     * @return either (1) <code>TRUE</code> if the current instance is greater than the provided instance
+     *         or (2) <code>FALSE</code> if it isn't greater than the provided instance.
+     */
     public boolean gt(Carbon value)
     {
         return time.after(value.getTime());
     }
 
+    /**
+     * Compares the provided carbon object with the carbon instances.
+     * Checks if the current carbon instance is greater than or equal to the provided instance.
+     *
+     * @param value The carbon instance to compare with
+     *
+     * @return either (1) <code>TRUE</code> if the current instance is greater than or equal to the provided instance
+     *         or (2) <code>FALSE</code> if it isn't greater than or equal to the provided instance.
+     */
     public boolean gte(Carbon value)
     {
         return gt(value) || eq(value);
     }
 
+    /**
+     * Compares the provided carbon object with the carbon instances.
+     * Checks if the current carbon instance is less than the provided instance.
+     *
+     * @param value The carbon instance to compare with
+     *
+     * @return either (1) <code>TRUE</code> if the current instance is less than the provided instance
+     *         or (2) <code>FALSE</code> if it isn't less than the provided instance.
+     */
     public boolean lt(Carbon value)
     {
         return time.before(value.getTime());
     }
 
+    /**
+     * Compares the provided carbon object with the carbon instances.
+     * Checks if the current carbon instance is less than or equal to the provided instance.
+     *
+     * @param value The carbon instance to compare with
+     *
+     * @return either (1) <code>TRUE</code> if the current instance is less than or equal to the provided instance
+     *         or (2) <code>FALSE</code> if it isn't less than or equal to the provided instance.
+     */
     public boolean lte(Carbon value)
     {
         return lt(value) || eq(value);
     }
 
+    /**
+     * Compares the provided carbon objects with the carbon instances.
+     * Checks if the current carbon instance is between the two provided carbon instances, or equal to either of them.
+     *
+     * @param first  The first carbon instance to compare with
+     * @param second The second carbon instance to compare with
+     *
+     * @return either (1) <code>TRUE</code> if the current instance is between the two provided instances
+     *         or (2) <code>FALSE</code> if the current instance isn't between the two provided instances.
+     */
     public boolean between(Carbon first, Carbon second)
     {
         return between(first, second, true);
     }
 
+    /**
+     * Compares the provided carbon objects with the carbon instances.
+     * Checks if the current carbon instance is between the two provided carbon instances.
+     *
+     * @param first      The first carbon instance to compare with
+     * @param second     The second carbon instance to compare with
+     * @param matchEqual Determines if a equal operator should be used as-well
+     *
+     * @return either (1) <code>TRUE</code> if the current instance is between the two provided instances
+     *         or (2) <code>FALSE</code> if the current instance isn't between the two provided instances.
+     */
     public boolean between(Carbon first, Carbon second, boolean matchEqual)
     {
         if (matchEqual && (eq(first) || eq(second))) {
@@ -1342,6 +1820,12 @@ public final class Carbon
     ///////////////////////////////////////////////////////////////////
     /////////////////////////// DIFFERENCES ///////////////////////////
     ///////////////////////////////////////////////////////////////////
+    /**
+     * Checks to see if the current date of the carbon instance matches yesterdays date.
+     *
+     * @return either (1) <code>TRUE</code> if the current date is the same as yesterdays date
+     *         or (2) <code>FALSE</code> if it doesn't match.
+     */
     public boolean isYesterday()
     {
         Carbon carbon = new Carbon().subDay();
@@ -1349,6 +1833,12 @@ public final class Carbon
         return carbon.getYear() == getYear() && carbon.getMonth() == getMonth() && carbon.getDay() == getDay();
     }
 
+    /**
+     * Checks to see if the current date of the carbon instance matches todays date.
+     *
+     * @return either (1) <code>TRUE</code> if the current date is the same as todays date
+     *         or (2) <code>FALSE</code> if it doesn't match.
+     */
     public boolean isToday()
     {
         Carbon carbon = new Carbon();
@@ -1356,6 +1846,12 @@ public final class Carbon
         return carbon.getYear() == getYear() && carbon.getMonth() == getMonth() && carbon.getDay() == getDay();
     }
 
+    /**
+     * Checks to see if the current date of the carbon instance matches tomorrows date.
+     *
+     * @return either (1) <code>TRUE</code> if the current date is the same as tomorrows date
+     *         or (2) <code>FALSE</code> if it doesn't match.
+     */
     public boolean isTomorrow()
     {
         Carbon carbon = new Carbon().addDay();
@@ -1364,9 +1860,10 @@ public final class Carbon
     }
 
     /**
-     * Checks to see if the Carbon instance is currently set in the past.
+     * Checks to see if the current date of the carbon instance is set in the past.
      *
-     * @return true if the carbon date is set in the past.
+     * @return either (1) <code>TRUE</code> if the current date is set to the past
+     *         or (2) <code>FALSE</code> if it's set to the present or future.
      */
     public boolean isPast()
     {
@@ -1374,9 +1871,10 @@ public final class Carbon
     }
 
     /**
-     * Checks to see if the Carbon instance is currently set in the future.
+     * Checks to see if the current date of the carbon instance is set in the future.
      *
-     * @return true if the carbon date is set in the future.
+     * @return either (1) <code>TRUE</code> if the current date is set to the future
+     *         or (2) <code>FALSE</code> if it's set to the present or past.
      */
     public boolean isFuture()
     {
@@ -1384,9 +1882,16 @@ public final class Carbon
     }
 
     /**
-     * Checks to see if the Carbon instance date is currently set to a weekday.
+     * Checks to see if the current day of the carbon instance is set on a weekday.
      *
-     * @return true if the carbon date is set to a weekday
+     * @see Day#MONDAY
+     * @see Day#TUESDAY
+     * @see Day#WEDNESDAY
+     * @see Day#THURSDAY
+     * @see Day#FRIDAY
+     *
+     * @return either (1) <code>TRUE</code> if the current day is set to a weekday
+     *         or (2) <code>FALSE</code> if it's set to a weekend day.
      */
     public boolean isWeekday()
     {
@@ -1394,25 +1899,53 @@ public final class Carbon
     }
 
     /**
-     * Checks to see if the Carbon instance date is currently set to a weekend.
+     * Checks to see if the current day of the carbon instance is set on a weekday.
      *
-     * @return true if the carbon date is set to a weekend
+     * @see Day#MONDAY
+     * @see Day#TUESDAY
+     * @see Day#WEDNESDAY
+     * @see Day#THURSDAY
+     * @see Day#FRIDAY
+     *
+     * @return either (1) <code>TRUE</code> if the current day is set to a weekday
+     *         or (2) <code>FALSE</code> if it's set to a weekend day.
      */
     public boolean isWeekend()
     {
-        return WEEKEND_DAYS.stream().anyMatch(( day ) -> (day.getId() == getDay()));
+        int currentDay = getDay();
+
+        return WEEKEND_DAYS.stream().anyMatch(( day ) -> (day.getId() == currentDay));
     }
 
+    /**
+     * Checks to see if the current year is a leap year.
+     *
+     * @return <code>TRUE</code> if the year is a leap year, <code>FALSE</code> otherwise.
+     */
     public boolean isLeapYear()
     {
         return time.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
     }
 
+    /**
+     * Checks to see if the current day matches the provided carbon instances day.
+     *
+     * @param other The carbon instance to compare with
+     *
+     * @return <code>TRUE</code> if the day matches, <code>FALSE</code> otherwise.
+     */
     public boolean isSameDay(Carbon other)
     {
         return getYear() == other.getYear() && getMonth() == other.getMonth() && getDay() == other.getDay();
     }
 
+    /**
+     * Checks to see if the current day and month matches the provided carbon instances day and month.
+     *
+     * @param other The carbon instance to compare with
+     *
+     * @return <code>TRUE</code> if the day and month matches, <code>FALSE</code> otherwise.
+     */
     public boolean isBirthday(Carbon other)
     {
         return getMonth() == other.getMonth() && getDay() == other.getDay();
@@ -1423,7 +1956,7 @@ public final class Carbon
      *
      * @return the difference between now and the carbon instance in seconds
      */
-    public long diff()
+    public long diffInSeconds()
     {
         long current = System.currentTimeMillis();
         long unixTime = time.getTimeInMillis();
@@ -1431,6 +1964,159 @@ public final class Carbon
         long value = (current - unixTime) / 1000;
 
         return value >= 0 ? value : value * -1;
+    }
+
+    /**
+     * Gets the difference between the provided carbon instance and the carbon instance in seconds.
+     *
+     * @param other The carbon instance to compare with
+     *
+     * @return the difference between now and the carbon instance in seconds
+     */
+    public long diffInSeconds(Carbon other)
+    {
+        long current = other.getTime().getTimeInMillis();
+        long unixTime = time.getTimeInMillis();
+
+        long value = (current - unixTime) / 1000;
+
+        return value >= 0 ? value : value * -1;
+    }
+
+    /**
+     * Gets the difference between now and the carbon instance in minutes.
+     *
+     * @return the difference between now and the carbon instance in minutes.
+     */
+    public long diffInMinutes()
+    {
+        return diffInSeconds() / Time.SECONDS_PER_MINUTE.getTime();
+    }
+
+    /**
+     * Gets the difference between the provided carbon instance and the current carbon instance in minutes.
+     *
+     * @param other The carbon instance to compare with.
+     *
+     * @return the difference between now and the carbon instance in minutes.
+     */
+    public long diffInMinutes(Carbon other)
+    {
+        return diffInSeconds(other) / Time.SECONDS_PER_MINUTE.getTime();
+    }
+
+    /**
+     * Gets the difference between now and the carbon instance in hours.
+     *
+     * @return the difference between now and the carbon instance in hours.
+     */
+    public long diffInHours()
+    {
+        return diffInMinutes() / Time.MINUTES_PER_HOUR.getTime();
+    }
+
+    /**
+     * Gets the difference between the provided carbon instance and the current carbon instance in hours.
+     *
+     * @param other The carbon instance to compare with.
+     *
+     * @return the difference between now and the carbon instance in hours.
+     */
+    public long diffInHours(Carbon other)
+    {
+        return diffInMinutes(other) / Time.MINUTES_PER_HOUR.getTime();
+    }
+
+    /**
+     * Gets the difference between now and the carbon instance in days.
+     *
+     * @return the difference between now and the carbon instance in days.
+     */
+    public long diffInDays()
+    {
+        return diffInHours() / Time.HOURS_PER_DAY.getTime();
+    }
+
+    /**
+     * Gets the difference between the provided carbon instance and the current carbon instance in days.
+     *
+     * @param other The carbon instance to compare with.
+     *
+     * @return the difference between now and the carbon instance in days.
+     */
+    public long diffInDays(Carbon other)
+    {
+        return diffInHours(other) / Time.HOURS_PER_DAY.getTime();
+    }
+
+    /**
+     * Gets the difference between now and the carbon instance in weeks.
+     *
+     * @return the difference between now and the carbon instance in weeks.
+     */
+    public long diffInWeeks()
+    {
+        return diffInDays() / Time.DAYS_PER_WEEK.getTime();
+    }
+
+    /**
+     * Gets the difference between the provided carbon instance and the current carbon instance in weeks.
+     *
+     * @param other The carbon instance to compare with.
+     *
+     * @return the difference between now and the carbon instance in weeks.
+     */
+    public long diffInWeeks(Carbon other)
+    {
+        return diffInDays(other) / Time.DAYS_PER_WEEK.getTime();
+    }
+
+    /**
+     * Gets the difference between now and the carbon instance in months.
+     *
+     * @return the difference between now and the carbon instance in months.
+     */
+    public long diffInMonths()
+    {
+        Carbon now = new Carbon();
+
+        return getPositive((getYear() - now.getYear()) * 12 + time.get(Calendar.MONTH) - now.getTime().get(Calendar.MONTH));
+    }
+
+    /**
+     * Gets the difference between the provided carbon instance and the current carbon instance in months.
+     *
+     * @param other The carbon instance to compare with.
+     *
+     * @return the difference between now and the carbon instance in months.
+     */
+    public long diffInMonths(Carbon other)
+    {
+        return getPositive((getYear() - other.getYear()) * 12 + time.get(Calendar.MONTH) - other.getTime().get(Calendar.MONTH));
+    }
+
+    /**
+     * Gets the difference between now and the carbon instance in years.
+     *
+     * @return the difference between now and the carbon instance in years.
+     */
+    public long diffInYears()
+    {
+        Carbon now = new Carbon();
+
+        return getPositive(now.getYear() - getYear());
+    }
+
+    /**
+     * Gets the difference between the provided carbon instance and the current carbon instance in years.
+     *
+     * @param other The carbon instance to compare with.
+     *
+     * @return the difference between now and the carbon instance in years.
+     */
+    public long diffInYears(Carbon other)
+    {
+        return getPositive(other.getYear() - getYear());
     }
 
     /**
@@ -1452,7 +2138,7 @@ public final class Carbon
      */
     public String diffForHumans(boolean removeModifiers)
     {
-        long unix = diff();
+        long unix = diffInSeconds();
 
         if (unix == 0) {
             return "now";
@@ -1525,7 +2211,6 @@ public final class Carbon
         long months = (unix = (unix / 30)) >= 12 ? unix % 12 : unix;
         long years = (unix / 12);
 
-//        System.out.println(String.format("parseDiffForHumans: [sec:%s, min:%s, hrs:%s, days:%s, months:%s, years:%s]", sec, min, hrs, days, months, years));
         if (years > 0) {
             if (years == 1) {
                 sb.append("a year");
@@ -1693,6 +2378,7 @@ public final class Carbon
 
     /**
      * Generates a date string, example:
+     * <p>
      *
      * 1975-12-25
      *
@@ -1717,7 +2403,7 @@ public final class Carbon
 
     /**
      * Generates a time string, example:
-     *
+     * <p>
      * 14:15:16
      *
      * @return The generated time string
@@ -1741,7 +2427,7 @@ public final class Carbon
 
     /**
      * Generates a date time string, example:
-     *
+     * <p>
      * 1975-12-25 14:15:16
      *
      * @return The generated date time string
@@ -1901,6 +2587,13 @@ public final class Carbon
         return format(format.getFormat());
     }
 
+    /**
+     * Creates a copy of the current Carbon instance.
+     *
+     * @see #Carbon(com.sendev.databasemanager.utils.Carbon)
+     *
+     * @return a copy of the current Carbon instance
+     */
     public Carbon copy()
     {
         return new Carbon(this);
