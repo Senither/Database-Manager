@@ -3,7 +3,6 @@ package com.sendev.databasemanager.plugin;
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.plugin.commands.CommandHandler;
-import com.sendev.databasemanager.plugin.commands.EditCommand;
 import com.sendev.databasemanager.plugin.commands.HelpCommand;
 import com.sendev.databasemanager.plugin.commands.PluginsCommand;
 import com.sendev.databasemanager.plugin.commands.VersionCommand;
@@ -59,7 +58,7 @@ public class DBMPlugin extends JavaPlugin
         command.registerCommand(new HelpCommand(this));
         command.registerCommand(new VersionCommand(this), true);
         command.registerCommand(new PluginsCommand(this));
-        command.registerCommand(new EditCommand(this));
+//        command.registerCommand(new EditCommand(this));
 
         getCommand("databasemanager").setExecutor(command);
 

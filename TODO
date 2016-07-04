@@ -180,3 +180,5 @@ Commands:
     Make the permission node **databasemanager.admin**
     ✔ How many plugins are using DBM @done (14/06/16 21:20)
     ✔ How many connections each plugin has @done (14/06/16 21:20)
+
+  ✔ Disable the edit commands until it is completely finished. @done (04/07/16 03:54)

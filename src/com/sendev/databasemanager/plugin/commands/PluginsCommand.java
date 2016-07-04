@@ -47,9 +47,12 @@ public class PluginsCommand extends DBMCommand
         }
 
         containers.values().stream().forEach(( container ) -> {
-            int size = container.getInstance().getConnections().getConnections().size();
+            int connSize = container.getInstance().getConnections().getConnections().size();
+            int migrSize = container.getInstance().migrations().getMigrations().size();
 
-            chat().sendMessage(player, "&3&m&l ]&3[ &7&o&l%s &7with &l%s &7connection%s.", container.getName(), size, (size == 1) ? "" : "s");
+            chat().sendMessage(player, "&3&m&l ]&3[ &7&o&l%s &7with &l%s &7connection%s and &l%s &7migration%s", container.getName(), 
+                connSize, (connSize == 1) ? "" : "s",
+                migrSize, (migrSize == 1) ? "" : "s");
         });
 
         return true;
