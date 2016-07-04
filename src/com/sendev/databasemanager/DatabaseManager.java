@@ -226,6 +226,10 @@ public final class DatabaseManager
      */
     public Collection query(String connection, String query) throws SQLException, DatabaseException
     {
+        if (connection == null) {
+            return query(query);
+        }
+
         output.debug("DatabaseManager::query was called on the connection \"%s\" with the following SQL statement: %s", connection, query);
 
         Database db = connections.getConnection(connection);
@@ -360,6 +364,10 @@ public final class DatabaseManager
      */
     public int queryUpdate(String connection, String query) throws SQLException
     {
+        if (connection == null) {
+            return queryUpdate(query);
+        }
+
         output.debug("DatabaseManager::queryUpdate was called on the connection \"%s\" with the following SQL statement: %s", connection, query);
 
         Database db = connections.getConnection(connection);
@@ -478,6 +486,10 @@ public final class DatabaseManager
      */
     public Set<Integer> queryInsert(String connection, String query) throws SQLException
     {
+        if (connection == null) {
+            return queryInsert(query);
+        }
+
         output.debug("DatabaseManager::queryInsert was called on the connection \"%s\" with the following SQL statement: %s", connection, query);
 
         if (!query.startsWith("INSERT INTO")) {
