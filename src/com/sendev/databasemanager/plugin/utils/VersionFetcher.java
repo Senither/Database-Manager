@@ -6,13 +6,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VersionFetcher
 {
-    private static final String VERSION_URL = "http://javadoc.sen-dev.com/DatabaseManager/version";
-    private static final String USER_AGENT = "Mozilla/5.0";
+    private static final String VERSION_URL = "http://javadoc.sen-dev.com/DatabaseManager.txt";
+    private static final Map<String, String> properties = new HashMap<>();
 
     private static String VERSION = null;
+
+    static {
+        properties.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36");
+        properties.put("Cache-Control", "no-cache");
+        properties.put("Pragma", "no-cache");
+        properties.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+        properties.put("Accept-Encoding", "gzip, deflate, sdch");
+        properties.put("Accept-Language", "en-US,en;q=0.8,en-GB;q=0.6,da;q=0.4");
+    }
 
     /**
      * Gets the latest version retrieved by the version fetcher.
@@ -37,7 +48,7 @@ public class VersionFetcher
     {
         HttpURLConnection connection = createConnection();
 
-        return setAndReturnVersion(readConnectionStream(connection.getInputStream()).trim());
+        return setAndReturnVersion(readConnectionStream(connection.getInputStream()));
     }
 
     private static HttpURLConnection createConnection() throws IOException
@@ -47,7 +58,10 @@ public class VersionFetcher
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
         con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", USER_AGENT);
+
+        properties.keySet().stream().forEach(( property ) -> {
+            con.setRequestProperty(property, properties.get(property));
+        });
 
         return con;
     }
@@ -55,14 +69,14 @@ public class VersionFetcher
     private static String readConnectionStream(InputStream stream) throws IOException
     {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(stream))) {
-            String inputLine;
-            StringBuilder response = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
+            String line;
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            while ((line = in.readLine()) != null) {
+                sb.append(line);
             }
 
-            return response.toString();
+            return sb.toString().trim();
         }
     }
 
