@@ -263,13 +263,13 @@ public class Migrations
 
         // If the migration has ran before, but was rolled back(down), this will update the existing row
         if (migration.getBatch() != -1) {
-            dbm.queryUpdate(makeQuery().update(item).where("plugin", plugin).andWhere("migration", migration.getName()));
+            makeQuery().where("plugin", plugin).andWhere("migration", migration.getName()).update(item);
         } // If the migration has never run before, this will create a new row
         else {
             item.put("plugin", plugin);
             item.put("migration", migration.getName());
 
-            dbm.queryUpdate(makeQuery().insert(item));
+            makeQuery().insert(item);
         }
 
         migration.setBatch(batch);

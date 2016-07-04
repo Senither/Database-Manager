@@ -59,6 +59,11 @@ public final class QueryBuilder implements DatabaseOriginLookup
         table(table);
     }
 
+    public boolean isIgnoringDatabasePrefix()
+    {
+        return ignoreDatabasePrefix;
+    }
+
     public QueryBuilder table(String table)
     {
         return selectAll().from(table);
@@ -362,66 +367,6 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return joins;
     }
 
-    public QueryBuilder insert(Map<String, Object>... items)
-    {
-        type = QueryType.INSERT;
-
-        this.items.addAll(Arrays.asList(items));
-
-        return this;
-    }
-
-    public QueryBuilder insert(List<String>... arrays)
-    {
-        return insert(buildMapFromArrays(arrays));
-    }
-
-    public QueryBuilder update(Map<String, Object>... items)
-    {
-        type = QueryType.UPDATE;
-
-        this.items.addAll(Arrays.asList(items));
-
-        return this;
-    }
-
-    public QueryBuilder update(List<String>... arrays)
-    {
-        return update(buildMapFromArrays(arrays));
-    }
-
-    private Map<String, Object> buildMapFromArrays(List<String>... arrays)
-    {
-        Map<String, Object> map = new HashMap<>();
-
-        for (List<String> array : arrays) {
-            if (array.size() != 2) {
-                continue;
-            }
-
-            map.put(array.get(0), array.get(1));
-        }
-
-        return map;
-    }
-
-    public List<Map<String, Object>> getItems()
-    {
-        return items;
-    }
-
-    public boolean isIgnoringDatabasePrefix()
-    {
-        return ignoreDatabasePrefix;
-    }
-
-    public QueryBuilder delete()
-    {
-        type = QueryType.DELETE;
-
-        return this;
-    }
-
     public String toSQL()
     {
         try {
@@ -447,8 +392,12 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return dbm.query(this);
     }
 
-    public int executeUpdate() throws SQLException
+    public int update(Map<String, Object>... items) throws SQLException
     {
+        type = QueryType.UPDATE;
+
+        this.items.addAll(Arrays.asList(items));
+
         DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
 
         if (dbm == null) {
@@ -456,6 +405,73 @@ public final class QueryBuilder implements DatabaseOriginLookup
         }
 
         return dbm.queryUpdate(this);
+    }
+
+    public int update(List<String>... arrays) throws SQLException
+    {
+        return update(buildMapFromArrays(arrays));
+    }
+
+    public Collection insert(Map<String, Object>... items) throws SQLException
+    {
+        type = QueryType.INSERT;
+
+        this.items.addAll(Arrays.asList(items));
+
+        DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
+
+        if (dbm == null) {
+            throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
+        }
+
+        Set<Integer> keys = dbm.queryInsert(this);
+        List<Map<String, Object>> collectionItems = new ArrayList<>();
+
+        for (int id : keys) {
+            Map<String, Object> row = new HashMap<>();
+            row.put("id", id);
+            collectionItems.add(row);
+        }
+
+        return new Collection(collectionItems);
+    }
+
+    public Collection insert(List<String>... arrays) throws SQLException
+    {
+        return insert(buildMapFromArrays(arrays));
+    }
+
+    public int delete() throws SQLException
+    {
+        type = QueryType.DELETE;
+
+        DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
+
+        if (dbm == null) {
+            throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
+        }
+
+        return dbm.queryUpdate(this);
+    }
+
+    private Map<String, Object> buildMapFromArrays(List<String>... arrays)
+    {
+        Map<String, Object> map = new HashMap<>();
+
+        for (List<String> array : arrays) {
+            if (array.size() != 2) {
+                continue;
+            }
+
+            map.put(array.get(0), array.get(1));
+        }
+
+        return map;
+    }
+
+    public List<Map<String, Object>> getItems()
+    {
+        return items;
     }
 
     public Set<Integer> queryInsert() throws SQLException
