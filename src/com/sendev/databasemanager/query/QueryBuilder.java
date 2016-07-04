@@ -383,16 +383,21 @@ public final class QueryBuilder implements DatabaseOriginLookup
 
     public Collection get() throws SQLException
     {
+        return get(null);
+    }
+
+    public Collection get(String connection) throws SQLException
+    {
         DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
 
         if (dbm == null) {
             throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
         }
 
-        return dbm.query(this);
+        return dbm.query(connection, this);
     }
 
-    public int update(Map<String, Object>... items) throws SQLException
+    public int update(String connection, Map<String, Object>... items) throws SQLException
     {
         type = QueryType.UPDATE;
 
@@ -404,7 +409,12 @@ public final class QueryBuilder implements DatabaseOriginLookup
             throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
         }
 
-        return dbm.queryUpdate(this);
+        return dbm.queryUpdate(connection, this);
+    }
+
+    public int update(Map<String, Object>... items) throws SQLException
+    {
+        return update(null, items);
     }
 
     public int update(List<String>... arrays) throws SQLException
@@ -412,7 +422,12 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return update(buildMapFromArrays(arrays));
     }
 
-    public Collection insert(Map<String, Object>... items) throws SQLException
+    public int update(String connection, List<String>... arrays) throws SQLException
+    {
+        return update(connection, buildMapFromArrays(arrays));
+    }
+
+    public Collection insert(String connection, Map<String, Object>... items) throws SQLException
     {
         type = QueryType.INSERT;
 
@@ -424,7 +439,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
             throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
         }
 
-        Set<Integer> keys = dbm.queryInsert(this);
+        Set<Integer> keys = dbm.queryInsert(connection, this);
         List<Map<String, Object>> collectionItems = new ArrayList<>();
 
         for (int id : keys) {
@@ -436,12 +451,22 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return new Collection(collectionItems);
     }
 
+    public Collection insert(Map<String, Object>... items) throws SQLException
+    {
+        return insert(null, items);
+    }
+
     public Collection insert(List<String>... arrays) throws SQLException
     {
         return insert(buildMapFromArrays(arrays));
     }
 
-    public int delete() throws SQLException
+    public Collection insert(String connetion, List<String>... arrays) throws SQLException
+    {
+        return insert(connetion, buildMapFromArrays(arrays));
+    }
+
+    public int delete(String connection) throws SQLException
     {
         type = QueryType.DELETE;
 
@@ -452,6 +477,11 @@ public final class QueryBuilder implements DatabaseOriginLookup
         }
 
         return dbm.queryUpdate(this);
+    }
+
+    public int delete() throws SQLException
+    {
+        return delete(null);
     }
 
     private Map<String, Object> buildMapFromArrays(List<String>... arrays)
