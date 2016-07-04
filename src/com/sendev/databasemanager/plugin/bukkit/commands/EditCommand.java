@@ -1,12 +1,12 @@
-package com.sendev.databasemanager.plugin.commands;
+package com.sendev.databasemanager.plugin.bukkit.commands;
 
 import com.sendev.databasemanager.Connection;
 import com.sendev.databasemanager.ConnectionLevel;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.DatabaseOptions;
 import com.sendev.databasemanager.factory.PluginContainer;
-import com.sendev.databasemanager.plugin.DBMPlugin;
-import com.sendev.databasemanager.plugin.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
+import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;

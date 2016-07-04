@@ -1,8 +1,8 @@
-package com.sendev.databasemanager.plugin.commands;
+package com.sendev.databasemanager.plugin.bukkit.commands;
 
-import com.sendev.databasemanager.plugin.DBMPlugin;
-import com.sendev.databasemanager.plugin.contracts.DBMCommand;
-import com.sendev.databasemanager.plugin.utils.StringMatcher;
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
+import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.bukkit.utils.StringMatcher;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.Command;

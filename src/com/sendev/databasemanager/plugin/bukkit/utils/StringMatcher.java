@@ -1,4 +1,4 @@
-package com.sendev.databasemanager.plugin.utils;
+package com.sendev.databasemanager.plugin.bukkit.utils;
 
 import java.util.Collections;
 import java.util.List;

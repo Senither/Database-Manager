@@ -1,6 +1,6 @@
-package com.sendev.databasemanager.plugin.listeners;
+package com.sendev.databasemanager.plugin.bukkit.listeners;
 
-import com.sendev.databasemanager.plugin.DBMPlugin;
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

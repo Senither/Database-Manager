@@ -1,15 +1,15 @@
-package com.sendev.databasemanager.plugin;
+package com.sendev.databasemanager.plugin.bukkit;
 
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
-import com.sendev.databasemanager.plugin.commands.CommandHandler;
-import com.sendev.databasemanager.plugin.commands.HelpCommand;
-import com.sendev.databasemanager.plugin.commands.PluginsCommand;
-import com.sendev.databasemanager.plugin.commands.VersionCommand;
-import com.sendev.databasemanager.plugin.listeners.ServerListener;
-import com.sendev.databasemanager.plugin.tasks.VersionTask;
-import com.sendev.databasemanager.plugin.utils.ChatFormatter;
-import com.sendev.databasemanager.plugin.utils.VersionFetcher;
+import com.sendev.databasemanager.plugin.bukkit.commands.CommandHandler;
+import com.sendev.databasemanager.plugin.bukkit.commands.HelpCommand;
+import com.sendev.databasemanager.plugin.bukkit.commands.PluginsCommand;
+import com.sendev.databasemanager.plugin.bukkit.commands.VersionCommand;
+import com.sendev.databasemanager.plugin.bukkit.listeners.ServerListener;
+import com.sendev.databasemanager.plugin.bukkit.tasks.VersionTask;
+import com.sendev.databasemanager.plugin.bukkit.utils.ChatFormatter;
+import com.sendev.databasemanager.plugin.bukkit.utils.VersionFetcher;
 import java.io.IOException;
 import java.util.logging.Level;
 import org.bukkit.plugin.Plugin;

@@ -1,8 +1,8 @@
-package com.sendev.databasemanager.plugin.commands;
+package com.sendev.databasemanager.plugin.bukkit.commands;
 
 import com.sendev.databasemanager.factory.PluginContainer;
-import com.sendev.databasemanager.plugin.DBMPlugin;
-import com.sendev.databasemanager.plugin.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
+import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

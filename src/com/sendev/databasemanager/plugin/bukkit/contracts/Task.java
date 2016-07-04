@@ -1,6 +1,6 @@
-package com.sendev.databasemanager.plugin.contracts;
+package com.sendev.databasemanager.plugin.bukkit.contracts;
 
-import com.sendev.databasemanager.plugin.DBMPlugin;
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 

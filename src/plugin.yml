@@ -1,5 +1,5 @@
 name: DatabaseManager
-main: com.sendev.databasemanager.plugin.DBMPlugin
+main: com.sendev.databasemanager.plugin.bukkit.DBMPlugin
 version: 0.8.1052
 
 author: [Senither]

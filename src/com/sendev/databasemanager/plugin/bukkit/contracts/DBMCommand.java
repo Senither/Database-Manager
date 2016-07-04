@@ -1,7 +1,7 @@
-package com.sendev.databasemanager.plugin.contracts;
+package com.sendev.databasemanager.plugin.bukkit.contracts;
 
-import com.sendev.databasemanager.plugin.DBMPlugin;
-import com.sendev.databasemanager.plugin.utils.ChatFormatter;
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
+import com.sendev.databasemanager.plugin.bukkit.utils.ChatFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.CommandSender;
