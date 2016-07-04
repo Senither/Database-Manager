@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -444,6 +445,28 @@ public final class QueryBuilder implements DatabaseOriginLookup
         }
 
         return dbm.query(this);
+    }
+
+    public int executeUpdate() throws SQLException
+    {
+        DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
+
+        if (dbm == null) {
+            throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
+        }
+
+        return dbm.queryUpdate(this);
+    }
+
+    public Set<Integer> queryInsert() throws SQLException
+    {
+        DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
+
+        if (dbm == null) {
+            throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
+        }
+
+        return dbm.queryInsert(this);
     }
 
     @Override

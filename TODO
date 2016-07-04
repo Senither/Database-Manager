@@ -1,25 +1,8 @@
-Database Manager:
-  ✔ Add a *queryUpdate* method that access the custom connection name value. @done (12/06/16 17:00)
-
-  ✔ Add a *queryInsert* method that allows user to do the same as *queryUpdate*, but instead it will return a Set<Integer> object, where each index reprecent a ID value of the row that was inserted. @done (12/06/16 17:08)
-    ✔ Checks should be made to make sure the parsed query is actually a INSERT query, if that's not the case a *DatabaseException* should be thrown. @done (12/06/16 17:08)
-
-  ✔ Implement a **setPrefix** method, either in the DBM main class or the options(The options might be a better choice) @done (18/06/16 19:20)
-    ✔ Make sure any time a table name is created, that the prefix is added infront of the table name dynamicly. @done (18/06/16 19:20)
-
-Database Factory:
-  ✔ Add a *PluginContainer* class where all plugin info should be stored for any plugin that has created an instance of DBM. @done (12/06/16 17:43)
-    ✔ If a plugin requests to create a new DBM instance, but a PluginContainer instance was already found, return the existing instance instead. @done (12/06/16 17:43)
-    ✔ Create a dynamic lookup on the main instance of the plugin description, allowing us to create a dynamic search that would allow us to remove the DBM instance from Eloquent and the Query Builder, making the database connection random. @done (12/06/16 23:37)
-
 Query Builder:
   The followin methods should be created and added under the "Ordering, Grouping, Limit, & Offset" in the wiki, 
   information about the methods can be found here: https://laravel.com/docs/5.2/queries#ordering-grouping-limit-and-offset
-    ✔ inRandomOrder @done (12/06/16 16:34)
     ☐ having
     ☐ havingRaw
-    ✔ skip  @done (12/06/16 16:51)
-    ✔ take @done (12/06/16 16:51)
 
   ☐ Create a Conditional Statements when method, allowing the user to parse it their own logic for a when statement.
     Information can be found here https://laravel.com/docs/5.2/queries#conditional-statements
@@ -28,7 +11,7 @@ Query Builder:
   ☐ Create a *QueryWhereStatement* interface that allows users to parse is logic to create an advanced where statement.
     Information can be found here https://laravel.com/docs/5.2/queries#advanced-where-clauses
 
-  ✔ Fixed an issue where **where clause** **or** and **and** statements would repeat twice.  @done (16/06/16 13:14)
+  ☐ Change the **insert** and **update** methods to carry out the action instead of the **queryUpdate()** and **queryInsert** methods.
 
 Grammar:
   ☐ Fix SQL support for creating tables
@@ -47,138 +30,8 @@ Schematics(Schema):
   ☐ add a **createDatabase** method that will create a new database
   ☐ Implement a way to add a default character set for a given table or column field.
 
-Migration:
-  ✔ Add a **Migration** class and create a getter for it in the DBM main class. @done (18/06/16 19:20)
-    ✔ Add a **up** method that should be used to roll all the non-migrated migrations to the database. @done (18/06/16 19:20)
-    ✔ Add a **down** method that should be used to roll all the migrated migrations away from the database. @done (18/06/16 19:20)
-    ✔ Add a **register** method that should register one or multiple migrations at a time.  @done (18/06/16 19:20)
-    ✔ Add a **rollback** method that functions the same way as down, but takes in an integer argument for how many migrations should be rolled back.  @done (18/06/16 19:20)
-
-  ✔ Add a Migration contract that all migrations should abid by @done (18/06/16 19:20)
-    The contract should have an **up** and **down** method, both needs to take the Schema class as an argument.
-
 Seeder:
   Faker seeder logic, from PHP
 
-Carbon:
-  ✔ Implement more output methods for different known datetime types. @done (12/06/16 15:48)
-    ✔ toDateString:                | 1975-12-25 @done (12/06/16 14:15)
-    ✔ toFormattedDateString        | Dec 25, 1975 @done (12/06/16 14:23)
-    ✔ toTimeString                 | 14:15:16 @done (12/06/16 14:24)
-    ✔ toDateTimeString             | 1975-12-25 14:15:16 @done (12/06/16 14:26)
-    ✔ toDayDateTimeString          | Thu, Dec 25, 1975 2:15 PM @done (12/06/16 14:29)
-    ✔ toAtomString                 | 1975-12-25T14:15:16-05:00 @done (12/06/16 14:44)
-    ✔ toCookieString               | Thursday, 25-Dec-1975 14:15:16 EST @done (12/06/16 14:52)
-    ✔ toIso8601String              | 1975-12-25T14:15:16-0500 @done (12/06/16 14:54)
-    ✔ toRfc822String               | Thu, 25 Dec 75 14:15:16 -0500 @done (12/06/16 14:59)
-    ✔ toRfc850String               | Thursday, 25-Dec-75 14:15:16 EST @done (12/06/16 15:02)
-    ✔ toRfc1036String              | Thu, 25 Dec 75 14:15:16 -0500 @done (12/06/16 15:05)
-    ✘ toRfc1123String              | Thu, 25 Dec 1975 14:15:16 -0500 @cancelled (12/06/16 15:09)
-    ✘ toRfc2822String              | Thu, 25 Dec 1975 14:15:16 -0500 @cancelled (12/06/16 15:09)
-    ✔ toRfc3339String              | 1975-12-25T14:15:16-05:00 @done (12/06/16 15:11)
-    ✔ toRssString                  | Thu, 25 Dec 1975 14:15:16 -0500 @done (12/06/16 15:17)
-    ✔ toW3cString                  | 1975-12-25T14:15:16-05:00 @done (12/06/16 15:48)
-
-  ✔ Implement a *format* method, allowing the user to parse in their own datetime string that should be generated. @done (12/06/16 14:15)
-  ✔ Add a **startOfWeek** and **endOfWeek** modifieres @done (14/06/16 10:06)
-  
-  ✔ Add javadoc comments to all the methods. @done (15/06/16 14:13)
-
-  ✔ Implement a way to parse in different supported time formats when creating a new Carbon instance. @done (15/06/16 15:04)
-    ✔ Add a **InvalidFormatException* exception that should be thrown when creating a Carbon instance if the format given is not supported. @done (15/06/16 15:05)
-
-  ✔ Implement the following **Comparison** @done (16/06/16 02:59)
-    ✔ eq - Equal @done (16/06/16 01:31)
-    ✔ ne - Not Equal @done (16/06/16 01:34)
-    ✔ gt - Greater Than @done (16/06/16 02:59)
-    ✔ gte - Greather than or Equal to @done (16/06/16 02:59)
-    ✔ lt - Less than @done (16/06/16 02:59)
-    ✔ lte - Less than or Equal to @done (16/06/16 02:59)
-    ✔ between - This should take two arguments, both being carbon instances. @done (16/06/16 02:59)
-
-  ✔ Implement **setDayOfWeek** and **getDayOfWeek** methods. @done (02/07/16 01:07)
-  ✔ Implement timezone support @done (02/07/16 15:49)
-
-Collection:
-  ✔ Fix the DatabaseException thrown in the *getStrings* method so it just returns NULL if nothing is found with the provided key. @done (13/06/16 15:53)
-      This was fixed by removing them compeltely since the methods wasen't actually needed anyway.
-
-  ✔ Create a way to make a new *Collection* instance without having to parse in a ResultSet, for example having the keys as the first paramater, and the items as the second. @done (13/06/16 15:53)
-
-  ✔ Implement more *Collection* methods, allowing users to do more things with the collection method itself. @done (13/06/16 15:53)
-    Information for all of the methods can be found here: https://laravel.com/docs/5.2/collections#available-methods
-    Note that some of the methods might not actually be usless in a Java case, so some might have to be removed.
-      ✔ avg @done (13/06/16 04:08)
-      ✔ chunk @done (13/06/16 15:50)
-      ✘ collapse @cancelled (13/06/16 15:50)
-      ✘ combine @cancelled (13/06/16 15:50)
-      ✘ contains @cancelled (13/06/16 15:51)
-      ✔ size @done (13/06/16 15:52)
-      ✘ diff @cancelled (13/06/16 15:52)
-      ✘ diffKeys @cancelled (13/06/16 15:52)
-      ✘ each @cancelled (13/06/16 15:52)
-      ✘ every @cancelled (13/06/16 15:52)
-      ✘ except @cancelled (13/06/16 15:52)
-      ✘ filter @cancelled (13/06/16 15:52)
-      ✘ flip @cancelled (13/06/16 15:52)
-      ✘ forget @cancelled (13/06/16 15:52)
-      ✘ groupBy @cancelled (13/06/16 15:52)
-      ✔ has @done (13/06/16 15:52)
-      ✘ implode @cancelled (13/06/16 15:52)
-      ✘ intersect @cancelled (13/06/16 15:52)
-      ✔ isEmpty @done (13/06/16 04:03)
-      ✘ keyBy @cancelled (13/06/16 15:52)
-      ✔ keys @done (13/06/16 15:52)
-      ✔ last @done (13/06/16 15:52)
-      ✘ map @cancelled (13/06/16 15:52)
-      ✔ max @done (13/06/16 15:52)
-      ✘ merge @cancelled (13/06/16 15:52)
-      ✔ min @done (13/06/16 15:52)
-      ✘ only @cancelled (13/06/16 15:52)
-      ✘ pluck @cancelled (13/06/16 15:52)
-      ✔ pop @done (13/06/16 15:52)
-      ✘ prepend @cancelled (13/06/16 15:52)
-      ✘ pull @cancelled (13/06/16 15:52)
-      ✘ push @cancelled (13/06/16 15:52)
-      ✘ put @cancelled (13/06/16 15:52)
-      ✔ random @done (13/06/16 15:52)
-      ✘ reduce @cancelled (13/06/16 15:52)
-      ✘ reject @cancelled (13/06/16 15:52)
-      ✔ reverse @done (13/06/16 15:52)
-      ✘ search @cancelled (13/06/16 15:52)
-      ✘ shift @cancelled (13/06/16 15:52)
-      ✘ shuffle @cancelled (13/06/16 15:52)
-      ✘ slice @cancelled (13/06/16 15:52)
-      ✘ sort @cancelled (13/06/16 15:52)
-      ✘ sortBy @cancelled (13/06/16 15:52)
-      ✘ sortByDesc @cancelled (13/06/16 15:52)
-      ✘ splice @cancelled (13/06/16 15:52)
-      ✔ sum @done (13/06/16 15:52)
-      ✘ take @cancelled (13/06/16 15:52)
-      ✘ toArray @cancelled (13/06/16 15:52)
-      ✔ toJson @done (13/06/16 15:52)
-      ✘ transform @cancelled (13/06/16 15:53)
-      ✘ union @cancelled (13/06/16 15:53)
-      ✘ unique @cancelled (13/06/16 15:53)
-      ✘ values @cancelled (13/06/16 15:53)
-      ✔ where @done (13/06/16 15:53)
-      ✔ whereLoose @done (13/06/16 15:53)
-      ✘ WhereIn @cancelled (13/06/16 15:53)
-      ✘ whereInLoose @cancelled (13/06/16 15:53)
-      ✘ zip @cancelled (13/06/16 15:53)
-
 Commands:
-  ✔ Add a command system to DBM, and register the following commands to DBM  @done (14/06/16 14:58)
-    ✔ DatabaseManager @done (14/06/16 14:58)
-    ✔ DBManager @done (14/06/16 14:58)
-    ✔ DBM @done (14/06/16 14:58)
-
-  ✔ Crete a default version message that should be sent to the player or console running the command @done (14/06/16 14:58)
-    ✔ Create a HTTP client that sends a GET request to http://javadoc.sen-dev.com/DatabaseManager/version to get the latest version, if it doesn't match the version the current DBM is running on, an update message should be sent.  @done (14/06/16 15:49)
-      ✔ Create a scheduled check for the update in the background as an async task, this should run every 30 minutes. @done (14/06/16 15:49)
-  ✔ Create a stats command that requires a permission node to run, the stats command should list the following @done (14/06/16 21:20)
-    Make the permission node **databasemanager.admin**
-    ✔ How many plugins are using DBM @done (14/06/16 21:20)
-    ✔ How many connections each plugin has @done (14/06/16 21:20)
-
-  ✔ Disable the edit commands until it is completely finished. @done (04/07/16 03:54)
+  ☐ Finish the **edit command**
