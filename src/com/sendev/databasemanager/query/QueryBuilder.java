@@ -20,31 +20,87 @@ import java.util.logging.Logger;
 public final class QueryBuilder implements DatabaseOriginLookup
 {
 
+    /**
+     * The query type that's being preformed.
+     */
     private QueryType type;
 
+    /**
+     * The table the query builder to used.
+     */
     private String table = null;
 
+    /**
+     * The amount of rows to take(LIMIT), if the value is set
+     * to -1 it should be ignored by the grammar generator.
+     */
     private int take = -1;
+
+    /**
+     * The amount of rows to skip(OFFSET), if the value is set
+     * to -1 it should be ignored by the grammar generator.
+     */
     private int skip = -1;
 
+    /**
+     * The list of {@link QueryOrder} clauses that should be used by the generator.
+     */
     private final List<QueryOrder> order = new ArrayList<>();
+
+    /**
+     * The list of {@link Clause} clauses that should be used by the generator.
+     */
     private final List<Clause> wheres = new ArrayList<>();
+
+    /**
+     * The list of {@link String} clauses that should be used by the generator.
+     */
     private final List<String> columns = new ArrayList<>();
+
+    /**
+     * The list of {@link JoinClause} objects that should be used by the generator.
+     */
     private final List<JoinClause> joins = new ArrayList<>();
+
+    /**
+     * The list of {@link Map} objects that should be used by the generator, containing
+     * the column name as the key, and value for the column as a map value.
+     */
     private final List<Map<String, Object>> items = new ArrayList<>();
 
+    /**
+     * Determines if the query grammar generator should ignore the database prefix.
+     */
     private final boolean ignoreDatabasePrefix;
 
+    /**
+     * Creates a new Query Builder instance with no table preset, that
+     * doesn't ignores database prefixes.
+     */
     public QueryBuilder()
     {
         this.ignoreDatabasePrefix = false;
     }
 
+    /**
+     * Creates a new Query builder instance with no table preset.
+     *
+     * @param ignoreDatabasePrefix Determines if the database prefix should
+     *                             be ignored during the query generation or not
+     */
     public QueryBuilder(boolean ignoreDatabasePrefix)
     {
         this.ignoreDatabasePrefix = ignoreDatabasePrefix;
     }
 
+    /**
+     * Creates a new Query Builder instance for the provided table, that
+     * ignores database prefixes.
+     * <p>
+     * This calls the {@link #table(java.lang.String) } method behind the scene.
+     *
+     * @param table The table the query builder should be generated for
+     */
     public QueryBuilder(String table)
     {
         this.ignoreDatabasePrefix = false;
@@ -52,6 +108,15 @@ public final class QueryBuilder implements DatabaseOriginLookup
         table(table);
     }
 
+    /**
+     * Creates a new Query Builder instance for the provided table.
+     * <p>
+     * This calls the {@link #table(java.lang.String) } method behind the scene.
+     *
+     * @param table                The table the query builder should be generated for
+     * @param ignoreDatabasePrefix Determines if the database prefix should
+     *                             be ignored during the query generation or not
+     */
     public QueryBuilder(String table, boolean ignoreDatabasePrefix)
     {
         this.ignoreDatabasePrefix = ignoreDatabasePrefix;
@@ -59,16 +124,37 @@ public final class QueryBuilder implements DatabaseOriginLookup
         table(table);
     }
 
+    /**
+     * Determines if the query builder should ignore
+     * the database prefix when generating the query.
+     *
+     * @return if the query builder should ignore the database prefix when generating the query.
+     */
     public boolean isIgnoringDatabasePrefix()
     {
         return ignoreDatabasePrefix;
     }
 
+    /**
+     * Sets the table that the query builder should be using, and sets the select state to ALL.
+     * This is the same as calling {@link #selectAll() } and {@link #from(java.lang.String) } in one go.
+     *
+     * @param table The table the query builder should be using
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder table(String table)
     {
         return selectAll().from(table);
     }
 
+    /**
+     * Sets the table the query should be generated for.
+     *
+     * @param table The table the query should be generated for
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder from(String table)
     {
         this.table = table;
@@ -76,16 +162,40 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Gets the table the query should be generated for.
+     *
+     * @return the table the query should be generated for.
+     */
     public String getTable()
     {
         return table;
     }
 
+    /**
+     * Sets the select state to ALL using the star(*) symbol.
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder selectAll()
     {
         return select("*");
     }
 
+    /**
+     * Selects the provided columns from the varargs columns object, columns
+     * parsed will automatically be formatted to SQL fields using the grave
+     * accent character(`), using the keyword <code>AS</code> will use the
+     * SQL AS to rename the output the collection will end up using.
+     * <p>
+     * Example calling: <code>select("username as name", "email", ...)</code>
+     * <p>
+     * Would re-name the username field in the table to name in the collection object.
+     *
+     * @param colums
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder select(String... colums)
     {
         type = QueryType.SELECT;
@@ -97,6 +207,11 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Adds a column that should be selected.
+     *
+     * @param column The column that should be selected
+     */
     protected void addColumn(String column)
     {
         if (!column.equals("*")) {
@@ -113,28 +228,23 @@ public final class QueryBuilder implements DatabaseOriginLookup
         columns.add("*");
     }
 
+    /**
+     * Gets the columns that should be selected in a {@link #get() } request.
+     *
+     * @return the columns that should be selected.
+     */
     public List<String> getColumns()
     {
         return columns;
     }
 
-    public QueryBuilder limit(int limit)
-    {
-        this.take = Math.max(limit, 0);
-
-        return this;
-    }
-
-    public QueryBuilder noLimit()
-    {
-        return limit(0);
-    }
-
-    public int getLimit()
-    {
-        return take;
-    }
-
+    /**
+     * Sets the amount of rows to skip using the SQL <code>OFFSET</code>.
+     *
+     * @param skip The amount of rows to skip
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder skip(int skip)
     {
         this.skip = Math.max(skip, 0);
@@ -142,6 +252,11 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Removes the skip(SQL <code>OFFSET</code>) from the query builder.
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder removeSkip()
     {
         this.skip = -1;
@@ -149,11 +264,23 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Gets the amount to skip(SQL <code>OFFSET</code>) in the SQL query.
+     *
+     * @return the amount to skip.
+     */
     public int getSkip()
     {
         return skip;
     }
 
+    /**
+     * Sets the amount of rows to take using the SQL <code>LIMIT</code>.
+     *
+     * @param take The amount of rows to take
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder take(int take)
     {
         this.take = Math.max(take, 0);
@@ -161,6 +288,11 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Removes the take(SQL <code>LIMIT</code>) from the query builder.
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder removeTake()
     {
         this.take = -1;
@@ -168,57 +300,133 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Gets the amount to take(SQL <code>LIMIT</code>) in the SQL query.
+     *
+     * @return the amount to take.
+     */
     public int getTake()
     {
         return take;
     }
 
-    public QueryBuilder where(String column, Object field)
+    /**
+     * Creates a SQL WHERE clause with an equal operator.
+     *
+     * @param column The column to use in the clause
+     * @param value  The value to compare the column to
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder where(String column, Object value)
     {
-        return where(column, "=", field);
+        return where(column, "=", value);
     }
 
-    public QueryBuilder where(String column, String identifier, Object field)
+    /**
+     * Creates a SQL WHERE clause with the provided operator.
+     *
+     * @param column   The column to use in the clause
+     * @param operator The operator to compare with
+     * @param value    The value to compare the column to
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder where(String column, String operator, Object value)
     {
-        wheres.add(new Clause(column, identifier, field));
+        wheres.add(new Clause(column, operator, value));
 
         return this;
     }
 
-    public QueryBuilder andWhere(String column, Object field)
+    /**
+     * Creates a SQL AND WHERE clause with an equal operator.
+     *
+     * @param column The column to use in the clause
+     * @param value  The value to compare the column to
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder andWhere(String column, Object value)
     {
-        return andWhere(column, "=", field);
+        return andWhere(column, "=", value);
     }
 
-    public QueryBuilder andWhere(String column, String identifier, Object field)
+    /**
+     * Creates a SQL AND WHERE clause with the provided operator.
+     *
+     * @param column   The column to use in the clause
+     * @param operator The operator to compare with
+     * @param value    The value to compare the column to
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder andWhere(String column, String operator, Object value)
     {
-        wheres.add(new Clause(column, identifier, field, OperatorType.AND));
+        wheres.add(new Clause(column, operator, value, OperatorType.AND));
 
         return this;
     }
 
-    public QueryBuilder orWhere(String column, Object field)
+    /**
+     * Creates a SQL OR WHERE clause with an equal operator.
+     *
+     * @param column The column to use in the clause
+     * @param value  The value to compare the column to
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder orWhere(String column, Object value)
     {
-        return orWhere(column, "=", field);
+        return orWhere(column, "=", value);
     }
 
-    public QueryBuilder orWhere(String column, String identifier, Object field)
+    /**
+     * Creates a SQL OR WHERE clause with the provided operator.
+     *
+     * @param column   The column to use in the clause
+     * @param operator The operator to compare with
+     * @param value    The value to compare the column to
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder orWhere(String column, String operator, Object value)
     {
-        wheres.add(new Clause(column, identifier, field, OperatorType.OR));
+        wheres.add(new Clause(column, operator, value, OperatorType.OR));
 
         return this;
     }
 
+    /**
+     * Gets the list where clauses that should be generated.
+     *
+     * @return the list of where clauses that should be generated.
+     */
     public List<Clause> getWhereClauses()
     {
         return wheres;
     }
 
+    /**
+     * Creates a SQL ORDER BY clause, ordering by ascending order.
+     *
+     * @param field The field the query should be ordered by
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder orderBy(String field)
     {
         return orderBy(field, "ASC");
     }
 
+    /**
+     * Creates a SQL ORDER BY clause, ordering by the provided type.
+     *
+     * @param field The field the query should be ordered by
+     * @param type  The type to order the query by
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder orderBy(String field, String type)
     {
         order.add(new QueryOrder(field, type));
@@ -226,6 +434,11 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Creates a random query order statement.
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder inRandomOrder()
     {
         order.add(new QueryOrder("RAND()", null, true));
@@ -233,11 +446,26 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    /**
+     * Gets the list of order clauses that should be used in the generated query.
+     *
+     * @return the list of order clauses.
+     */
     public List<QueryOrder> getOrder()
     {
         return order;
     }
 
+    /**
+     * Creates a JOIN clause on the provided table of the given type, once the join clause
+     * has been created, a {@link JoinClause} object will be returned to help specify
+     * what the clause should be bound to.
+     *
+     * @param table The table the join clause should be used on
+     * @param type  The type of the join clause
+     *
+     * @return the join clause that was created.
+     */
     public JoinClause join(String table, String type)
     {
         JoinClause join = new JoinClause(type, table);
@@ -247,11 +475,29 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return join;
     }
 
+    /**
+     * Creates a LEFT JOIN clause on the provided table, once the join clause has been
+     * created, a {@link JoinClause} object will be returned to help specify
+     * what the clause should be bound to.
+     *
+     * @param table The table the join clause should be used on
+     *
+     * @return the join clause that was created.
+     */
     public JoinClause leftJoin(String table)
     {
         return join(table, "left");
     }
 
+    /**
+     * Creates a LEFT JOIN clause on the provided table, using the equal operator.
+     *
+     * @param table The table the join clause should be used on
+     * @param one   The first field to bind on
+     * @param two   The second field to bind on
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder leftJoin(String table, String one, String two)
     {
         JoinClause join = leftJoin(table);
@@ -261,20 +507,48 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
-    public QueryBuilder leftJoin(String table, String one, String identifier, String two)
+    /**
+     * Creates a LEFT JOIN clause on the provided table, using the provided operator.
+     *
+     * @param table    The table the join clause should be used on
+     * @param one      The first field to bind on
+     * @param operator The operator to compare with
+     * @param two      The second field to bind on
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder leftJoin(String table, String one, String operator, String two)
     {
         JoinClause join = leftJoin(table);
 
-        join.on(one, identifier, two);
+        join.on(one, operator, two);
 
         return this;
     }
 
+    /**
+     * Creates a RIGHT JOIN clause on the provided table, once the join clause has been
+     * created, a {@link JoinClause} object will be returned to help specify
+     * what the clause should be bound to.
+     *
+     * @param table The table the join clause should be used on
+     *
+     * @return the join clause that was created.
+     */
     public JoinClause rightJoin(String table)
     {
         return join(table, "right");
     }
 
+    /**
+     * Creates a RIGHT JOIN clause on the provided table, using the equal operator.
+     *
+     * @param table The table the join clause should be used on
+     * @param one   The first field to bind on
+     * @param two   The second field to bind on
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder rightJoin(String table, String one, String two)
     {
         JoinClause join = rightJoin(table);
@@ -284,20 +558,48 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
-    public QueryBuilder rightJoin(String table, String one, String identifier, String two)
+    /**
+     * Creates a RIGHT JOIN clause on the provided table, using the provided operator.
+     *
+     * @param table    The table the join clause should be used on
+     * @param one      The first field to bind on
+     * @param operator The operator to compare with
+     * @param two      The second field to bind on
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder rightJoin(String table, String one, String operator, String two)
     {
         JoinClause join = rightJoin(table);
 
-        join.on(one, identifier, two);
+        join.on(one, operator, two);
 
         return this;
     }
 
+    /**
+     * Creates a INNER JOIN clause on the provided table, once the join clause has been
+     * created, a {@link JoinClause} object will be returned to help specify
+     * what the clause should be bound to.
+     *
+     * @param table The table the join clause should be used on
+     *
+     * @return the join clause that was created.
+     */
     public JoinClause innerJoin(String table)
     {
         return join(table, "inner");
     }
 
+    /**
+     * Creates a INNER JOIN clause on the provided table, using the equal operator.
+     *
+     * @param table The table the join clause should be used on
+     * @param one   The first field to bind on
+     * @param two   The second field to bind on
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder innerJoin(String table, String one, String two)
     {
         JoinClause join = innerJoin(table);
@@ -307,20 +609,48 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
-    public QueryBuilder innerJoin(String table, String one, String identifier, String two)
+    /**
+     * Creates a INNER JOIN clause on the provided table, using the provided operator.
+     *
+     * @param table    The table the join clause should be used on
+     * @param one      The first field to bind on
+     * @param operator The operator to compare with
+     * @param two      The second field to bind on
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder innerJoin(String table, String one, String operator, String two)
     {
         JoinClause join = innerJoin(table);
 
-        join.on(one, identifier, two);
+        join.on(one, operator, two);
 
         return this;
     }
 
+    /**
+     * Creates a OUTER JOIN clause on the provided table, once the join clause has been
+     * created, a {@link JoinClause} object will be returned to help specify
+     * what the clause should be bound to.
+     *
+     * @param table The table the join clause should be used on
+     *
+     * @return the join clause that was created.
+     */
     public JoinClause outerJoin(String table)
     {
         return join(table, "outer");
     }
 
+    /**
+     * Creates a OUTER JOIN clause on the provided table, using the equal operator.
+     *
+     * @param table The table the join clause should be used on
+     * @param one   The first field to bind on
+     * @param two   The second field to bind on
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder outerJoin(String table, String one, String two)
     {
         JoinClause join = outerJoin(table);
@@ -330,20 +660,48 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
-    public QueryBuilder outerJoin(String table, String one, String identifier, String two)
+    /**
+     * Creates a OUTER JOIN clause on the provided table, using the provided operator.
+     *
+     * @param table    The table the join clause should be used on
+     * @param one      The first field to bind on
+     * @param operator The operator to compare with
+     * @param two      The second field to bind on
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder outerJoin(String table, String one, String operator, String two)
     {
         JoinClause join = outerJoin(table);
 
-        join.on(one, identifier, two);
+        join.on(one, operator, two);
 
         return this;
     }
 
+    /**
+     * Creates a FULL JOIN clause on the provided table, once the join clause has been
+     * created, a {@link JoinClause} object will be returned to help specify
+     * what the clause should be bound to.
+     *
+     * @param table The table the join clause should be used on
+     *
+     * @return the join clause that was created.
+     */
     public JoinClause fullJoin(String table)
     {
         return join(table, "full");
     }
 
+    /**
+     * Creates a FULL JOIN clause on the provided table, using the equal operator.
+     *
+     * @param table The table the join clause should be used on
+     * @param one   The first field to bind on
+     * @param two   The second field to bind on
+     *
+     * @return the query builder instance.
+     */
     public QueryBuilder fullJoin(String table, String one, String two)
     {
         JoinClause join = fullJoin(table);
@@ -353,20 +711,42 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
-    public QueryBuilder fullJoin(String table, String one, String identifier, String two)
+    /**
+     * Creates a FULL JOIN clause on the provided table, using the provided operator.
+     *
+     * @param table    The table the join clause should be used on
+     * @param one      The first field to bind on
+     * @param operator The operator to compare with
+     * @param two      The second field to bind on
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder fullJoin(String table, String one, String operator, String two)
     {
         JoinClause join = fullJoin(table);
 
-        join.on(one, identifier, two);
+        join.on(one, operator, two);
 
         return this;
     }
 
+    /**
+     * Gets a list of all the JOIN clauses.
+     *
+     * @return a list of all the JOIN clauses.
+     */
     public List<JoinClause> getJoins()
     {
         return joins;
     }
 
+    /**
+     * Creates the grammar instance and builds the SQL query, if an error occurs
+     * while building the query <code>NULL</code> will be returned instead.
+     *
+     * @return either (1) the generated SQL query
+     *         or (2) <code>NULL</code> if an error occurred.
+     */
     public String toSQL()
     {
         try {
@@ -381,11 +761,21 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return null;
     }
 
-    public Collection get() throws SQLException
-    {
-        return get(null);
-    }
-
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#query(java.lang.String, com.sendev.databasemanager.query.QueryBuilder) }
+     * method with the current instance of the query builder.
+     *
+     * @param connection The database connection to run the query against
+     *
+     * @return a <code>Collection</code> object that contains the data produced
+     *         by the given query; never <code>null</code>@exception
+     *
+     * @throws SQLException if a database access error occurs,
+     *                      this method is called on a closed <code>Statement</code>, the given
+     *                      SQL statement produces anything other than a single
+     *                      <code>ResultSet</code> object, the method is called on a
+     *                      <code>PreparedStatement</code> or <code>CallableStatement</code>
+     */
     public Collection get(String connection) throws SQLException
     {
         DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
@@ -397,6 +787,93 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return dbm.query(connection, this);
     }
 
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#query(com.sendev.databasemanager.query.QueryBuilder) }
+     * method with the current instance of the query builder.
+     *
+     * @return a <code>Collection</code> object that contains the data produced
+     *         by the given query; never <code>null</code>@exception
+     *
+     * @throws SQLException if a database access error occurs,
+     *                      this method is called on a closed <code>Statement</code>, the given
+     *                      SQL statement produces anything other than a single
+     *                      <code>ResultSet</code> object, the method is called on a
+     *                      <code>PreparedStatement</code> or <code>CallableStatement</code>
+     */
+    public Collection get() throws SQLException
+    {
+        return get(null);
+    }
+
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder) }
+     * method with the current instance of the query builder.
+     *
+     * @param arrays The list of items that should be updated
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
+    public int update(List<String>... arrays) throws SQLException
+    {
+        return update(buildMapFromArrays(arrays));
+    }
+
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(java.lang.String, com.sendev.databasemanager.query.QueryBuilder) }
+     * method with the current instance of the query builder.
+     *
+     * @param connection The database connection to run the query against
+     * @param arrays     The list of items that should be updated
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
+    public int update(String connection, List<String>... arrays) throws SQLException
+    {
+        return update(connection, buildMapFromArrays(arrays));
+    }
+
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder) }
+     * method with the current instance of the query builder.
+     *
+     * @param items The map of items that should be updated
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
+    public int update(Map<String, Object>... items) throws SQLException
+    {
+        return update(null, items);
+    }
+
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(java.lang.String, com.sendev.databasemanager.query.QueryBuilder) }
+     * method with the current instance of the query builder.
+     *
+     * @param connection The database connection to run the query against
+     * @param items      The map of items that should be updated
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
     public int update(String connection, Map<String, Object>... items) throws SQLException
     {
         type = QueryType.UPDATE;
@@ -412,21 +889,71 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return dbm.queryUpdate(connection, this);
     }
 
-    public int update(Map<String, Object>... items) throws SQLException
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(com.sendev.databasemanager.query.QueryBuilder) }
+     * method with the current instance of the query builder.
+     *
+     * @param arrays The list of items that should be inserted
+     *
+     * @return a Collection
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
+    public Collection insert(List<String>... arrays) throws SQLException
     {
-        return update(null, items);
+        return insert(buildMapFromArrays(arrays));
     }
 
-    public int update(List<String>... arrays) throws SQLException
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(java.lang.String, com.sendev.databasemanager.query.QueryBuilder)
+     * method with the current instance of the query builder.
+     *
+     * @param connection The database connection to run the query against
+     * @param arrays     The list of items that should be inserted
+     *
+     * @return a Collection of the geneated ids.
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
+    public Collection insert(String connection, List<String>... arrays) throws SQLException
     {
-        return update(buildMapFromArrays(arrays));
+        return insert(connection, buildMapFromArrays(arrays));
     }
 
-    public int update(String connection, List<String>... arrays) throws SQLException
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(com.sendev.databasemanager.query.QueryBuilder)
+     * method with the current instance of the query builder.
+     *
+     * @param items The map of items that should be inserted
+     *
+     * @return a Collection of the geneated ids.
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
+    public Collection insert(Map<String, Object>... items) throws SQLException
     {
-        return update(connection, buildMapFromArrays(arrays));
+        return insert(null, items);
     }
 
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(java.lang.String, com.sendev.databasemanager.query.QueryBuilder)
+     * method with the current instance of the query builder.
+     *
+     * @param connection The database connection to run the query against
+     * @param items      The map of items that should be inserted
+     *
+     * @return a Collection of the geneated ids.
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
     public Collection insert(String connection, Map<String, Object>... items) throws SQLException
     {
         type = QueryType.INSERT;
@@ -451,21 +978,35 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return new Collection(collectionItems);
     }
 
-    public Collection insert(Map<String, Object>... items) throws SQLException
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder)
+     * method with the current instance of the query builder.
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
+    public int delete() throws SQLException
     {
-        return insert(null, items);
+        return delete(null);
     }
 
-    public Collection insert(List<String>... arrays) throws SQLException
-    {
-        return insert(buildMapFromArrays(arrays));
-    }
-
-    public Collection insert(String connetion, List<String>... arrays) throws SQLException
-    {
-        return insert(connetion, buildMapFromArrays(arrays));
-    }
-
+    /**
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder)
+     * method with the current instance of the query builder.
+     *
+     * @param connection The database connection to run the query against
+     *
+     * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
+     *         or (2) 0 for SQL statements that return nothing
+     *
+     * @throws SQLException if a database access error occurs;
+     *                      this method is called on a closed  <code>PreparedStatement</code>
+     *                      or the SQL statement returns a <code>ResultSet</code> object
+     */
     public int delete(String connection) throws SQLException
     {
         type = QueryType.DELETE;
@@ -479,11 +1020,13 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return dbm.queryUpdate(this);
     }
 
-    public int delete() throws SQLException
-    {
-        return delete(null);
-    }
-
+    /**
+     * Builds a Map from a List object.
+     *
+     * @param arrays The list to build the map from
+     *
+     * @return The map that was build from the list.
+     */
     private Map<String, Object> buildMapFromArrays(List<String>... arrays)
     {
         Map<String, Object> map = new HashMap<>();
@@ -499,20 +1042,14 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return map;
     }
 
+    /**
+     * Gets the list of item maps for the query builder.
+     *
+     * @return the list of item maps for the query builder.
+     */
     public List<Map<String, Object>> getItems()
     {
         return items;
-    }
-
-    public Set<Integer> queryInsert() throws SQLException
-    {
-        DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
-
-        if (dbm == null) {
-            throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
-        }
-
-        return dbm.queryInsert(this);
     }
 
     @Override

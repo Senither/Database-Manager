@@ -114,7 +114,7 @@ public class SelectGrammar extends TableGrammar
         }
 
         if (builder.getTake() > 0) {
-            addPart(String.format(" LIMIT %d", builder.getLimit()));
+            addPart(String.format(" LIMIT %d", builder.getTake()));
 
             // The skip clause is placed inside the limit statement because LIMIT is 
             // required for the OFFSET to be regonized by the SQL server, placing

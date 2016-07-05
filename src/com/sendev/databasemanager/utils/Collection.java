@@ -389,9 +389,9 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
-     * Gets all the data rows where the field equals the value, this uses strict
-     * comparisons to match the values, use the {@link #whereLoose(String, Object) whereLosse}
-     * method to filter using "losse" comparisons.
+     * Gets all the data rows where the field equals the value, this uses a loose
+     * comparisons to match the values, use the {@link #where(String, Object) where}
+     * method to filter using "strict" comparisons.
      *
      * @param field The field that should be matched
      * @param value The value that should match the field
