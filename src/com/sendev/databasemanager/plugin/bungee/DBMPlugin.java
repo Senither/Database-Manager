@@ -6,6 +6,7 @@ import com.sendev.databasemanager.plugin.bungee.commands.CommandHandler;
 import com.sendev.databasemanager.plugin.bungee.commands.HelpCommand;
 import com.sendev.databasemanager.plugin.bungee.commands.PluginsCommand;
 import com.sendev.databasemanager.plugin.bungee.commands.VersionCommand;
+import com.sendev.databasemanager.plugin.bungee.listeners.NetworkListener;
 import com.sendev.databasemanager.plugin.bungee.utils.ChatFormatter;
 import com.sendev.databasemanager.plugin.contracts.PlatformType;
 import com.sendev.databasemanager.plugin.contracts.PluginContract;
@@ -37,6 +38,7 @@ public class DBMPlugin extends ProxyPlugin implements PluginContract
         command.registerCommand(new PluginsCommand(this));
 
         getProxy().getPluginManager().registerCommand(this, command);
+        getProxy().getPluginManager().registerListener(this, new NetworkListener(this));
     }
 
     public ChatFormatter getChat()
