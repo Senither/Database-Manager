@@ -1,10 +1,9 @@
 package com.sendev.databasemanager.factory;
 
 import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 public class PluginContainer
 {
@@ -13,12 +12,10 @@ public class PluginContainer
     private final List<String> binds;
     private final DatabaseManager instance;
 
-    public PluginContainer(Plugin plugin, DatabaseManager instance)
+    public PluginContainer(DatabasePlugin plugin, DatabaseManager instance)
     {
-        PluginDescriptionFile description = plugin.getDescription();
-
-        this.name = description.getName();
-        this.main = description.getMain();
+        this.name = plugin.getName();
+        this.main = plugin.getMain();
 
         this.instance = instance;
 

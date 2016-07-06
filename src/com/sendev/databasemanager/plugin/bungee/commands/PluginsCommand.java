@@ -1,12 +1,12 @@
-package com.sendev.databasemanager.plugin.bukkit.commands;
+package com.sendev.databasemanager.plugin.bungee.commands;
 
 import com.sendev.databasemanager.factory.PluginContainer;
-import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
-import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
+import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.entity.Player;
+import net.md_5.bungee.api.CommandSender;
 
 public class PluginsCommand extends DBMCommand
 {
@@ -34,7 +34,7 @@ public class PluginsCommand extends DBMCommand
     }
 
     @Override
-    public boolean runPlayerCommand(Player player, String[] args)
+    public boolean runCommand(CommandSender player, String[] args)
     {
         chat().sendMessage(player, "&3&l]&3&l&m--------&3&l[ &bDatabase Manager : Stats &3&l]&3&l&m--------&3&l[");
 

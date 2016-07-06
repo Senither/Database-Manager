@@ -2,6 +2,8 @@ package com.sendev.databasemanager;
 
 import com.sendev.databasemanager.exceptions.OriginException;
 import com.sendev.databasemanager.factory.PluginContainer;
+import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
+import com.sendev.databasemanager.plugin.contracts.PlatformType;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
@@ -9,13 +11,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.plugin.Plugin;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseFactory
 {
 
     private static final String ORIGIN_INTERFACE = "com.sendev.databasemanager.contracts.DatabaseOriginLookup";
     private static final Map<String, PluginContainer> containers = new HashMap<>();
+    private static PlatformType platform;
 
     /**
      * Gets all the plugin containers currently existing in DBM.
@@ -25,6 +29,11 @@ public class DatabaseFactory
     public Map<String, PluginContainer> getContainers()
     {
         return containers;
+    }
+
+    public void setPlatform(PlatformType platform)
+    {
+        DatabaseFactory.platform = platform;
     }
 
     /**
@@ -40,21 +49,31 @@ public class DatabaseFactory
      * @return either (1) A new a fresh instance of the Database Manager
      *         or (2) the existing Database manager instance for the provided plugin
      */
-    public static DatabaseManager createNewInstance(Plugin plugin)
+    public static DatabaseManager createNewInstance(Object plugin)
     {
         if (plugin == null) {
             throw new InvalidParameterException("The plugin parameter must be an instance of the Bukkit Plugin instance!");
         }
 
-        if (containers.containsKey(plugin.getName())) {
-            containers.get(plugin.getName()).getInstance();
+        try {
+            DatabasePlugin parser = (DatabasePlugin) platform.getInstance().newInstance();
+
+            parser.parse(plugin);
+
+            if (containers.containsKey(parser.getName())) {
+                return containers.get(parser.getName()).getInstance();
+            }
+
+            DatabaseManager dbm = new DatabaseManager(parser);
+
+            containers.put(parser.getName(), new PluginContainer(parser, dbm));
+
+            return dbm;
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DatabaseFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        DatabaseManager dbm = new DatabaseManager(plugin);
-
-        containers.put(plugin.getName(), new PluginContainer(plugin, dbm));
-
-        return dbm;
+        return null;
     }
 
     /**

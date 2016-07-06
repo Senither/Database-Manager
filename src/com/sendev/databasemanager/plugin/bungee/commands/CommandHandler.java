@@ -1,28 +1,27 @@
-package com.sendev.databasemanager.plugin.bukkit.commands;
+package com.sendev.databasemanager.plugin.bungee.commands;
 
-import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
-import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
+import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
 import com.sendev.databasemanager.plugin.utils.StringMatcher;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.plugin.Command;
 
-public class CommandHandler implements CommandExecutor
+public class CommandHandler extends Command
 {
     private final DBMPlugin plugin;
 
     private final List<DBMCommand> commands;
-    private final List<DBMCommand> defaultCommands;
+    private DBMCommand defaultCommand = null;
 
     public CommandHandler(DBMPlugin plugin)
     {
+        super("bungeedatabasemanager", null, new String[]{"bungeedbmanager", "bdbmanager", "bungeedbm", "bdbm"});
+
         this.plugin = plugin;
 
         commands = new ArrayList<>();
-        defaultCommands = new ArrayList<>();
     }
 
     /**
@@ -55,11 +54,7 @@ public class CommandHandler implements CommandExecutor
             return;
         }
 
-        if (defaultCommands.contains(command)) {
-            return;
-        }
-
-        defaultCommands.add(command);
+        this.defaultCommand = command;
     }
 
     /**
@@ -73,20 +68,24 @@ public class CommandHandler implements CommandExecutor
     }
 
     @Override
-    public final boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    public void execute(CommandSender sender, String[] args)
     {
         if (args.length == 0) {
-            for (DBMCommand cmd : defaultCommands) {
-                if (!cmd.hasPermission()) {
-                    return parseCommand(cmd, sender, args);
-                }
+            if (defaultCommand == null) {
+                plugin.getChat().sendMessage(sender, "&cThere doesn't seem to be a default command registered, try and use some arguments.");
 
-                if (sender.hasPermission(cmd.getPermission())) {
-                    return parseCommand(cmd, sender, args);
-                }
+                return;
             }
 
-            return false;
+            if (defaultCommand.getPermission() != null && !sender.hasPermission(defaultCommand.getPermission())) {
+                plugin.getChat().missingPermission(sender, defaultCommand.getPermission());
+
+                return;
+            }
+
+            defaultCommand.runCommand(sender, args);
+
+            return;
         }
 
         String commandTrigger = args[0];
@@ -105,17 +104,19 @@ public class CommandHandler implements CommandExecutor
                 if (cmd.hasPermission() && !sender.hasPermission(cmd.getPermission())) {
                     plugin.getChat().missingPermission(sender, cmd.getPermission());
 
-                    return false;
+                    return;
                 }
 
-                return parseCommand(cmd, sender, parm);
+                cmd.runCommand(sender, args);
+
+                return;
             }
         }
 
         if (!sender.hasPermission("databasemanager.admin")) {
             plugin.getChat().missingPermission(sender, "databasemanager.admin");
 
-            return false;
+            return;
         }
 
         List<String> commandTriggers = new ArrayList<>();
@@ -128,18 +129,5 @@ public class CommandHandler implements CommandExecutor
 
         plugin.getChat().sendMessage(sender, "%s &4%s &cwas not found! Did you mean...", plugin.getPrefix('4', 'c'), commandTrigger);
         plugin.getChat().sendMessage(sender, "&4/&cDBM &4[&c%s&4]", match);
-
-        return false;
-    }
-
-    private boolean parseCommand(DBMCommand command, CommandSender sender, String[] args)
-    {
-        if (!(sender instanceof Player)) {
-            return command.runConsoleCommand(sender, args);
-        }
-
-        Player player = (Player) sender;
-
-        return command.runPlayerCommand(player, args);
     }
 }

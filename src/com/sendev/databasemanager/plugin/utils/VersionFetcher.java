@@ -1,4 +1,4 @@
-package com.sendev.databasemanager.plugin.bukkit.utils;
+package com.sendev.databasemanager.plugin.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

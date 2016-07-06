@@ -5,6 +5,7 @@ import com.sendev.databasemanager.contracts.DatabaseOutput;
 import com.sendev.databasemanager.exceptions.DatabaseException;
 import com.sendev.databasemanager.migrate.Migrations;
 import com.sendev.databasemanager.output.OutputMode;
+import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Schema;
 import com.sendev.databasemanager.utils.Collection;
@@ -15,11 +16,10 @@ import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
-import org.bukkit.plugin.Plugin;
 
 public final class DatabaseManager
 {
-    private final Plugin plugin;
+    private final DatabasePlugin plugin;
     private final Schema schema = new Schema(this);
     private final Migrations migrations = new Migrations(this);
     private final DatabaseOptions options = new DatabaseOptions();
@@ -39,7 +39,7 @@ public final class DatabaseManager
      *
      * @param plugin The Bukkit plugin instance for the plugin using the Database Manager.
      */
-    public DatabaseManager(Plugin plugin)
+    public DatabaseManager(DatabasePlugin plugin)
     {
         this.plugin = plugin;
 
@@ -91,12 +91,12 @@ public final class DatabaseManager
     }
 
     /**
-     * Returns the Bukkit JavaPlugin instance, this is used by some
+     * Returns the DatabasePlugin instance, this is used by some
      * of the internal operations in the Database Manager.
      *
-     * @return The Bukkit JavaPlugin instance.
+     * @return The database plugin instance.
      */
-    public Plugin plugin()
+    public DatabasePlugin plugin()
     {
         return plugin;
     }
