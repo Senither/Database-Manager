@@ -11,15 +11,13 @@ Query Builder:
   ☐ Create a *QueryWhereStatement* interface that allows users to parse is logic to create an advanced where statement.
     Information can be found here https://laravel.com/docs/5.2/queries#advanced-where-clauses
 
-  ☐ Change the **insert** and **update** methods to carry out the action instead of the **queryUpdate()** and **queryInsert** methods.
+  ✔ Change the **insert** and **update** methods to carry out the action instead of the **queryUpdate()** and **queryInsert** methods. @done (06/07/16 16:08)
 
 Grammar:
   ☐ Fix SQL support for creating tables
     SQLite doesn't support ENGINEs and CHARSETs
 
 Schematics(Schema):
-  ✔ Fix the *defautValue* on the field class for booleans, parsing in a raw boolean seems to throw exceptions, so a SQL Action object should be used instead. @done (12/06/16 16:06)
-
   ☐ Add a *updateTable* method which will function the same way as the *createTable* method, however it will just update a existing table instead of making a new one.
     ☐ An *AlterGrammar* grammar class should be created in order to format update table information.
   
@@ -33,5 +31,13 @@ Schematics(Schema):
 Seeder:
   Faker seeder logic, from PHP
 
-Commands:
-  ☐ Finish the **edit command**
+Plugin:
+  ✔ Add Bungee support @done (06/07/16 13:42)
+    ✔ Add the same commands as on the Bukkit side, just re-name them to /bungee<command> <etc...> @done (06/07/16 13:43)
+
+  Commands:
+    ☐ Finish the **edit command**
+
+  Version fetch:
+    ☐ Add a version comparitor so the version fetch can tell users how many versions they're behind.
+      For this to work all the public versions of DBM must be stored in the version file.
