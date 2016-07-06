@@ -2,7 +2,7 @@ package com.sendev.databasemanager.plugin.bukkit.tasks;
 
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.bukkit.contracts.Task;
-import com.sendev.databasemanager.plugin.utils.VersionFetcher;
+import com.sendev.databasemanager.plugin.utils.Version;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +38,7 @@ public class VersionTask extends Task
     public void run()
     {
         try {
-            lastVersionRecived = VersionFetcher.fetch();
+            lastVersionRecived = Version.fetch();
         } catch (IOException ex) {
             Logger.getLogger(VersionTask.class.getName()).log(Level.INFO,
             "[DBM] Attempted to fetch the latest version from SenDevelopment has failed, trying again in 30 minutes!");

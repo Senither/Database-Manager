@@ -11,7 +11,7 @@ public class BootstrapLogger
         String latestVersion = version;
 
         try {
-            latestVersion = VersionFetcher.fetch();
+            latestVersion = Version.fetch();
         } catch (IOException ex) {
             logger.info("Failed to make a version check with SenDevelopment, the site might be down.");
         }
@@ -27,6 +27,7 @@ public class BootstrapLogger
             logger.log(Level.INFO, "There is a new version of DBM avaliable!");
             logger.log(Level.INFO, "Version avaliable: v{0}", latestVersion);
             logger.log(Level.INFO, "Current version:   v{0}", version);
+            logger.log(Level.INFO, "You''re currently {0} version(s) behind", Version.getVersionDiff(version));
         }
 
         logger.log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
