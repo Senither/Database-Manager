@@ -11,9 +11,7 @@ import com.sendev.databasemanager.plugin.bukkit.tasks.VersionTask;
 import com.sendev.databasemanager.plugin.bukkit.utils.ChatFormatter;
 import com.sendev.databasemanager.plugin.contracts.PlatformType;
 import com.sendev.databasemanager.plugin.contracts.PluginContract;
-import com.sendev.databasemanager.plugin.utils.VersionFetcher;
-import java.io.IOException;
-import java.util.logging.Level;
+import com.sendev.databasemanager.plugin.utils.BootstrapLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DBMPlugin extends JavaPlugin implements PluginContract
@@ -35,31 +33,7 @@ public class DBMPlugin extends JavaPlugin implements PluginContract
     @Override
     public void onEnable()
     {
-        // Gets the latest, and current version of DBM
-        String currentVersion = getDescription().getVersion();
-        String latestVersion = currentVersion;
-
-        try {
-            latestVersion = VersionFetcher.fetch();
-        } catch (IOException ex) {
-            getLogger().info("Failed to make a version check with SenDevelopment, the site might be down.");
-        }
-
-        // Send console plugin message
-        getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-        getLogger().log(Level.INFO, "Plugin: Database Manager v{0}", currentVersion);
-        getLogger().log(Level.INFO, "Author: Alexis Tan (Senither) ");
-        getLogger().log(Level.INFO, "Site: http://sen-dev.com/");
-        getLogger().log(Level.INFO, "Wiki: https://bitbucket.org/Senither/database-manager");
-
-        if (!currentVersion.equals(latestVersion)) {
-            getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-            getLogger().log(Level.INFO, "There is a new version of DBM avaliable!");
-            getLogger().log(Level.INFO, "Version avaliable: v{0}", latestVersion);
-            getLogger().log(Level.INFO, "Current version:   v{0}", currentVersion);
-        }
-
-        getLogger().log(Level.INFO, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        BootstrapLogger.logBootMessageTo(getLogger(), getDescription().getVersion());
 
         // Register commands
         command.registerCommand(new HelpCommand(this));
@@ -73,7 +47,7 @@ public class DBMPlugin extends JavaPlugin implements PluginContract
         getServer().getPluginManager().registerEvents(new ServerListener(this), this);
 
         // Register tasks
-        (version = new VersionTask(this, latestVersion)).startTask();
+        (version = new VersionTask(this, getDescription().getVersion())).startTask();
     }
 
     /**
