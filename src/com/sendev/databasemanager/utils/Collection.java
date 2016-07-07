@@ -1,6 +1,7 @@
 package com.sendev.databasemanager.utils;
 
 import com.google.gson.Gson;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -92,25 +93,49 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
+     * Calculates the average 
+     * 
+     * @return 
+     */
+    public double avg()
+    {
+        return avg(keys.keySet().iterator().next());
+    }
+
+    /**
      * Calculates the average for a field
      *
      * @param field the field to calculated the average of
      *
      * @return the average for the provided field
      */
-    public double avgInt(String field)
+    public double avg(String field)
     {
-        if (isEmpty()) {
+        if (isEmpty() || !keys.containsKey(field)) {
             return 0;
         }
 
-        int avg = 0;
+        BigDecimal decimal = new BigDecimal(0);
 
         for (DataRow row : items) {
-            avg += row.getInt(field);
+            Object obj = row.get(field);
+
+            switch (obj.getClass().getTypeName()) {
+                case "java.lang.Double":
+                    decimal = decimal.add(new BigDecimal((Double) obj));
+                    break;
+
+                case "java.lang.Long":
+                    decimal = decimal.add(new BigDecimal((Long) obj));
+                    break;
+
+                case "java.lang.Integer":
+                    decimal = decimal.add(new BigDecimal((Integer) obj));
+                    break;
+            }
         }
 
-        return avg / items.size();
+        return decimal.divide(new BigDecimal(items.size())).doubleValue();
     }
 
     /**
@@ -120,9 +145,9 @@ public class Collection implements Cloneable, Iterable<DataRow>
      *
      * @return the chunked down collection
      */
-    public List<List<DataRow>> chunk(int size)
+    public List<Collection> chunk(int size)
     {
-        List<List<DataRow>> chunk = new ArrayList<>();
+        List<Collection> chunk = new ArrayList<>();
 
         int index = 0, counter = 0;
         for (DataRow row : items) {
@@ -132,11 +157,15 @@ public class Collection implements Cloneable, Iterable<DataRow>
             }
 
             try {
-                chunk.get(index);
+                Collection get = chunk.get(index);
+
+                get.add(row);
             } catch (IndexOutOfBoundsException e) {
-                chunk.add(index, new ArrayList<>());
-            } finally {
-                chunk.get(index).add(row);
+                Collection collection = new Collection();
+
+                collection.add(row);
+
+                chunk.add(index, collection);
             }
         }
 
@@ -436,6 +465,21 @@ public class Collection implements Cloneable, Iterable<DataRow>
     public Iterator<DataRow> iterator()
     {
         return new CollectionIterator();
+    }
+
+    private void add(DataRow row)
+    {
+        Map<String, Object> items = new HashMap<>();
+
+        for (String key : row.keySet()) {
+            if (!keys.containsKey(key)) {
+                keys.put(key, row.get(key).getClass().getTypeName());
+            }
+
+            items.put(key, row.get(key));
+        }
+
+        this.items.add(new DataRow(items));
     }
 
     private class CollectionIterator implements Iterator<DataRow>

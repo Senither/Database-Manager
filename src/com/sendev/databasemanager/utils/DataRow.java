@@ -1,5 +1,6 @@
 package com.sendev.databasemanager.utils;
 
+import com.google.gson.Gson;
 import com.sendev.databasemanager.exceptions.InvalidFormatException;
 import java.util.Map;
 import java.util.Set;
@@ -284,6 +285,14 @@ public class DataRow
         } catch (InvalidFormatException ex) {
             return def;
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        Gson gson = new Gson();
+
+        return gson.toJson(items);
     }
 
     private boolean isString(Object name)
