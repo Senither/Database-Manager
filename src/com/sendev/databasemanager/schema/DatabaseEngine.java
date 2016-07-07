@@ -20,6 +20,11 @@ public enum DatabaseEngine
         this.engine = engine;
     }
 
+    /**
+     * Gets the database engine string value.
+     *
+     * @return the database engines string value.
+     */
     public String getEngine()
     {
         return engine;
