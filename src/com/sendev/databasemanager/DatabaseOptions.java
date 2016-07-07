@@ -89,6 +89,14 @@ public final class DatabaseOptions
         return queryReturnLimit;
     }
 
+    /**
+     * Sets the global database prefix used by all the query generators.
+     * <p>
+     * <strong>Note:</strong> Even with the prefix set, query generators can still
+     * skip the prefix in the building process, if the option for that is given.
+     *
+     * @param prefix
+     */
     public void setPrefix(String prefix)
     {
         if (prefix == null) {
@@ -98,6 +106,12 @@ public final class DatabaseOptions
         this.prefix = prefix.trim();
     }
 
+    /**
+     * Gets the database prefix used by the query generators, if no
+     * prefix is set, an empty string will be returned instead.
+     *
+     * @return The database prefix.
+     */
     public String getPrefix()
     {
         return prefix;
