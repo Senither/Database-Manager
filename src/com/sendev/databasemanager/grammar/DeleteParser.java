@@ -11,9 +11,10 @@ public class DeleteParser extends GrammarParser
     {
         switch (getType(connection)) {
             case MySQL:
-                com.sendev.databasemanager.grammar.mysql.Delete delete = new com.sendev.databasemanager.grammar.mysql.Delete();
+                return setupAndRun(new com.sendev.databasemanager.grammar.mysql.Delete(), query, manager, options);
 
-                return delete.format(query);
+            case SQLite:
+                return setupAndRun(new com.sendev.databasemanager.grammar.sqlite.Delete(), query, manager, options);
 
             default:
                 return null;

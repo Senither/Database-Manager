@@ -11,9 +11,10 @@ public class UpdateParser extends GrammarParser
     {
         switch (getType(connection)) {
             case MySQL:
-                com.sendev.databasemanager.grammar.mysql.Update update = new com.sendev.databasemanager.grammar.mysql.Update();
+                return setupAndRun(new com.sendev.databasemanager.grammar.mysql.Update(), query, manager, options);
 
-                return update.format(query);
+            case SQLite:
+                return setupAndRun(new com.sendev.databasemanager.grammar.sqlite.Update(), query, manager, options);
 
             default:
                 return null;

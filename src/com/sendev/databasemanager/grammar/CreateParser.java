@@ -11,12 +11,10 @@ public class CreateParser extends GrammarParser
     {
         switch (getType(connection)) {
             case MySQL:
-                com.sendev.databasemanager.grammar.mysql.Create create = new com.sendev.databasemanager.grammar.mysql.Create();
+                return setupAndRun(new com.sendev.databasemanager.grammar.mysql.Create(), blueprint, manager, options);
 
-                create.setDBM(manager);
-                create.setOptions(options);
-
-                return create.format(blueprint);
+            case SQLite:
+                return setupAndRun(new com.sendev.databasemanager.grammar.sqlite.Create(), blueprint, manager, options);
 
             default:
                 return null;

@@ -11,9 +11,10 @@ public class SelectParser extends GrammarParser
     {
         switch (getType(connection)) {
             case MySQL:
-                com.sendev.databasemanager.grammar.mysql.Select select = new com.sendev.databasemanager.grammar.mysql.Select();
+                return setupAndRun(new com.sendev.databasemanager.grammar.mysql.Select(), query, manager, options);
 
-                return select.format(query);
+            case SQLite:
+                return setupAndRun(new com.sendev.databasemanager.grammar.sqlite.Select(), query, manager, options);
 
             default:
                 return null;

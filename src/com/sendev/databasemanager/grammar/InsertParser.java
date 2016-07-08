@@ -11,9 +11,10 @@ public class InsertParser extends GrammarParser
     {
         switch (getType(connection)) {
             case MySQL:
-                com.sendev.databasemanager.grammar.mysql.Insert insert = new com.sendev.databasemanager.grammar.mysql.Insert();
+                return setupAndRun(new com.sendev.databasemanager.grammar.mysql.Insert(), query, manager, options);
 
-                return insert.format(query);
+            case SQLite:
+                return setupAndRun(new com.sendev.databasemanager.grammar.sqlite.Insert(), query, manager, options);
 
             default:
                 return null;

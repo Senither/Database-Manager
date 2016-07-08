@@ -3,7 +3,9 @@ package com.sendev.databasemanager.grammar;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.connections.MySQL;
 import com.sendev.databasemanager.connections.SQLite;
+import com.sendev.databasemanager.contracts.AlterGrammar;
 import com.sendev.databasemanager.contracts.Database;
+import com.sendev.databasemanager.contracts.TableGrammar;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Blueprint;
 import java.util.HashMap;
@@ -39,6 +41,22 @@ public abstract class GrammarParser
         }
 
         return null;
+    }
+
+    protected String setupAndRun(TableGrammar grammar, QueryBuilder builder, DatabaseManager manager, Map<String, Boolean> options)
+    {
+        grammar.setDBM(manager);
+        grammar.setOptions(options);
+        
+        return grammar.format(builder);
+    }
+    
+    protected String setupAndRun(AlterGrammar grammar, Blueprint blueprint, DatabaseManager manager, Map<String, Boolean> options)
+    {
+        grammar.setDBM(manager);
+        grammar.setOptions(options);
+        
+        return grammar.format(blueprint);
     }
 
     protected enum ConnectionType
