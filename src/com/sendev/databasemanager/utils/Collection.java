@@ -93,9 +93,9 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
-     * Calculates the average 
-     * 
-     * @return 
+     * Calculates the average
+     *
+     * @return
      */
     public double avg()
     {
@@ -193,13 +193,12 @@ public class Collection implements Cloneable, Iterable<DataRow>
      * @param index the index to get from the collection
      *
      * @return the DataRow object in the provided index
+     *
+     * @throws IndexOutOfBoundsException if the index is out of range
+     *                                   (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     public DataRow get(int index)
     {
-        if (items.isEmpty()) {
-            return null;
-        }
-
         return items.get(index);
     }
 
