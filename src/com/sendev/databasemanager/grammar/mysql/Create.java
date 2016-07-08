@@ -1,35 +1,15 @@
-package com.sendev.databasemanager.grammar;
+package com.sendev.databasemanager.grammar.mysql;
 
-import com.sendev.databasemanager.contracts.AlterGrammar;
+import com.sendev.databasemanager.grammar.contracts.CreateGrammar;
 import com.sendev.databasemanager.schema.Blueprint;
 import com.sendev.databasemanager.schema.Field;
 import com.sendev.databasemanager.schema.FieldType;
 
-public class CreateGrammar extends AlterGrammar
+public class Create extends CreateGrammar
 {
-    private boolean ignoreExistingTable = true;
-    private boolean ignoreDatabasePrefix = false;
-
-    public CreateGrammar()
-    {
-        query = "CREATE TABLE ";
-    }
-
-    public void ignoreExistingTable(boolean value)
-    {
-        this.ignoreExistingTable = value;
-    }
-
-    public void ignoreDatabasePrefix(boolean value)
-    {
-        this.ignoreDatabasePrefix = value;
-    }
-
     @Override
     public String format(Blueprint blueprint)
     {
-        dbm = getDBMFrom(blueprint);
-
         buildTable(blueprint);
 
         buildFields(blueprint);
@@ -51,12 +31,12 @@ public class CreateGrammar extends AlterGrammar
 
     private void buildTable(Blueprint blueprint)
     {
-        if (!ignoreExistingTable) {
+        if (!options.getOrDefault("ignoreExistingTable", Boolean.FALSE)) {
             addPart(" IF NOT EXISTS ");
         }
 
         String table = blueprint.getTable();
-        if (!ignoreDatabasePrefix) {
+        if (!options.getOrDefault("ignoreDatabasePrefix", Boolean.FALSE)) {
             table = buildTable(table);
         }
 

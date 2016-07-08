@@ -1,21 +1,13 @@
-package com.sendev.databasemanager.grammar;
+package com.sendev.databasemanager.grammar.mysql;
 
-import com.sendev.databasemanager.contracts.TableGrammar;
+import com.sendev.databasemanager.grammar.contracts.DeleteGrammar;
 import com.sendev.databasemanager.query.QueryBuilder;
 
-public class DeleteGrammar extends TableGrammar
+public class Delete extends DeleteGrammar
 {
-
-    public DeleteGrammar()
-    {
-        query = "DELETE FROM ";
-    }
-
     @Override
     public String format(QueryBuilder builder)
     {
-        dbm = getDBMFrom(builder);
-
         String table = builder.getTable();
         if (!builder.isIgnoringDatabasePrefix()) {
             table = buildTable(table);

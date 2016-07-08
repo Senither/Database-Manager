@@ -1,9 +1,10 @@
 package com.sendev.databasemanager.schema;
 
+import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.contracts.Database;
 import com.sendev.databasemanager.exceptions.DatabaseException;
-import com.sendev.databasemanager.grammar.CreateGrammar;
+import com.sendev.databasemanager.grammar.CreateParser;
 import com.sendev.databasemanager.query.QueryType;
 import com.sendev.databasemanager.schema.contracts.DatabaseClosure;
 import java.sql.DatabaseMetaData;
@@ -147,9 +148,11 @@ public class Schema
 
         Blueprint blueprint = createAndRunBlueprint(table, closure);
 
-        CreateGrammar grammar = createGrammar(true);
+        DatabaseManager dynamicDBM = DatabaseFactory.getDynamicOrigin(blueprint.getClass());
 
-        String query = grammar.format(blueprint);
+        CreateParser grammar = createGrammar(true);
+
+        String query = grammar.parse(dynamicDBM, dynamicDBM.getConnections().getDefaultConnection(), blueprint);
 
         dbm.output().debug("create query was generated, executing query: %s", query);
 
@@ -177,9 +180,11 @@ public class Schema
 
         Blueprint blueprint = createAndRunBlueprint(table, closure);
 
-        CreateGrammar grammar = createGrammar(true, ignoreDatabasePrefix);
+        DatabaseManager dynamicDBM = DatabaseFactory.getDynamicOrigin(blueprint.getClass());
 
-        String query = grammar.format(blueprint);
+        CreateParser grammar = createGrammar(true, ignoreDatabasePrefix);
+
+        String query = grammar.parse(dynamicDBM, dynamicDBM.getConnections().getDefaultConnection(), blueprint);
 
         dbm.output().debug("create query was generated, executing query: %s", query);
 
@@ -211,9 +216,11 @@ public class Schema
 
         Blueprint blueprint = createAndRunBlueprint(table, closure);
 
-        CreateGrammar grammar = createGrammar(false);
+        DatabaseManager dynamicDBM = DatabaseFactory.getDynamicOrigin(blueprint.getClass());
 
-        String query = grammar.format(blueprint);
+        CreateParser grammar = createGrammar(false);
+
+        String query = grammar.parse(dynamicDBM, dynamicDBM.getConnections().getDefaultConnection(), blueprint);
 
         dbm.output().debug("Schema::createIfNotExists query was generated, executing query: %s", query);
 
@@ -250,9 +257,11 @@ public class Schema
 
         Blueprint blueprint = createAndRunBlueprint(table, closure);
 
-        CreateGrammar grammar = createGrammar(false, ignoreDatabasePrefix);
+        DatabaseManager dynamicDBM = DatabaseFactory.getDynamicOrigin(blueprint.getClass());
 
-        String query = grammar.format(blueprint);
+        CreateParser grammar = createGrammar(false, ignoreDatabasePrefix);
+
+        String query = grammar.parse(dynamicDBM, dynamicDBM.getConnections().getDefaultConnection(), blueprint);
 
         dbm.output().debug("Schema::createIfNotExists query was generated, executing query: %s", query);
 
@@ -283,7 +292,7 @@ public class Schema
      *
      * @return The {@link QueryType#CREATE} grammar instance.
      */
-    private CreateGrammar createGrammar(boolean shouldIgnoreExistingTable)
+    private CreateParser createGrammar(boolean shouldIgnoreExistingTable)
     {
         return createGrammar(shouldIgnoreExistingTable, false);
     }
@@ -296,13 +305,13 @@ public class Schema
      *
      * @return The {@link QueryType#CREATE} grammar instance.
      */
-    private CreateGrammar createGrammar(boolean shouldIgnoreExistingTable, boolean shouldIgnoreDatabasePrefix)
+    private CreateParser createGrammar(boolean shouldIgnoreExistingTable, boolean shouldIgnoreDatabasePrefix)
     {
         try {
-            CreateGrammar grammar = (CreateGrammar) QueryType.CREATE.getGrammar().newInstance();
+            CreateParser grammar = (CreateParser) QueryType.CREATE.getGrammar().newInstance();
 
-            grammar.ignoreExistingTable(shouldIgnoreExistingTable);
-            grammar.ignoreDatabasePrefix(shouldIgnoreDatabasePrefix);
+            grammar.setOption("ignoreExistingTable", shouldIgnoreExistingTable);
+            grammar.setOption("ignoreDatabasePrefix", shouldIgnoreDatabasePrefix);
 
             return grammar;
         } catch (InstantiationException ex) {

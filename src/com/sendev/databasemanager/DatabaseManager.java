@@ -263,7 +263,7 @@ public final class DatabaseManager
      */
     public Collection query(QueryBuilder query) throws SQLException
     {
-        return query(query.toSQL());
+        return query(query.toSQL(this));
     }
 
     /**
@@ -289,7 +289,7 @@ public final class DatabaseManager
      */
     public Collection query(String connection, QueryBuilder query) throws SQLException
     {
-        return query(connection, query.toSQL());
+        return query(connection, query.toSQL(this));
     }
 
     /**
@@ -340,7 +340,7 @@ public final class DatabaseManager
      */
     public int queryUpdate(QueryBuilder query) throws SQLException
     {
-        return queryUpdate(query.toSQL());
+        return queryUpdate(query.toSQL(this));
     }
 
     /**
@@ -401,7 +401,7 @@ public final class DatabaseManager
      */
     public int queryUpdate(String connection, QueryBuilder query) throws SQLException
     {
-        return queryUpdate(connection, query.toSQL());
+        return queryUpdate(connection, query.toSQL(this));
     }
 
     /**
@@ -463,7 +463,7 @@ public final class DatabaseManager
      */
     public Set<Integer> queryInsert(QueryBuilder query) throws SQLException
     {
-        return queryInsert(query.toSQL());
+        return queryInsert(query.toSQL(this));
     }
 
     /**
@@ -537,6 +537,6 @@ public final class DatabaseManager
      */
     public Set<Integer> queryInsert(String connection, QueryBuilder query) throws SQLException
     {
-        return queryInsert(connection, query.toSQL());
+        return queryInsert(connection, query.toSQL(this));
     }
 }

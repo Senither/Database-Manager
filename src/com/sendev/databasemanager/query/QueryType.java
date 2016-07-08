@@ -1,19 +1,19 @@
 package com.sendev.databasemanager.query;
 
-import com.sendev.databasemanager.grammar.CreateGrammar;
-import com.sendev.databasemanager.grammar.DeleteGrammar;
-import com.sendev.databasemanager.grammar.InsertGrammar;
-import com.sendev.databasemanager.grammar.SelectGrammar;
-import com.sendev.databasemanager.grammar.UpdateGrammar;
+import com.sendev.databasemanager.grammar.CreateParser;
+import com.sendev.databasemanager.grammar.DeleteParser;
+import com.sendev.databasemanager.grammar.InsertParser;
+import com.sendev.databasemanager.grammar.SelectParser;
+import com.sendev.databasemanager.grammar.UpdateParser;
 
 public enum QueryType
 {
 
-    SELECT(SelectGrammar.class),
-    INSERT(InsertGrammar.class),
-    UPDATE(UpdateGrammar.class),
-    DELETE(DeleteGrammar.class),
-    CREATE(CreateGrammar.class);
+    SELECT(SelectParser.class),
+    INSERT(InsertParser.class),
+    UPDATE(UpdateParser.class),
+    DELETE(DeleteParser.class),
+    CREATE(CreateParser.class);
 
     private final Class grammar;
 

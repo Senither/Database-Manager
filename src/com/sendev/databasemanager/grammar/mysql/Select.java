@@ -1,6 +1,6 @@
-package com.sendev.databasemanager.grammar;
+package com.sendev.databasemanager.grammar.mysql;
 
-import com.sendev.databasemanager.contracts.TableGrammar;
+import com.sendev.databasemanager.grammar.contracts.SelectGrammar;
 import com.sendev.databasemanager.query.Clause;
 import com.sendev.databasemanager.query.JoinClause;
 import com.sendev.databasemanager.query.OperatorType;
@@ -8,14 +8,8 @@ import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.query.QueryOrder;
 import java.util.List;
 
-public class SelectGrammar extends TableGrammar
+public class Select extends SelectGrammar
 {
-
-    public SelectGrammar()
-    {
-        query = "SELECT ";
-    }
-
     @Override
     public String format(QueryBuilder builder)
     {

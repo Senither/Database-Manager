@@ -6,11 +6,23 @@ import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Blueprint;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Grammar
 {
 
     protected DatabaseManager dbm;
+    protected Map<String, Boolean> options;
+
+    public void setDBM(DatabaseManager dbm)
+    {
+        this.dbm = dbm;
+    }
+
+    public void setOptions(Map<String, Boolean> options)
+    {
+        this.options = options;
+    }
 
     /**
      * The query SQL string, this string will be appended to

@@ -3,9 +3,9 @@ package com.sendev.databasemanager.query;
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
-import com.sendev.databasemanager.contracts.TableGrammar;
 import com.sendev.databasemanager.exceptions.DatabaseException;
 import com.sendev.databasemanager.exceptions.OriginException;
+import com.sendev.databasemanager.grammar.GrammarParser;
 import com.sendev.databasemanager.utils.Collection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -749,10 +749,21 @@ public final class QueryBuilder implements DatabaseOriginLookup
      */
     public String toSQL()
     {
-        try {
-            TableGrammar grammar = (TableGrammar) type.getGrammar().newInstance();
+        DatabaseManager dbm = DatabaseFactory.getDynamicOrigin(getClass());
 
-            String sql = grammar.format(this);
+        if (dbm == null) {
+            throw new DatabaseException("Failed to find any data binding connected to the instantiated class.");
+        }
+
+        return toSQL(dbm);
+    }
+
+    public String toSQL(DatabaseManager dbm)
+    {
+        try {
+            GrammarParser grammar = (GrammarParser) type.getGrammar().newInstance();
+
+            String sql = grammar.parse(dbm, dbm.getConnections().getDefaultConnection(), this);
 
             return sql;
         } catch (InstantiationException | IllegalAccessException ex) {

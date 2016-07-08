@@ -1,21 +1,12 @@
-package com.sendev.databasemanager.grammar;
+package com.sendev.databasemanager.grammar.mysql;
 
-import com.sendev.databasemanager.contracts.TableGrammar;
+import com.sendev.databasemanager.grammar.contracts.UpdateGrammar;
 import com.sendev.databasemanager.query.QueryBuilder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class InsertGrammar extends TableGrammar
+public class Update extends UpdateGrammar
 {
-
-    private final List<String> keyset = new ArrayList<>();
-
-    public InsertGrammar()
-    {
-        query = "INSERT INTO ";
-    }
-
     @Override
     public String format(QueryBuilder builder)
     {
@@ -26,11 +17,13 @@ public class InsertGrammar extends TableGrammar
             table = buildTable(table);
         }
 
-        addPart(String.format(" %s", formatField(table)));
+        addPart(String.format(" %s SET", formatField(table)));
 
         buildKeyset(builder);
 
         buildValues(builder);
+
+        buildWhereClause(builder);
 
         return finalize(builder);
     }
@@ -45,29 +38,19 @@ public class InsertGrammar extends TableGrammar
             });
         });
 
-        addPart(" (");
-
-        keyset.stream().forEach(( key ) -> {
-            addPart(String.format("`%s`, ", key));
-        });
-
-        removeLast(2).addPart(")");
     }
 
     private void buildValues(QueryBuilder builder)
     {
-        addPart(" VALUES ");
-
         List<Map<String, Object>> items = builder.getItems();
 
         for (Map<String, Object> row : items) {
-            addPart(" (");
 
             keyset.stream().forEach(( key ) -> {
-                addPart((row.containsKey(key)) ? String.format("'%s', ", row.get(key)) : "NULL, ");
+                addPart((row.containsKey(key)) ? String.format(" %s = '%s', ", formatField(key), row.get(key)) : " NULL, ");
             });
 
-            removeLast(2).addPart("),");
+            removeLast(2).addPart(" ");
         }
 
         removeLast(1);
