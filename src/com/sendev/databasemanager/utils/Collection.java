@@ -132,6 +132,10 @@ public class Collection implements Cloneable, Iterable<DataRow>
                 case "java.lang.Integer":
                     decimal = decimal.add(new BigDecimal((Integer) obj));
                     break;
+
+                case "java.lang.Float":
+                    decimal = decimal.add(new BigDecimal((Float) obj));
+                    break;
             }
         }
 
