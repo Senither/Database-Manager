@@ -2,6 +2,7 @@ package com.sendev.databasemanager.plugin.contracts;
 
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.exceptions.InvalidPluginException;
 import java.util.logging.Logger;
 
 public interface PluginContract
@@ -43,9 +44,9 @@ public interface PluginContract
      *
      * @throws InvalidPluginException if the provided object doesn't inherit from the plugin main
      *                                class for the current running platform, if Bukkit/Spigot is
-     *                                being used the parsed object has to extend the {@link org.bukkit.plugin.java.JavaPlugin}
+     *                                being used the parsed object has to extend the JavaPlugin
      *                                class, if BungeeCord is being used the object have to extend
-     *                                the BungeeCord {@link net.md_5.bungee.api.plugin.Plugin} class.
+     *                                the BungeeCord Plugin class.
      */
     public DatabaseManager createNewInstance(Object plugin);
 }

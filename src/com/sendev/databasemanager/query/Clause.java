@@ -70,7 +70,7 @@ public class Clause
      * Gets the clause identifier that should be used when
      * comparing field {@link #one} and {@link #two}.
      *
-     * @return
+     * @return the clause identifier that should be used.
      */
     public String getIdentifier()
     {

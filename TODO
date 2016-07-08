@@ -14,7 +14,7 @@ Query Builder:
   ✔ Change the **insert** and **update** methods to carry out the action instead of the **queryUpdate()** and **queryInsert** methods. @done (06/07/16 16:08)
 
 Grammar:
-  ☐ Fix SQL support for creating tables
+  ✔ Fix SQL support for creating tables @done (08/07/16 17:39)
     SQLite doesn't support ENGINEs and CHARSETs
 
 Schematics(Schema):

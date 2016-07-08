@@ -95,7 +95,7 @@ public final class DatabaseOptions
      * <strong>Note:</strong> Even with the prefix set, query generators can still
      * skip the prefix in the building process, if the option for that is given.
      *
-     * @param prefix
+     * @param prefix The prefix that should be used globally within DBM.
      */
     public void setPrefix(String prefix)
     {

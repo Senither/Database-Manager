@@ -192,7 +192,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
      * <p>
      * Would re-name the username field in the table to name in the collection object.
      *
-     * @param colums
+     * @param colums The varargs list of columns that should be selected.
      *
      * @return the query builder instance.
      */
@@ -918,7 +918,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
     }
 
     /**
-     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(java.lang.String, com.sendev.databasemanager.query.QueryBuilder)
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(java.lang.String, com.sendev.databasemanager.query.QueryBuilder) }
      * method with the current instance of the query builder.
      *
      * @param connection The database connection to run the query against
@@ -936,7 +936,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
     }
 
     /**
-     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(com.sendev.databasemanager.query.QueryBuilder)
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(com.sendev.databasemanager.query.QueryBuilder) }
      * method with the current instance of the query builder.
      *
      * @param items The map of items that should be inserted
@@ -953,7 +953,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
     }
 
     /**
-     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(java.lang.String, com.sendev.databasemanager.query.QueryBuilder)
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryInsert(java.lang.String, com.sendev.databasemanager.query.QueryBuilder) }
      * method with the current instance of the query builder.
      *
      * @param connection The database connection to run the query against
@@ -990,7 +990,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
     }
 
     /**
-     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder)
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder) }
      * method with the current instance of the query builder.
      *
      * @return either (1) the row count for SQL Data Manipulation Language (DML) statements
@@ -1006,7 +1006,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
     }
 
     /**
-     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder)
+     * Runs the {@link com.sendev.databasemanager.DatabaseManager#queryUpdate(com.sendev.databasemanager.query.QueryBuilder) }
      * method with the current instance of the query builder.
      *
      * @param connection The database connection to run the query against
