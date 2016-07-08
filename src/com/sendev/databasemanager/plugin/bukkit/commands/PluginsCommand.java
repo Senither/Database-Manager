@@ -3,6 +3,7 @@ package com.sendev.databasemanager.plugin.bukkit.commands;
 import com.sendev.databasemanager.factory.PluginContainer;
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +37,14 @@ public class PluginsCommand extends DBMCommand
     @Override
     public boolean runPlayerCommand(Player player, String[] args)
     {
-        chat().sendMessage(player, "&3&l]&3&l&m--------&3&l[ &bDatabase Manager : Stats &3&l]&3&l&m--------&3&l[");
+        BukkitSender sender = new BukkitSender(player);
+        
+        chat().sendMessage(sender, "&3&l]&3&l&m--------&3&l[ &bDatabase Manager : Stats &3&l]&3&l&m--------&3&l[");
 
         Map<String, PluginContainer> containers = plugin.getFactory().getContainers();
 
         if (containers.isEmpty()) {
-            chat().sendMessage(player, "&7There doesn't seem to be any plugins currently using DBM.");
+            chat().sendMessage(sender, "&7There doesn't seem to be any plugins currently using DBM.");
 
             return false;
         }
@@ -50,7 +53,7 @@ public class PluginsCommand extends DBMCommand
             int connSize = container.getInstance().getConnections().getConnections().size();
             int migrSize = container.getInstance().migrations().getMigrations().size();
 
-            chat().sendMessage(player, "&3&m&l ]&3[ &7&o&l%s &7with &l%s &7connection%s and &l%s &7migration%s", container.getName(),
+            chat().sendMessage(sender, "&3&m&l ]&3[ &7&o&l%s &7with &l%s &7connection%s and &l%s &7migration%s", container.getName(),
             connSize, (connSize == 1) ? "" : "s",
             migrSize, (migrSize == 1) ? "" : "s");
         });

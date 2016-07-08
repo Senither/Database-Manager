@@ -7,6 +7,7 @@ import com.sendev.databasemanager.DatabaseOptions;
 import com.sendev.databasemanager.factory.PluginContainer;
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -50,8 +51,10 @@ public class EditCommand extends DBMCommand
     @Override
     public boolean runPlayerCommand(Player player, String[] args)
     {
+        BukkitSender sender = new BukkitSender(player);
+
         if (args.length == 0) {
-            chat().sendMessage(player, "%s &cYou must include a plugin name to edit!", plugin.getPrefix('4', 'c'));
+            chat().sendMessage(sender, "%s &cYou must include a plugin name to edit!", plugin.getPrefix('4', 'c'));
 
             return false;
         }
@@ -69,7 +72,7 @@ public class EditCommand extends DBMCommand
             }
         }
 
-        chat().sendMessage(player, "%s &4%s &cwas not found in the DBM plugin container.", plugin.getPrefix('4', 'c'), args[0]);
+        chat().sendMessage(sender, "%s &4%s &cwas not found in the DBM plugin container.", plugin.getPrefix('4', 'c'), args[0]);
 
         return false;
     }
@@ -99,33 +102,37 @@ public class EditCommand extends DBMCommand
 
     private boolean helpCommand(PluginContainer container, Player player, String[] args)
     {
-        chat().sendMessage(player, TITLE_MESSAGE, container.getName(), "Help");
+        chat().sendMessage(new BukkitSender(player), TITLE_MESSAGE, container.getName(), "Help");
 
         return true;
     }
 
     private boolean dumpCommand(PluginContainer container, Player player, String[] args)
     {
-        chat().sendMessage(player, TITLE_MESSAGE, container.getName(), "Dump");
+        BukkitSender sender = new BukkitSender(player);
+
+        chat().sendMessage(sender, TITLE_MESSAGE, container.getName(), "Dump");
 
         DatabaseManager instance = container.getInstance();
         DatabaseOptions options = instance.options();
 
-        chat().sendMessage(player, "&3%s &bconnection(s) and &3%s &bmigration(s) are registered to DBM!",
+        chat().sendMessage(sender, "&3%s &bconnection(s) and &3%s &bmigration(s) are registered to DBM!",
         instance.getConnections().getConnections().size(), instance.migrations().getMigrations().size());
 
-        chat().sendMessage(player, "&bDebug Mode    : &3%s", options.isDebugMessagesEnabled() ? "&aEnabled" : "&cDisabled");
-        chat().sendMessage(player, "&bQuery Timeout : &3%s", options.getQueryTimeout() == -1 ? "&cDisabled" : "&3" + options.getQueryTimeout() + " milliseconds");
-        chat().sendMessage(player, "&bQuery Limit     : &3%s", options.getQueryReturnLimit() == -1 ? "&cDisabled" : "&3" + options.getQueryReturnLimit());
-        chat().sendMessage(player, "&bDB-Engine      : &3%s", options.getEngine().getEngine());
-        chat().sendMessage(player, "&bDB-Prefix      : &3%s", options.getPrefix().length() == 0 ? "&7&oNone set" : "&3" + options.getPrefix());
+        chat().sendMessage(sender, "&bDebug Mode    : &3%s", options.isDebugMessagesEnabled() ? "&aEnabled" : "&cDisabled");
+        chat().sendMessage(sender, "&bQuery Timeout : &3%s", options.getQueryTimeout() == -1 ? "&cDisabled" : "&3" + options.getQueryTimeout() + " milliseconds");
+        chat().sendMessage(sender, "&bQuery Limit     : &3%s", options.getQueryReturnLimit() == -1 ? "&cDisabled" : "&3" + options.getQueryReturnLimit());
+        chat().sendMessage(sender, "&bDB-Engine      : &3%s", options.getEngine().getEngine());
+        chat().sendMessage(sender, "&bDB-Prefix      : &3%s", options.getPrefix().length() == 0 ? "&7&oNone set" : "&3" + options.getPrefix());
 
         return true;
     }
 
     private boolean connectionsCommand(PluginContainer container, Player player, String[] args)
     {
-        chat().sendMessage(player, TITLE_MESSAGE, container.getName(), "Connections");
+        BukkitSender sender = new BukkitSender(player);
+
+        chat().sendMessage(sender, TITLE_MESSAGE, container.getName(), "Connections");
 
         Map<String, Connection> connections = container.getInstance().getConnections().getConnections();
 
@@ -140,7 +147,7 @@ public class EditCommand extends DBMCommand
             try {
                 DatabaseMetaData meta = connecction.getConnection().getConnection().getMetaData();
 
-                chat().sendMessage(player, "&b" + name.toUpperCase() + " &b| &3" + meta.getURL());
+                chat().sendMessage(sender, "&b" + name.toUpperCase() + " &b| &3" + meta.getURL());
 
                 ConnectionLevel level = connecction.getLevel();
                 String username = "&7&oNo Hostname";
@@ -148,7 +155,7 @@ public class EditCommand extends DBMCommand
                     username = "&3" + meta.getUserName();
                 }
 
-                chat().sendMessage(player, "&7" + subName + " &b| &3" + username + " &b: &3" + level.name() + " [&b" + level.getLevel() + "&3]");
+                chat().sendMessage(sender, "&7" + subName + " &b| &3" + username + " &b: &3" + level.name() + " [&b" + level.getLevel() + "&3]");
             } catch (SQLException ex) {
             }
         }

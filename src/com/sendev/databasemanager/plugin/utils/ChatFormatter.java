@@ -1,16 +1,12 @@
-package com.sendev.databasemanager.plugin.bungee.utils;
+package com.sendev.databasemanager.plugin.utils;
 
+import com.sendev.databasemanager.plugin.utils.sender.ChatSender;
 import java.util.ArrayList;
 import java.util.List;
-import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatFormatter
 {
-
     /**
      * Colourize a message, using Bukkit/Spigots
      * standard and(&amp;) symbol syntax.
@@ -83,21 +79,21 @@ public class ChatFormatter
      * @param sender     The object the message should be sent to.
      * @param permission The permission node that should be sent to the player.
      */
-    public void missingPermission(CommandSender sender, String permission)
+    public void missingPermission(ChatSender sender, String permission)
     {
-        sender.sendMessage(ChatColor.RED + "Influent permissions to execute this command.");
-        sender.sendMessage(ChatColor.RED + "You're missing the permission node " + ChatColor.ITALIC + permission);
+        sender.send(ChatColor.RED + "Influent permissions to execute this command.");
+        sender.send(ChatColor.RED + "You're missing the permission node " + ChatColor.ITALIC + permission);
     }
 
     /**
      * Sends a message to a command sender(terminal/console or player)
      *
-     * @param player  Command Sender object (Console)
+     * @param sender  Command Sender object (Console)
      * @param message Message to send
      */
-    public void sendMessage(CommandSender player, String message)
+    public void sendMessage(ChatSender sender, String message)
     {
-        player.sendMessage(colorize(message));
+        sender.send(colorize(message));
     }
 
     /**
@@ -107,44 +103,9 @@ public class ChatFormatter
      * @param message    The message to send to the sender
      * @param parameters Any parameters that needs to replace placeholders in the provided message
      */
-    public void sendMessage(CommandSender sender, String message, Object... parameters)
+    public void sendMessage(ChatSender sender, String message, Object... parameters)
     {
-        sender.sendMessage(colorize(String.format(message, parameters)));
+        sender.send(colorize(String.format(message, parameters)));
     }
 
-    /**
-     * Broadcasts a message to all players currently online on the server.
-     *
-     * @param message The message that should be broadcasted
-     */
-    public void broadcast(String message)
-    {
-        message = colorize(message);
-
-        for (ProxiedPlayer player : BungeeCord.getInstance().getPlayers()) {
-            player.sendMessage(new TextComponent(message));
-        }
-    }
-
-    /**
-     * Broadcasts a message to all players currently online who has the provided permission node.
-     *
-     * @param message    The message that should be broadcasted.
-     * @param permission The permission node that the player should have to see the broadcast.
-     */
-    public void broadcast(String message, String permission)
-    {
-        if (permission == null) {
-            broadcast(message);
-            return;
-        }
-
-        message = colorize(message);
-
-        for (ProxiedPlayer player : BungeeCord.getInstance().getPlayers()) {
-            if (player.hasPermission(permission)) {
-                player.sendMessage(message);
-            }
-        }
-    }
 }

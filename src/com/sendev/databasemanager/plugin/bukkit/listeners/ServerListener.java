@@ -1,6 +1,7 @@
 package com.sendev.databasemanager.plugin.bukkit.listeners;
 
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
+import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,10 +37,12 @@ public class ServerListener implements Listener
             return;
         }
 
+        BukkitSender sender = new BukkitSender(player);
+
         String prefix = plugin.getPrefix('2', 'a');
 
-        plugin.getChat().sendMessage(player, "%s &7There is a new version of DBM available!", prefix);
-        plugin.getChat().sendMessage(player, "%s &7Server is running &2v%s &7new version is &2v%s", prefix, version, plugin.getVersion().getLastVersionReceived());
-        plugin.getChat().sendMessage(player, "%s &7Site: &2https://bitbucket.org/Senither/database-manager", prefix);
+        plugin.getChat().sendMessage(sender, "%s &7There is a new version of DBM available!", prefix);
+        plugin.getChat().sendMessage(sender, "%s &7Server is running &2v%s &7new version is &2v%s", prefix, version, plugin.getVersion().getLastVersionReceived());
+        plugin.getChat().sendMessage(sender, "%s &7Site: &2https://bitbucket.org/Senither/database-manager", prefix);
     }
 }

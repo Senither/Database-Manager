@@ -1,7 +1,8 @@
 package com.sendev.databasemanager.plugin.bungee.contracts;
 
 import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
-import com.sendev.databasemanager.plugin.bungee.utils.ChatFormatter;
+import com.sendev.databasemanager.plugin.utils.ChatFormatter;
+import com.sendev.databasemanager.plugin.utils.sender.BungeeSender;
 import java.util.ArrayList;
 import java.util.List;
 import net.md_5.bungee.api.CommandSender;
@@ -116,11 +117,13 @@ public abstract class DBMCommand
             ).reduce(command, String::concat);
         }
 
-        plugin.getChat().sendMessage(player, command.trim());
+        BungeeSender sender = new BungeeSender(player);
+
+        plugin.getChat().sendMessage(sender, command.trim());
 
         if (sendDescription) {
             getDescription().stream().forEach(( line ) -> {
-                plugin.getChat().sendMessage(player, " &3&l&m*&7 " + line);
+                plugin.getChat().sendMessage(sender, " &3&l&m*&7 " + line);
             });
         }
 
@@ -135,7 +138,7 @@ public abstract class DBMCommand
      */
     protected final void sendMessage(CommandSender sender, String message)
     {
-        chat().sendMessage(sender, "%s &b%s", plugin.getPrefix('3', 'b'), message);
+        chat().sendMessage(new BungeeSender(sender), "%s &b%s", plugin.getPrefix('3', 'b'), message);
     }
 
     /**
@@ -146,7 +149,7 @@ public abstract class DBMCommand
      */
     protected final void sendErrorMessage(CommandSender player, String message)
     {
-        chat().sendMessage(player, "%s &c%s", plugin.getPrefix('4', 'c'), message);
+        chat().sendMessage(new BungeeSender(player), "%s &c%s", plugin.getPrefix('4', 'c'), message);
     }
 
     /**

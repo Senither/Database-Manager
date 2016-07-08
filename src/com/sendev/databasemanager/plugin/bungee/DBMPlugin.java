@@ -7,10 +7,10 @@ import com.sendev.databasemanager.plugin.bungee.commands.HelpCommand;
 import com.sendev.databasemanager.plugin.bungee.commands.PluginsCommand;
 import com.sendev.databasemanager.plugin.bungee.commands.VersionCommand;
 import com.sendev.databasemanager.plugin.bungee.listeners.NetworkListener;
-import com.sendev.databasemanager.plugin.bungee.utils.ChatFormatter;
 import com.sendev.databasemanager.plugin.contracts.PlatformType;
 import com.sendev.databasemanager.plugin.contracts.PluginContract;
 import com.sendev.databasemanager.plugin.utils.BootstrapLogger;
+import com.sendev.databasemanager.plugin.utils.ChatFormatter;
 
 public class DBMPlugin extends ProxyPlugin implements PluginContract
 {

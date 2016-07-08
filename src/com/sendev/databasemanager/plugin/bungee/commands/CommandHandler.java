@@ -3,6 +3,7 @@ package com.sendev.databasemanager.plugin.bungee.commands;
 import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
 import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
 import com.sendev.databasemanager.plugin.utils.StringMatcher;
+import com.sendev.databasemanager.plugin.utils.sender.BungeeSender;
 import java.util.ArrayList;
 import java.util.List;
 import net.md_5.bungee.api.CommandSender;
@@ -70,15 +71,17 @@ public class CommandHandler extends Command
     @Override
     public void execute(CommandSender sender, String[] args)
     {
+        BungeeSender player = new BungeeSender(sender);
+
         if (args.length == 0) {
             if (defaultCommand == null) {
-                plugin.getChat().sendMessage(sender, "&cThere doesn't seem to be a default command registered, try and use some arguments.");
+                plugin.getChat().sendMessage(player, "&cThere doesn't seem to be a default command registered, try and use some arguments.");
 
                 return;
             }
 
             if (defaultCommand.getPermission() != null && !sender.hasPermission(defaultCommand.getPermission())) {
-                plugin.getChat().missingPermission(sender, defaultCommand.getPermission());
+                plugin.getChat().missingPermission(player, defaultCommand.getPermission());
 
                 return;
             }
@@ -102,7 +105,7 @@ public class CommandHandler extends Command
                 }
 
                 if (cmd.hasPermission() && !sender.hasPermission(cmd.getPermission())) {
-                    plugin.getChat().missingPermission(sender, cmd.getPermission());
+                    plugin.getChat().missingPermission(player, cmd.getPermission());
 
                     return;
                 }
@@ -114,7 +117,7 @@ public class CommandHandler extends Command
         }
 
         if (!sender.hasPermission("databasemanager.admin")) {
-            plugin.getChat().missingPermission(sender, "databasemanager.admin");
+            plugin.getChat().missingPermission(player, "databasemanager.admin");
 
             return;
         }
@@ -127,7 +130,7 @@ public class CommandHandler extends Command
 
         String match = StringMatcher.match(commandTrigger, commandTriggers).getMatch();
 
-        plugin.getChat().sendMessage(sender, "%s &4%s &cwas not found! Did you mean...", plugin.getPrefix('4', 'c'), commandTrigger);
-        plugin.getChat().sendMessage(sender, "&4/&cDBM &4[&c%s&4]", match);
+        plugin.getChat().sendMessage(player, "%s &4%s &cwas not found! Did you mean...", plugin.getPrefix('4', 'c'), commandTrigger);
+        plugin.getChat().sendMessage(player, "&4/&cDBM &4[&c%s&4]", match);
     }
 }

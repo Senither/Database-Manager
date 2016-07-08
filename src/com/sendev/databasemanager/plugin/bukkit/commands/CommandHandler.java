@@ -3,6 +3,7 @@ package com.sendev.databasemanager.plugin.bukkit.commands;
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
 import com.sendev.databasemanager.plugin.utils.StringMatcher;
+import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.Command;
@@ -75,6 +76,8 @@ public class CommandHandler implements CommandExecutor
     @Override
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
+        BukkitSender player = new BukkitSender(sender);
+
         if (args.length == 0) {
             for (DBMCommand cmd : defaultCommands) {
                 if (!cmd.hasPermission()) {
@@ -103,7 +106,7 @@ public class CommandHandler implements CommandExecutor
                 }
 
                 if (cmd.hasPermission() && !sender.hasPermission(cmd.getPermission())) {
-                    plugin.getChat().missingPermission(sender, cmd.getPermission());
+                    plugin.getChat().missingPermission(player, cmd.getPermission());
 
                     return false;
                 }
@@ -113,7 +116,7 @@ public class CommandHandler implements CommandExecutor
         }
 
         if (!sender.hasPermission("databasemanager.admin")) {
-            plugin.getChat().missingPermission(sender, "databasemanager.admin");
+            plugin.getChat().missingPermission(player, "databasemanager.admin");
 
             return false;
         }
@@ -126,8 +129,8 @@ public class CommandHandler implements CommandExecutor
 
         String match = StringMatcher.match(commandTrigger, commandTriggers).getMatch();
 
-        plugin.getChat().sendMessage(sender, "%s &4%s &cwas not found! Did you mean...", plugin.getPrefix('4', 'c'), commandTrigger);
-        plugin.getChat().sendMessage(sender, "&4/&cDBM &4[&c%s&4]", match);
+        plugin.getChat().sendMessage(player, "%s &4%s &cwas not found! Did you mean...", plugin.getPrefix('4', 'c'), commandTrigger);
+        plugin.getChat().sendMessage(player, "&4/&cDBM &4[&c%s&4]", match);
 
         return false;
     }

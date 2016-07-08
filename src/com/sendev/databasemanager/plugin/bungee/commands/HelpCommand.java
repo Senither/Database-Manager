@@ -2,6 +2,7 @@ package com.sendev.databasemanager.plugin.bungee.commands;
 
 import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
 import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.utils.sender.BungeeSender;
 import java.util.Arrays;
 import java.util.List;
 import net.md_5.bungee.api.CommandSender;
@@ -17,7 +18,7 @@ public class HelpCommand extends DBMCommand
     @Override
     public String getPermission()
     {
-        return "bungeedatabasemanager.admin";
+        return "databasemanager.admin";
     }
 
     @Override
@@ -35,9 +36,11 @@ public class HelpCommand extends DBMCommand
     @Override
     public boolean runCommand(CommandSender player, String[] args)
     {
+        BungeeSender sender = new BungeeSender(player);
+
         PluginDescription desc = plugin.getDescription();
 
-        chat().sendMessage(player, "&3&l]&3&l&m------&3&l[ &b%s &3v&7%s &3&l]&3&l&m------&3&l[",
+        chat().sendMessage(sender, "&3&l]&3&l&m------&3&l[ &b%s &3v&7%s &3&l]&3&l&m------&3&l[",
         "BungeeCord Database Manager", desc.getVersion()
         );
 

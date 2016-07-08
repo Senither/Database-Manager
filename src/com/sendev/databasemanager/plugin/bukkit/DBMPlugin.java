@@ -8,10 +8,10 @@ import com.sendev.databasemanager.plugin.bukkit.commands.PluginsCommand;
 import com.sendev.databasemanager.plugin.bukkit.commands.VersionCommand;
 import com.sendev.databasemanager.plugin.bukkit.listeners.ServerListener;
 import com.sendev.databasemanager.plugin.bukkit.tasks.VersionTask;
-import com.sendev.databasemanager.plugin.bukkit.utils.ChatFormatter;
 import com.sendev.databasemanager.plugin.contracts.PlatformType;
 import com.sendev.databasemanager.plugin.contracts.PluginContract;
 import com.sendev.databasemanager.plugin.utils.BootstrapLogger;
+import com.sendev.databasemanager.plugin.utils.ChatFormatter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DBMPlugin extends JavaPlugin implements PluginContract

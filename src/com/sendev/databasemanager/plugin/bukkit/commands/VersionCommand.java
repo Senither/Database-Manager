@@ -2,6 +2,7 @@ package com.sendev.databasemanager.plugin.bukkit.commands;
 
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
+import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 import java.util.Arrays;
 import java.util.List;
 import org.bukkit.command.CommandSender;
@@ -41,10 +42,12 @@ public class VersionCommand extends DBMCommand
     @Override
     public boolean runConsoleCommand(CommandSender sender, String[] args)
     {
+        BukkitSender player = new BukkitSender(sender);
+
         String version = plugin.getDescription().getVersion();
 
-        chat().sendMessage(sender, "The server is running DatabaseManager v" + version);
-        chat().sendMessage(sender, "Created by Alexis Tan [Senither] (https://bitbucket.org/Senither/database-manager)");
+        chat().sendMessage(player, "The server is running DatabaseManager v" + version);
+        chat().sendMessage(player, "Created by Alexis Tan [Senither] (https://bitbucket.org/Senither/database-manager)");
 
         return true;
     }

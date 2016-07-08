@@ -1,7 +1,8 @@
 package com.sendev.databasemanager.plugin.bukkit.contracts;
 
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
-import com.sendev.databasemanager.plugin.bukkit.utils.ChatFormatter;
+import com.sendev.databasemanager.plugin.utils.ChatFormatter;
+import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.CommandSender;
@@ -101,6 +102,8 @@ public abstract class DBMCommand
      */
     public final boolean sendCommandInformationMessage(Player player, boolean sendDescription)
     {
+        BukkitSender sender = new BukkitSender(player);
+
         if (getTriggers().isEmpty()) {
             return false;
         }
@@ -117,11 +120,11 @@ public abstract class DBMCommand
             ).reduce(command, String::concat);
         }
 
-        plugin.getChat().sendMessage(player, command.trim());
+        plugin.getChat().sendMessage(sender, command.trim());
 
         if (sendDescription) {
             getDescription().stream().forEach(( line ) -> {
-                plugin.getChat().sendMessage(player, " &3&l&m*&7 " + line);
+                plugin.getChat().sendMessage(sender, " &3&l&m*&7 " + line);
             });
         }
 
@@ -136,7 +139,7 @@ public abstract class DBMCommand
      */
     protected final void sendMessage(Player player, String message)
     {
-        chat().sendMessage(player, "%s &b%s", plugin.getPrefix('3', 'b'), message);
+        chat().sendMessage(new BukkitSender(player), "%s &b%s", plugin.getPrefix('3', 'b'), message);
     }
 
     /**
@@ -147,7 +150,7 @@ public abstract class DBMCommand
      */
     protected final void sendMessage(CommandSender sender, String message)
     {
-        chat().sendMessage(sender, "%s &b%s", plugin.getPrefix('3', 'b'), message);
+        chat().sendMessage(new BukkitSender(sender), "%s &b%s", plugin.getPrefix('3', 'b'), message);
     }
 
     /**
@@ -158,7 +161,7 @@ public abstract class DBMCommand
      */
     protected final void sendErrorMessage(Player player, String message)
     {
-        chat().sendMessage(player, "%s &c%s", plugin.getPrefix('4', 'c'), message);
+        chat().sendMessage(new BukkitSender(player), "%s &c%s", plugin.getPrefix('4', 'c'), message);
     }
 
     /**
