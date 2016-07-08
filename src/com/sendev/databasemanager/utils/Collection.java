@@ -93,9 +93,9 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
-     * Calculates the average
+     * Calculates the average for the first key field.
      *
-     * @return
+     * @return the average for the first key field.
      */
     public double avg()
     {
