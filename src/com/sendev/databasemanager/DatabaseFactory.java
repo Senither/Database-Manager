@@ -31,6 +31,11 @@ public class DatabaseFactory
         return containers;
     }
 
+    /**
+     * Sets the platform type that should be used parsed the provided object when creating a new DBM instance.
+     *
+     * @param platform The platform type that should be set
+     */
     public void setPlatform(PlatformType platform)
     {
         DatabaseFactory.platform = platform;
@@ -38,16 +43,23 @@ public class DatabaseFactory
 
     /**
      * Creates a new Database Manager(DBM) instance, allowing you to communicate with databases easier,
-     * using the DBM also gives you access to the Database Schema and Query Builder which makes it
-     * even easier to create, delete, modify and update database records.
+     * using the DBM also gives you access to the Database Schema, Database Migrations and Query Builder
+     * which makes it even easier to create, delete, modify and update database records.
      *
      * @see com.sendev.databasemanager.query.QueryBuilder
      * @see com.sendev.databasemanager.schema.Schema
+     * @see com.sendev.databasemanager.migrate.Migrations
      *
      * @param plugin The instance of the plugin that are going to use the DBM.
      *
      * @return either (1) A new a fresh instance of the Database Manager
      *         or (2) the existing Database manager instance for the provided plugin
+     *
+     * @throws InvalidPluginException if the provided object doesn't inherit from the plugin main
+     *                                class for the current running platform, if Bukkit/Spigot is
+     *                                being used the parsed object has to extend the {@link org.bukkit.plugin.java.JavaPlugin}
+     *                                class, if BungeeCord is being used the object have to extend
+     *                                the BungeeCord {@link net.md_5.bungee.api.plugin.Plugin} class.
      */
     public static DatabaseManager createNewInstance(Object plugin)
     {
@@ -83,7 +95,7 @@ public class DatabaseFactory
      * then be returned, if no DBM instance was found, or a reflection exception is thrown while
      * doing the origin lookup, <code>NULL</code> will be returned instead.
      *
-     * @param object the getClass() object to run the origin lookup on.
+     * @param object The getClass() object to run the origin lookup on.
      *
      * @return either (1) The DBM instance belonging to the provided classes origin
      *         or (2) NULL if something went wrong or the object doesn't follow the origin contract
@@ -118,8 +130,6 @@ public class DatabaseFactory
 
             method.invoke(object.newInstance());
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InstantiationException ex) {
-//            Logger.getLogger(DatabaseFactory.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println("Failed to create a new instace of the object type: " + ex.getMessage());
             return null;
         } catch (InvocationTargetException ex) {
             if (ex.getCause() instanceof OriginException) {

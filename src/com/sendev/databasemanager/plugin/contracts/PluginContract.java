@@ -10,8 +10,8 @@ public interface PluginContract
     public Logger getLogger();
 
     public PlatformType getPlatformType();
-    
-     /**
+
+    /**
      * Gets the database factory instance.
      *
      * @return the database factory instance
@@ -30,15 +30,22 @@ public interface PluginContract
 
     /**
      * Creates a new Database Manager(DBM) instance, allowing you to communicate with databases easier,
-     * using the DBM also gives you access to the Database Schema and Query Builder which makes it
-     * even easier to create, delete, modify and update database records.
+     * using the DBM also gives you access to the Database Schema, Database Migrations and Query Builder
+     * which makes it even easier to create, delete, modify and update database records.
      *
      * @see com.sendev.databasemanager.query.QueryBuilder
      * @see com.sendev.databasemanager.schema.Schema
+     * @see com.sendev.databasemanager.migrate.Migrations
      *
      * @param plugin The instance of the plugin that are going to use the DBM.
      *
      * @return A new a fresh instance of the Database Manager.
+     *
+     * @throws InvalidPluginException if the provided object doesn't inherit from the plugin main
+     *                                class for the current running platform, if Bukkit/Spigot is
+     *                                being used the parsed object has to extend the {@link org.bukkit.plugin.java.JavaPlugin}
+     *                                class, if BungeeCord is being used the object have to extend
+     *                                the BungeeCord {@link net.md_5.bungee.api.plugin.Plugin} class.
      */
     public DatabaseManager createNewInstance(Object plugin);
 }
