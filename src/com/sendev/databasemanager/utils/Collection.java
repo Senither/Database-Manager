@@ -207,6 +207,18 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
+     * Gets all the keys from the <code>ResultSet</code> object in the form of a
+     * <code>HashMap</code>, where the key is the database table column
+     * name, and the value is the database column type.
+     *
+     * @return A map of all the database keys.
+     */
+    public HashMap<String, String> getKeys()
+    {
+        return keys;
+    }
+
+    /**
      * Checks to see the collection contains the provided field.
      *
      * @param field the field to check if exists
@@ -226,18 +238,6 @@ public class Collection implements Cloneable, Iterable<DataRow>
     public boolean isEmpty()
     {
         return items.isEmpty();
-    }
-
-    /**
-     * Gets all the keys from the <code>ResultSet</code> object in the form of a
-     * <code>HashMap</code>, where the key is the database table column
-     * name, and the value is the database column type.
-     *
-     * @return A map of all the database keys.
-     */
-    public HashMap<String, String> getKeys()
-    {
-        return keys;
     }
 
     /**
@@ -453,7 +453,7 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
-     * Converts the collection to a JSON string using Gson.
+     * Converts the collection to a JSON string using {@link Gson}.
      *
      * @return the JSON collection string
      */
