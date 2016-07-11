@@ -21,28 +21,6 @@ public class DataRow
     }
 
     /**
-     * Checks to see if the given index exists in the data rows list of items.
-     *
-     * @param name The index(name) to check if exists.
-     *
-     * @return true if the index exists, otherwise it will return false.
-     */
-    public boolean has(String name)
-    {
-        return items.containsKey(name);
-    }
-
-    /**
-     * Gets all the keys from the data row.
-     *
-     * @return All the keys from the data row.
-     */
-    public Set<String> keySet()
-    {
-        return items.keySet();
-    }
-
-    /**
      * Gets a object from the data rows item list.
      *
      * @param name The index(name) to get.
@@ -106,35 +84,6 @@ public class DataRow
         }
 
         return (boolean) value;
-    }
-
-    /**
-     * Gets a string object from the data rows item list.
-     *
-     * @param name The index(name) to get.
-     *
-     * @return either (1) The value of the index given,
-     *         or (2) <code>NULL</code> if the index doesn't exists.
-     */
-    public String getString(String name)
-    {
-        return getString(name, null);
-    }
-
-    /**
-     * Gets a string object from the data rows item list.
-     *
-     * @param name The index(name) to get.
-     * @param def  The default vault to return if the index doesn't exists.
-     *
-     * @return either (1) The value of the index given,
-     *         or (2) the default value given.
-     */
-    public String getString(String name, String def)
-    {
-        Object value = get(name, def);
-
-        return String.valueOf(value);
     }
 
     /**
@@ -255,6 +204,35 @@ public class DataRow
     }
 
     /**
+     * Gets a string object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>NULL</code> if the index doesn't exists.
+     */
+    public String getString(String name)
+    {
+        return getString(name, null);
+    }
+
+    /**
+     * Gets a string object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
+    public String getString(String name, String def)
+    {
+        Object value = get(name, def);
+
+        return String.valueOf(value);
+    }
+
+    /**
      * Gets a carbon timestamp object from the data rows item list.
      *
      * @param name The index(name) to get.
@@ -287,8 +265,40 @@ public class DataRow
         }
     }
 
+    /**
+     * Checks to see if the given index exists in the data rows list of items.
+     *
+     * @param name The index(name) to check if exists.
+     *
+     * @return true if the index exists, otherwise it will return false.
+     */
+    public boolean has(String name)
+    {
+        return items.containsKey(name);
+    }
+
+    /**
+     * Gets all the keys from the data row.
+     *
+     * @return All the keys from the data row.
+     */
+    public Set<String> keySet()
+    {
+        return items.keySet();
+    }
+
     @Override
     public String toString()
+    {
+        return toJson();
+    }
+
+    /**
+     * Converts the collection to a JSON string using {@link Gson}.
+     *
+     * @return the JSON collection string
+     */
+    public String toJson()
     {
         Gson gson = new Gson();
 
