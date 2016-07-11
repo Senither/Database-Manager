@@ -28,6 +28,8 @@ Schematics(Schema):
   ☐ add a **createDatabase** method that will create a new database
   ☐ Implement a way to add a default character set for a given table or column field.
 
+  ☐ Add a way to parse in the full package path for a eqloquent model to a clause(where, join, etc...), and the clause will then determine what table name to use from the model. 
+
 Seeder:
   Faker seeder logic, from PHP
 
