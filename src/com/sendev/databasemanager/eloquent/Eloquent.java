@@ -1,6 +1,5 @@
 package com.sendev.databasemanager.eloquent;
 
-import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.utils.Collection;
 import java.lang.annotation.Annotation;
@@ -16,14 +15,10 @@ import java.util.logging.Logger;
 public abstract class Eloquent extends EloquentDefaultFields
 {
 
-    protected final DatabaseManager dbm;
+    protected final QueryBuilder builder;
 
-    protected QueryBuilder builder;
-
-    public Eloquent(DatabaseManager dbm)
+    public Eloquent()
     {
-        this.dbm = dbm;
-
         builder = new QueryBuilder(table());
     }
 
@@ -35,14 +30,14 @@ public abstract class Eloquent extends EloquentDefaultFields
 
     public Collection find(int id) throws SQLException
     {
-        builder().table(table()).where(primaryKey(), id);
+        builder.table(table()).where(primaryKey(), id);
 
         return get();
     }
 
     public Collection all() throws SQLException
     {
-        builder().table(table()).selectAll();
+        builder.table(table()).selectAll();
 
         return get();
     }
@@ -61,7 +56,7 @@ public abstract class Eloquent extends EloquentDefaultFields
 
     public Eloquent where(String column, String identifier, Object field)
     {
-        builder().where(column, identifier, field);
+        builder.where(column, identifier, field);
 
         return this;
     }
@@ -73,7 +68,7 @@ public abstract class Eloquent extends EloquentDefaultFields
 
     public Eloquent andWhere(String column, String identifier, Object field)
     {
-        builder().andWhere(column, identifier, field);
+        builder.andWhere(column, identifier, field);
 
         return this;
     }
@@ -85,63 +80,63 @@ public abstract class Eloquent extends EloquentDefaultFields
 
     public Eloquent orWhere(String column, String identifier, Object field)
     {
-        builder().orWhere(column, identifier, field);
+        builder.orWhere(column, identifier, field);
 
         return this;
     }
 
     public Eloquent leftJoin(String table, String one, String two)
     {
-        builder().leftJoin(table, one, two);
+        builder.leftJoin(table, one, two);
 
         return this;
     }
 
     public Eloquent leftJoin(String table, String one, String identifier, String two)
     {
-        builder().leftJoin(table, one, identifier, two);
+        builder.leftJoin(table, one, identifier, two);
 
         return this;
     }
 
     public Eloquent rightJoin(String table, String one, String two)
     {
-        builder().rightJoin(table, one, two);
+        builder.rightJoin(table, one, two);
 
         return this;
     }
 
     public Eloquent rightJoin(String table, String one, String identifier, String two)
     {
-        builder().rightJoin(table, one, identifier, two);
+        builder.rightJoin(table, one, identifier, two);
 
         return this;
     }
 
     public Eloquent innerJoin(String table, String one, String two)
     {
-        builder().innerJoin(table, one, two);
+        builder.innerJoin(table, one, two);
 
         return this;
     }
 
     public Eloquent innerJoin(String table, String one, String identifier, String two)
     {
-        builder().innerJoin(table, one, identifier, two);
+        builder.innerJoin(table, one, identifier, two);
 
         return this;
     }
 
     public Eloquent outerJoin(String table, String one, String two)
     {
-        builder().outerJoin(table, one, two);
+        builder.outerJoin(table, one, two);
 
         return this;
     }
 
     public Eloquent outerJoin(String table, String one, String identifier, String two)
     {
-        builder().outerJoin(table, one, identifier, two);
+        builder.outerJoin(table, one, identifier, two);
 
         return this;
     }
@@ -183,20 +178,9 @@ public abstract class Eloquent extends EloquentDefaultFields
         return this;
     }
 
-    public boolean save()
-    {
-
-        return false;
-    }
-
-    public QueryBuilder builder()
-    {
-        return builder;
-    }
-
     public Collection get() throws SQLException
     {
-        return dbm.query(builder);
+        return builder.get();
     }
 
     @Override
