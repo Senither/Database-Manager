@@ -122,7 +122,25 @@ public class DataRow
             }
         }
 
-        return (double) value;
+        switch (getType(value)) {
+            case "Integer":
+                value = ((Integer) value).doubleValue();
+                break;
+
+            case "Long":
+                value = ((Long) value).doubleValue();
+                break;
+
+            case "Float":
+                value = ((Float) value).doubleValue();
+                break;
+        }
+
+        try {
+            return (double) value;
+        } catch (ClassCastException ex) {
+            return def;
+        }
     }
 
     /**
@@ -161,7 +179,25 @@ public class DataRow
             }
         }
 
-        return (int) value;
+        switch (getType(value)) {
+            case "Double":
+                value = ((Double) value).intValue();
+                break;
+
+            case "Long":
+                value = ((Long) value).intValue();
+                break;
+
+            case "Float":
+                value = ((Float) value).intValue();
+                break;
+        }
+
+        try {
+            return (int) value;
+        } catch (ClassCastException ex) {
+            return def;
+        }
     }
 
     /**
@@ -200,7 +236,25 @@ public class DataRow
             }
         }
 
-        return (long) value;
+        switch (getType(value)) {
+            case "Double":
+                value = ((Double) value).longValue();
+                break;
+
+            case "Integer":
+                value = ((Integer) value).longValue();
+                break;
+
+            case "Float":
+                value = ((Float) value).longValue();
+                break;
+        }
+
+        try {
+            return (long) value;
+        } catch (ClassCastException ex) {
+            return def;
+        }
     }
 
     /**
