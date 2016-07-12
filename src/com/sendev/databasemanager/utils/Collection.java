@@ -604,11 +604,33 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return sum;
     }
 
-//    public Collection take(int number)
-//    {
-    // This is a work in progress, a copy method is 
-    // required for this method to work correctly.
-//    }
+    /**
+     * Takes the provided number of items from the collection and returns a new collection.
+     *
+     * @param amount The amount of items to take from the original collection
+     *
+     * @return a new collection with the provided number of items from the original collection.
+     */
+    public Collection take(int amount)
+    {
+        Collection collection = new Collection();
+        Iterator<DataRow> iterator = items.iterator();
+
+        int index = 0;
+        while (iterator.hasNext()) {
+            DataRow next = iterator.next();
+
+            if (index++ >= amount) {
+                break;
+            }
+
+            collection.add(new DataRow(next));
+            iterator.remove();
+        }
+
+        return collection;
+    }
+
     /**
      * Gets all the data rows where the field equals the value, this uses strict
      * comparisons to match the values, use the {@link #whereLoose(String, Object) whereLosse}
@@ -687,17 +709,7 @@ public class Collection implements Cloneable, Iterable<DataRow>
 
     private void add(DataRow row)
     {
-        Map<String, Object> items = new HashMap<>();
-
-        for (String key : row.keySet()) {
-            if (!keys.containsKey(key)) {
-                keys.put(key, row.get(key).getClass().getTypeName());
-            }
-
-            items.put(key, row.get(key));
-        }
-
-        this.items.add(new DataRow(items));
+        this.items.add(new DataRow(row));
     }
 
     private class CollectionIterator implements Iterator<DataRow>
