@@ -258,6 +258,63 @@ public class DataRow
     }
 
     /**
+     * Gets a float object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) <code>0F</code> if the index doesn't exists.
+     */
+    public float getFloat(String name)
+    {
+        return getFloat(name, 0F);
+    }
+
+    /**
+     * Gets a float object from the data rows item list.
+     *
+     * @param name The index(name) to get.
+     * @param def  The default vault to return if the index doesn't exists.
+     *
+     * @return either (1) The value of the index given,
+     *         or (2) the default value given.
+     */
+    public float getFloat(String name, float def)
+    {
+        Object value = get(name, def);
+
+        if (isString(value)) {
+            String str = String.valueOf(value);
+
+            try {
+                return Float.parseFloat(str);
+            } catch (NumberFormatException ex) {
+                return def;
+            }
+        }
+
+        switch (getType(value)) {
+            case "Double":
+                value = ((Double) value).floatValue();
+                break;
+
+            case "Integer":
+                value = ((Integer) value).floatValue();
+                break;
+
+            case "Long":
+                value = ((Long) value).floatValue();
+                break;
+        }
+
+        try {
+            return (float) value;
+        } catch (ClassCastException ex) {
+            return def;
+        }
+    }
+
+    /**
      * Gets a string object from the data rows item list.
      *
      * @param name The index(name) to get.
