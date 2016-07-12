@@ -177,6 +177,21 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
+     * Checks every value stored in the collection and compares
+     * it to see if it matches the provided item.
+     *
+     * @param item The item to compare the collection with
+     *
+     * @return <code>true</code> if this collection contains the provided elements.
+     */
+    public boolean contains(Object item)
+    {
+        return items.stream().anyMatch(( row )
+        -> (row.keySet().stream().anyMatch(( key )
+        -> (row.get(key).equals(item)))));
+    }
+
+    /**
      * Gets the first index of the collection.
      *
      * @return either (1) The first <code>DataRow</code> object, generated from the <code>ResultSet</code> object,
@@ -231,9 +246,9 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
-     * Returns <tt>true</tt> if this collection contains no elements.
+     * Returns <code>true</code> if this collection contains no elements.
      *
-     * @return <tt>true</tt> if this collection contains no elements
+     * @return <code>true</code> if this collection contains no elements
      */
     public boolean isEmpty()
     {
