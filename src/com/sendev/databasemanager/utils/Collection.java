@@ -296,6 +296,84 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
+     * Gets the max/highest long value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the highest value from the provided field
+     *         or (2) <code>Long.MIN_VALUE</code>
+     */
+    public long maxLong(String field)
+    {
+        if (!has(field)) {
+            return Long.MIN_VALUE;
+        }
+
+        long max = Long.MIN_VALUE;
+        for (DataRow row : items) {
+            long x = row.getLong(field);
+
+            if (max < x) {
+                max = x;
+            }
+        }
+
+        return max;
+    }
+
+    /**
+     * Gets the max/highest double value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the highest value from the provided field
+     *         or (2) <code>Double.MIN_VALUE</code>
+     */
+    public double maxDouble(String field)
+    {
+        if (!has(field)) {
+            return Double.MIN_VALUE;
+        }
+
+        double max = Double.MIN_VALUE;
+        for (DataRow row : items) {
+            double x = row.getDouble(field);
+
+            if (max < x) {
+                max = x;
+            }
+        }
+
+        return max;
+    }
+
+    /**
+     * Gets the max/highest float value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the highest value from the provided field
+     *         or (2) <code>Float.MIN_VALUE</code>
+     */
+    public float maxFloat(String field)
+    {
+        if (!has(field)) {
+            return Float.MIN_VALUE;
+        }
+
+        float max = Float.MIN_VALUE;
+        for (DataRow row : items) {
+            float x = row.getFloat(field);
+
+            if (max < x) {
+                max = x;
+            }
+        }
+
+        return max;
+    }
+
+    /**
      * Gets the min/lowest integer value from the provided field.
      *
      * @param field the field to use
@@ -312,6 +390,84 @@ public class Collection implements Cloneable, Iterable<DataRow>
         int min = Integer.MAX_VALUE;
         for (DataRow row : items) {
             int x = row.getInt(field);
+
+            if (min > x) {
+                min = x;
+            }
+        }
+
+        return min;
+    }
+
+    /**
+     * Gets the min/lowest long value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the lowest value from the provided field
+     *         or (2) <code>Long.MAX_VALUE</code>
+     */
+    public long minLong(String field)
+    {
+        if (!has(field)) {
+            return Long.MAX_VALUE;
+        }
+
+        long min = Long.MAX_VALUE;
+        for (DataRow row : items) {
+            long x = row.getLong(field);
+
+            if (min > x) {
+                min = x;
+            }
+        }
+
+        return min;
+    }
+
+    /**
+     * Gets the min/lowest double value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the lowest value from the provided field
+     *         or (2) <code>Double.MAX_VALUE</code>
+     */
+    public double minDouble(String field)
+    {
+        if (!has(field)) {
+            return Double.MAX_VALUE;
+        }
+
+        double min = Double.MAX_VALUE;
+        for (DataRow row : items) {
+            double x = row.getDouble(field);
+
+            if (min > x) {
+                min = x;
+            }
+        }
+
+        return min;
+    }
+
+    /**
+     * Gets the min/lowest float value from the provided field.
+     *
+     * @param field the field to use
+     *
+     * @return either (1) the lowest value from the provided field
+     *         or (2) <code>Float.MAX_VALUE</code>
+     */
+    public float minFloat(String field)
+    {
+        if (!has(field)) {
+            return Float.MAX_VALUE;
+        }
+
+        float min = Float.MAX_VALUE;
+        for (DataRow row : items) {
+            float x = row.getFloat(field);
 
             if (min > x) {
                 min = x;
