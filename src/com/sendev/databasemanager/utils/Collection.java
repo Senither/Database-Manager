@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +29,22 @@ public class Collection implements Cloneable, Iterable<DataRow>
     {
         this.keys = new HashMap<>();
         this.items = new ArrayList<>();
+    }
+
+    /**
+     * Creates a new Collection object from the provided collection
+     * instance, this is the same as calling the {@link #copy() } method.
+     *
+     * @param instance The collection to copy
+     */
+    public Collection(Collection instance)
+    {
+        this.keys = new HashMap<>();
+        this.items = new ArrayList<>();
+
+        for (DataRow row : instance.all()) {
+            items.add(new DataRow(row));
+        }
     }
 
     /**
@@ -189,6 +206,16 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return items.stream().anyMatch(( row )
         -> (row.keySet().stream().anyMatch(( key )
         -> (row.get(key).equals(item)))));
+    }
+
+    /**
+     * Creates a copy of the current collections instance.
+     *
+     * @return the new collection.
+     */
+    public Collection copy()
+    {
+        return new Collection(this);
     }
 
     /**
@@ -534,6 +561,18 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
+     * Randomly shuffles the items in the collection.
+     *
+     * @return the newly shuffled collection.
+     */
+    public Collection shuffle()
+    {
+        Collections.shuffle(items, random);
+
+        return this;
+    }
+
+    /**
      * Gets the total number of items in the collection.
      *
      * @return the total number of items in the collection
@@ -565,6 +604,11 @@ public class Collection implements Cloneable, Iterable<DataRow>
         return sum;
     }
 
+//    public Collection take(int number)
+//    {
+    // This is a work in progress, a copy method is 
+    // required for this method to work correctly.
+//    }
     /**
      * Gets all the data rows where the field equals the value, this uses strict
      * comparisons to match the values, use the {@link #whereLoose(String, Object) whereLosse}

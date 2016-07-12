@@ -2,6 +2,7 @@ package com.sendev.databasemanager.utils;
 
 import com.google.gson.Gson;
 import com.sendev.databasemanager.exceptions.InvalidFormatException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,6 +10,20 @@ public class DataRow
 {
 
     private final Map<String, Object> items;
+
+    /**
+     * Creates a new data row object from the provided data row.
+     *
+     * @param row The row to generate the data row from.
+     */
+    public DataRow(DataRow row)
+    {
+        this.items = new HashMap<>();
+
+        for (Map.Entry<String, Object> item : row.items.entrySet()) {
+            this.items.put(item.getKey(), item.getValue());
+        }
+    }
 
     /**
      * Creates a new data row object from a map of data.
