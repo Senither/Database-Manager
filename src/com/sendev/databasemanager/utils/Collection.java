@@ -534,6 +534,18 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
+     * Reverses the order of items in the collection.
+     * 
+     * @return the reversed collection.
+     */
+    public Collection reverse()
+    {
+        Collections.reverse(items);
+
+        return this;
+    }
+
+    /**
      * Search the collection where the field is equal to the value.
      *
      * @param field the field to check
