@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -584,6 +585,56 @@ public class Collection implements Cloneable, Iterable<DataRow>
         Collections.shuffle(items, random);
 
         return this;
+    }
+
+    /**
+     * Sorts the collection according to the order induced by the specified
+     * comparator. All elements in the list must be <i>mutually comparable</i>
+     * using the specified comparator.
+     *
+     * @param comparator The comparator to use to sort the collection.
+     *
+     * @return the collection instance.
+     */
+    public Collection sort(Comparator<DataRow> comparator)
+    {
+        Collections.sort(items, comparator);
+
+        return this;
+    }
+
+    /**
+     * Sorts the collection in an ascending order using the provided field, if
+     * the field is not found the collection will be returned in its current state.
+     *
+     * @param field The field that should be used to sort the collection.
+     *
+     * @return the collection instance.
+     */
+    public Collection sortBy(String field)
+    {
+        if (!has(field)) {
+            return this;
+        }
+
+        return sort(( DataRow first, DataRow second ) -> first.get(field).hashCode() - second.get(field).hashCode());
+    }
+
+    /**
+     * Sorts the collection in an descending order using the provided field, if
+     * the field is not found the collection will be returned in its current state.
+     *
+     * @param field The field that should be used to sort the collection.
+     *
+     * @return the collection instance.
+     */
+    public Collection sortByDesc(String field)
+    {
+        if (!has(field)) {
+            return this;
+        }
+
+        return sort(( DataRow first, DataRow second ) -> second.get(field).hashCode() - first.get(field).hashCode());
     }
 
     /**
