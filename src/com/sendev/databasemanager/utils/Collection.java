@@ -561,6 +561,20 @@ public class Collection implements Cloneable, Iterable<DataRow>
     }
 
     /**
+     * Removes and returns the first element in the collection.
+     *
+     * @return The first element in the collection.
+     */
+    public DataRow shift()
+    {
+        try {
+            return items.remove(0);
+        } catch (IndexOutOfBoundsException ex) {
+            return null;
+        }
+    }
+
+    /**
      * Randomly shuffles the items in the collection.
      *
      * @return the newly shuffled collection.
