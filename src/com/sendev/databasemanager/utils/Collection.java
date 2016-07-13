@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -217,6 +218,25 @@ public class Collection implements Cloneable, Iterable<DataRow>
     public Collection copy()
     {
         return new Collection(this);
+    }
+
+    /**
+     * Loops through every entity in the Collection and parses the key and
+     * {@link com.sendev.databasemanager.utils.DataRow} object to the consumer.
+     *
+     * @param comparator The collection consumer to use.
+     *
+     * @return the collection instance.
+     */
+    public Collection each(CollectionEach comparator)
+    {
+        ListIterator<DataRow> iterator = items.listIterator();
+
+        while (iterator.hasNext()) {
+            comparator.forEach(iterator.nextIndex(), iterator.next());
+        }
+
+        return this;
     }
 
     /**
@@ -535,7 +555,7 @@ public class Collection implements Cloneable, Iterable<DataRow>
 
     /**
      * Reverses the order of items in the collection.
-     * 
+     *
      * @return the reversed collection.
      */
     public Collection reverse()
@@ -787,6 +807,19 @@ public class Collection implements Cloneable, Iterable<DataRow>
     private void add(DataRow row)
     {
         this.items.add(new DataRow(row));
+    }
+
+    public interface CollectionEach
+    {
+        /**
+         * This is called by by the {@link Collection#each(com.sendev.databasemanager.utils.Collection.CollectionEach) }
+         * method, used to loops through every entity in the Collection and parses the key and
+         * {@link com.sendev.databasemanager.utils.DataRow} object to the consumer.
+         *
+         * @param key   The key for the element
+         * @param value The data row linked to the key
+         */
+        public void forEach(int key, DataRow value);
     }
 
     private class CollectionIterator implements Iterator<DataRow>
