@@ -26,8 +26,14 @@ public class Select extends SelectGrammar
 
     private void buildColumns(QueryBuilder builder)
     {
-        if (builder.getColumns().size() == 1 && builder.getColumns().get(0).equals("*")) {
-            query += "*";
+        if (builder.getColumns().size() == 1) {
+            String column = builder.getColumns().get(0);
+
+            if (column.equals("*")) {
+                query += "*";
+            } else if (column.startsWith("RAW:")) {
+                query += column.substring(4);
+            }
         } else {
             builder.getColumns().stream().forEach(( column ) -> {
                 query += formatField(column) + ", ";

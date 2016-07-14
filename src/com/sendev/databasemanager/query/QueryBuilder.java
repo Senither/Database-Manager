@@ -209,6 +209,24 @@ public final class QueryBuilder implements DatabaseOriginLookup
     }
 
     /**
+     * Creates a raw select statement, allowing you to parse in raw SQL that
+     * the generator won't modify or affect in any way.
+     *
+     * @param select The raw SQL select statement.
+     *
+     * @return the query builder instance.
+     */
+    public QueryBuilder selectRaw(String select)
+    {
+        type = QueryType.SELECT;
+
+        columns.clear();
+        columns.add("RAW:" + select.trim());
+
+        return this;
+    }
+
+    /**
      * Adds a column that should be selected.
      *
      * @param column The column that should be selected
