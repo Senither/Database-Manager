@@ -38,14 +38,15 @@ public abstract class TableGrammar extends Grammar
         }
 
         addPart(" WHERE ");
-        int orderLength = 0;
+        boolean first = true;
 
         for (QueryClause obj : builder.getWhereClauses()) {
             // This will build a normal clause
             if (obj instanceof Clause) {
                 Clause clause = (Clause) obj;
 
-                orderLength = addClause(clause);
+                addClause(clause, first);
+                first = false;
 
                 continue;
             }
@@ -58,7 +59,7 @@ public abstract class TableGrammar extends Grammar
                     continue;
                 }
 
-                removeLast(orderLength);
+                first = true;
                 addPart(" %s (", nestedClause.getOperator());
 
                 for (QueryClause temp : nestedClause.getWhereClauses()) {
@@ -68,27 +69,19 @@ public abstract class TableGrammar extends Grammar
 
                     Clause clause = (Clause) temp;
 
-                    orderLength = addClause(clause);
+                    addClause(clause, first);
+                    first = false;
                 }
-                String operator = query.substring(query.length() - orderLength, query.length());
 
-                removeLast(orderLength);
-
-                addPart(") %s ", operator.trim());
+                addPart(") ");
             }
-        }
 
-        if (orderLength > 0) {
-            removeLast(orderLength);
+            first = false;
         }
     }
 
-    private int addClause(Clause clause)
+    private void addClause(Clause clause, boolean exemptOperator)
     {
-        String string = String.format("%s %s",
-        formatField(clause.getOne()), clause.getIdentifier()
-        );
-
         if (clause.getOrder() == null) {
             clause.setOrder(OperatorType.AND);
         }
@@ -98,10 +91,13 @@ public abstract class TableGrammar extends Grammar
             field = String.format("'%s'", field);
         }
 
-        String operator = clause.getOrder().getOperator();
+        String stringClause = String.format("%s %s %s", formatField(clause.getOne()), clause.getIdentifier(), field);
 
-        addRawPart(String.format(string + " %s %s ", field, operator));
+        String operator = "";
+        if (!exemptOperator) {
+            operator = clause.getOrder().getOperator() + " ";
+        }
 
-        return operator.length() + 2;
+        addRawPart(String.format("%s%s ", operator, stringClause));
     }
 }

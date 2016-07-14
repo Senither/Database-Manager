@@ -12,6 +12,13 @@ Query Builder:
     Information can be found here https://laravel.com/docs/5.2/queries#advanced-where-clauses
 
   ✔ Change the **insert** and **update** methods to carry out the action instead of the **queryUpdate()** and **queryInsert** methods. @done (06/07/16 16:08)
+  
+  ✔ Fix the building process of where statements so the operator is built in front of the statement, not behind it. @done (15/07/16 01:38)
+    Currently calling code like
+      builder.where("id", 1).orWhere("id", "<" 5);
+    Would produce the following code
+      SELECT ... FROM `tableName` WHERE `id` = 1 AND `id` < 5;
+    This is due to the first where clause produces an AND operator, but the OR operator should be used in this case. 
 
 Grammar:
   ✔ Fix SQL support for creating tables @done (08/07/16 17:39)
