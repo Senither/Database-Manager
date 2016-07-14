@@ -3,6 +3,7 @@ package com.sendev.databasemanager.query;
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
+import com.sendev.databasemanager.contracts.QueryClause;
 import com.sendev.databasemanager.exceptions.DatabaseException;
 import com.sendev.databasemanager.exceptions.OriginException;
 import com.sendev.databasemanager.grammar.GrammarParser;
@@ -50,7 +51,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
     /**
      * The list of {@link Clause} clauses that should be used by the generator.
      */
-    private final List<Clause> wheres = new ArrayList<>();
+    private final List<QueryClause> wheres = new ArrayList<>();
 
     /**
      * The list of {@link String} clauses that should be used by the generator.
@@ -339,6 +340,17 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    public QueryBuilder where(ClauseConsumer consumer)
+    {
+        NestedClause clause = new NestedClause();
+
+        consumer.build(clause);
+
+        wheres.add(clause);
+
+        return this;
+    }
+
     /**
      * Creates a SQL AND WHERE clause with an equal operator.
      *
@@ -364,6 +376,17 @@ public final class QueryBuilder implements DatabaseOriginLookup
     public QueryBuilder andWhere(String column, String operator, Object value)
     {
         wheres.add(new Clause(column, operator, value, OperatorType.AND));
+
+        return this;
+    }
+
+    public QueryBuilder andWhere(ClauseConsumer consumer)
+    {
+        NestedClause clause = new NestedClause(OperatorType.AND);
+
+        consumer.build(clause);
+
+        wheres.add(clause);
 
         return this;
     }
@@ -397,12 +420,23 @@ public final class QueryBuilder implements DatabaseOriginLookup
         return this;
     }
 
+    public QueryBuilder orWhere(ClauseConsumer consumer)
+    {
+        NestedClause clause = new NestedClause(OperatorType.OR);
+
+        consumer.build(clause);
+
+        wheres.add(clause);
+
+        return this;
+    }
+
     /**
      * Gets the list where clauses that should be generated.
      *
      * @return the list of where clauses that should be generated.
      */
-    public List<Clause> getWhereClauses()
+    public List<QueryClause> getWhereClauses()
     {
         return wheres;
     }

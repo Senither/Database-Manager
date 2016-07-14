@@ -1,6 +1,8 @@
 package com.sendev.databasemanager.query;
 
-public class Clause
+import com.sendev.databasemanager.contracts.QueryClause;
+
+public class Clause implements QueryClause
 {
     /**
      * The first field for the clause.

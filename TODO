@@ -43,3 +43,8 @@ Plugin:
   Version fetch:
     ☐ Add a version comparitor so the version fetch can tell users how many versions they're behind.
       For this to work all the public versions of DBM must be stored in the version file.
+
+Wiki:
+  DataRows:
+    ✔ Add the *toJson* method to the docs @done (14/07/16 14:21)
+    ✔ Add the *getFloat* method to the docs @done (14/07/16 14:21)

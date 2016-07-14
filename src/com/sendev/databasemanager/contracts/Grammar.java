@@ -84,6 +84,20 @@ public abstract class Grammar
         return this;
     }
 
+    public Grammar addRawPart(String part)
+    {
+        query = query + part;
+
+        return this;
+    }
+
+    public Grammar addRawPart(String part, Object... params)
+    {
+        query = query + String.format(part, params);;
+
+        return this;
+    }
+
     /**
      * Removes the given number of characters
      * from the end of the query string.

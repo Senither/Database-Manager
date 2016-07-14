@@ -1,9 +1,10 @@
 package com.sendev.databasemanager.query;
 
+import com.sendev.databasemanager.contracts.QueryClause;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JoinClause
+public class JoinClause implements QueryClause
 {
     /**
      * The type of join being performed.
