@@ -1,7 +1,5 @@
 package com.sendev.databasemanager.contracts;
 
-import com.sendev.databasemanager.DatabaseManager;
-import com.sendev.databasemanager.query.QueryBuilder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+
 import static org.bukkit.Bukkit.getLogger;
+
+import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.query.QueryBuilder;
 
 public abstract class Database implements DatabaseContract
 {

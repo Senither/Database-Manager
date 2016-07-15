@@ -1,10 +1,11 @@
 package com.sendev.databasemanager.plugin.bungee.contracts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
 import com.sendev.databasemanager.plugin.utils.ChatFormatter;
 import com.sendev.databasemanager.plugin.utils.sender.BungeeSender;
-import java.util.ArrayList;
-import java.util.List;
 import net.md_5.bungee.api.CommandSender;
 
 public abstract class DBMCommand

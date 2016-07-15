@@ -1,11 +1,12 @@
 package com.sendev.databasemanager.plugin.bungee.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
 import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
 import com.sendev.databasemanager.plugin.utils.StringMatcher;
 import com.sendev.databasemanager.plugin.utils.sender.BungeeSender;
-import java.util.ArrayList;
-import java.util.List;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 

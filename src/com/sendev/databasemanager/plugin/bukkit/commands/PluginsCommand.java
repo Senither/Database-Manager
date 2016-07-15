@@ -1,13 +1,15 @@
 package com.sendev.databasemanager.plugin.bukkit.commands;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.bukkit.entity.Player;
+
 import com.sendev.databasemanager.factory.PluginContainer;
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
 import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import org.bukkit.entity.Player;
 
 public class PluginsCommand extends DBMCommand
 {
@@ -38,7 +40,7 @@ public class PluginsCommand extends DBMCommand
     public boolean runPlayerCommand(Player player, String[] args)
     {
         BukkitSender sender = new BukkitSender(player);
-        
+
         chat().sendMessage(sender, "&3&l]&3&l&m--------&3&l[ &bDatabase Manager : Stats &3&l]&3&l&m--------&3&l[");
 
         Map<String, PluginContainer> containers = plugin.getFactory().getContainers();

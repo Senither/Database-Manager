@@ -1,5 +1,8 @@
 package com.sendev.databasemanager.grammar;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.connections.MySQL;
 import com.sendev.databasemanager.connections.SQLite;
@@ -8,8 +11,6 @@ import com.sendev.databasemanager.contracts.Database;
 import com.sendev.databasemanager.contracts.TableGrammar;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Blueprint;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class GrammarParser
 {
@@ -47,15 +48,15 @@ public abstract class GrammarParser
     {
         grammar.setDBM(manager);
         grammar.setOptions(options);
-        
+
         return grammar.format(builder);
     }
-    
+
     protected String setupAndRun(AlterGrammar grammar, Blueprint blueprint, DatabaseManager manager, Map<String, Boolean> options)
     {
         grammar.setDBM(manager);
         grammar.setOptions(options);
-        
+
         return grammar.format(blueprint);
     }
 

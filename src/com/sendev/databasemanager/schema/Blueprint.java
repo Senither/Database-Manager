@@ -1,9 +1,10 @@
 package com.sendev.databasemanager.schema;
 
-import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
-import com.sendev.databasemanager.exceptions.OriginException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
+import com.sendev.databasemanager.exceptions.OriginException;
 
 public class Blueprint implements DatabaseOriginLookup
 {

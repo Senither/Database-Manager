@@ -1,8 +1,5 @@
 package com.sendev.databasemanager.connections;
 
-import com.sendev.databasemanager.contracts.FilenameDatabase;
-import com.sendev.databasemanager.contracts.StatementContract;
-import com.sendev.databasemanager.exceptions.DatabaseException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -10,7 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
-import static org.bukkit.Bukkit.getLogger;
+
+import static org.bukkit.Bukkit.*;
+
+import com.sendev.databasemanager.contracts.FilenameDatabase;
+import com.sendev.databasemanager.contracts.StatementContract;
+import com.sendev.databasemanager.exceptions.DatabaseException;
 
 public class SQLite extends FilenameDatabase
 {

@@ -1,8 +1,9 @@
 package com.sendev.databasemanager.migrate;
 
+import java.util.Comparator;
+
 import com.sendev.databasemanager.exceptions.InvalidFormatException;
 import com.sendev.databasemanager.utils.Carbon;
-import java.util.Comparator;
 
 /**
  * Note to self:

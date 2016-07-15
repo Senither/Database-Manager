@@ -1,7 +1,8 @@
 package com.sendev.databasemanager.contracts;
 
-import com.sendev.databasemanager.exceptions.DatabaseException;
 import java.io.File;
+
+import com.sendev.databasemanager.exceptions.DatabaseException;
 
 public abstract class FilenameDatabase extends Database
 {

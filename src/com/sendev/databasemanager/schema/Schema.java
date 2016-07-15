@@ -1,5 +1,10 @@
 package com.sendev.databasemanager.schema;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.contracts.Database;
@@ -7,10 +12,6 @@ import com.sendev.databasemanager.exceptions.DatabaseException;
 import com.sendev.databasemanager.grammar.CreateParser;
 import com.sendev.databasemanager.query.QueryType;
 import com.sendev.databasemanager.schema.contracts.DatabaseClosure;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Schema
 {

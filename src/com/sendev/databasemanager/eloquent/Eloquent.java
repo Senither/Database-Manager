@@ -1,7 +1,5 @@
 package com.sendev.databasemanager.eloquent;
 
-import com.sendev.databasemanager.query.QueryBuilder;
-import com.sendev.databasemanager.utils.Collection;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -11,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.sendev.databasemanager.query.QueryBuilder;
+import com.sendev.databasemanager.utils.Collection;
 
 public abstract class Eloquent extends EloquentDefaultFields
 {

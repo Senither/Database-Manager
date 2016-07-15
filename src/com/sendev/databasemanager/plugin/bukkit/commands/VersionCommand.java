@@ -1,12 +1,14 @@
 package com.sendev.databasemanager.plugin.bukkit.commands;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.bukkit.contracts.DBMCommand;
 import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
-import java.util.Arrays;
-import java.util.List;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class VersionCommand extends DBMCommand
 {

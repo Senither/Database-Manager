@@ -4,7 +4,7 @@ public class OriginException extends RuntimeException
 {
 
     /**
-     * Origin exception, this is used internally for origin lookups by the 
+     * Origin exception, this is used internally for origin lookups by the
      * {@link com.sendev.databasemanager.contracts.DatabaseOriginLookup DatabaseOriginLookup contract}.
      */
     public OriginException()

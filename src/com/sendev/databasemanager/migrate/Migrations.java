@@ -1,17 +1,18 @@
 package com.sendev.databasemanager.migrate;
 
-import com.sendev.databasemanager.DatabaseManager;
-import com.sendev.databasemanager.migrate.contracts.Migration;
-import com.sendev.databasemanager.query.QueryBuilder;
-import com.sendev.databasemanager.schema.Blueprint;
-import com.sendev.databasemanager.utils.Collection;
-import com.sendev.databasemanager.utils.DataRow;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.migrate.contracts.Migration;
+import com.sendev.databasemanager.query.QueryBuilder;
+import com.sendev.databasemanager.schema.Blueprint;
+import com.sendev.databasemanager.utils.Collection;
+import com.sendev.databasemanager.utils.DataRow;
 
 public class Migrations
 {

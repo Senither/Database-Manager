@@ -1,7 +1,8 @@
 package com.sendev.databasemanager.plugin.contracts;
 
-import com.sendev.databasemanager.exceptions.InvalidPluginException;
 import java.util.logging.Logger;
+
+import com.sendev.databasemanager.exceptions.InvalidPluginException;
 
 public interface DatabasePlugin
 {

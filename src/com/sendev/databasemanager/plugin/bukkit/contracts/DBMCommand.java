@@ -1,12 +1,14 @@
 package com.sendev.databasemanager.plugin.bukkit.contracts;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import com.sendev.databasemanager.plugin.utils.ChatFormatter;
 import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
-import java.util.ArrayList;
-import java.util.List;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public abstract class DBMCommand
 {

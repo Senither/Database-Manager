@@ -1,12 +1,13 @@
 package com.sendev.databasemanager.contracts;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Blueprint;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 public abstract class Grammar
 {
@@ -86,14 +87,14 @@ public abstract class Grammar
 
     public Grammar addRawPart(String part)
     {
-        query = query + part;
+        query += part;
 
         return this;
     }
 
     public Grammar addRawPart(String part, Object... params)
     {
-        query = query + String.format(part, params);;
+        query += String.format(part, params);
 
         return this;
     }

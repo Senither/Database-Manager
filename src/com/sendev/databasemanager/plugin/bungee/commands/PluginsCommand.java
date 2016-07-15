@@ -1,12 +1,13 @@
 package com.sendev.databasemanager.plugin.bungee.commands;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import com.sendev.databasemanager.factory.PluginContainer;
 import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
 import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
 import com.sendev.databasemanager.plugin.utils.sender.BungeeSender;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import net.md_5.bungee.api.CommandSender;
 
 public class PluginsCommand extends DBMCommand
@@ -38,7 +39,7 @@ public class PluginsCommand extends DBMCommand
     public boolean runCommand(CommandSender player, String[] args)
     {
         BungeeSender sender = new BungeeSender(player);
-        
+
         chat().sendMessage(sender, "&3&l]&3&l&m--------&3&l[ &bDatabase Manager : Stats &3&l]&3&l&m--------&3&l[");
 
         Map<String, PluginContainer> containers = plugin.getFactory().getContainers();

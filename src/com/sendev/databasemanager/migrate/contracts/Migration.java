@@ -1,7 +1,8 @@
 package com.sendev.databasemanager.migrate.contracts;
 
-import com.sendev.databasemanager.schema.Schema;
 import java.sql.SQLException;
+
+import com.sendev.databasemanager.schema.Schema;
 
 public interface Migration
 {

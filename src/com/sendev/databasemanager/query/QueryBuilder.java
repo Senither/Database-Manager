@@ -1,13 +1,5 @@
 package com.sendev.databasemanager.query;
 
-import com.sendev.databasemanager.DatabaseFactory;
-import com.sendev.databasemanager.DatabaseManager;
-import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
-import com.sendev.databasemanager.contracts.QueryClause;
-import com.sendev.databasemanager.exceptions.DatabaseException;
-import com.sendev.databasemanager.exceptions.OriginException;
-import com.sendev.databasemanager.grammar.GrammarParser;
-import com.sendev.databasemanager.utils.Collection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +9,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.sendev.databasemanager.DatabaseFactory;
+import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.contracts.DatabaseOriginLookup;
+import com.sendev.databasemanager.contracts.QueryClause;
+import com.sendev.databasemanager.exceptions.DatabaseException;
+import com.sendev.databasemanager.exceptions.OriginException;
+import com.sendev.databasemanager.grammar.GrammarParser;
+import com.sendev.databasemanager.utils.Collection;
 
 public final class QueryBuilder implements DatabaseOriginLookup
 {

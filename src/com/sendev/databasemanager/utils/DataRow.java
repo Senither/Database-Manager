@@ -1,10 +1,12 @@
 package com.sendev.databasemanager.utils;
 
-import com.google.gson.Gson;
-import com.sendev.databasemanager.exceptions.InvalidFormatException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import com.google.gson.Gson;
+
+import com.sendev.databasemanager.exceptions.InvalidFormatException;
 
 public class DataRow
 {

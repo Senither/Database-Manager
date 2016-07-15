@@ -1,10 +1,12 @@
 package com.sendev.databasemanager.plugin.type;
 
-import com.sendev.databasemanager.exceptions.InvalidPluginException;
-import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
 import java.util.logging.Logger;
+
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.sendev.databasemanager.exceptions.InvalidPluginException;
+import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
 
 public class BukkitPlugin implements DatabasePlugin
 {

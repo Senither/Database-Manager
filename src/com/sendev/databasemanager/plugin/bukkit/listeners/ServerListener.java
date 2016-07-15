@@ -1,11 +1,12 @@
 package com.sendev.databasemanager.plugin.bukkit.listeners;
 
-import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
-import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
+import com.sendev.databasemanager.plugin.utils.sender.BukkitSender;
 
 public class ServerListener implements Listener
 {

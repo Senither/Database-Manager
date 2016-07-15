@@ -1,12 +1,13 @@
 package com.sendev.databasemanager.connections;
 
-import com.sendev.databasemanager.contracts.HostnameDatabase;
-import com.sendev.databasemanager.contracts.StatementContract;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.sendev.databasemanager.contracts.HostnameDatabase;
+import com.sendev.databasemanager.contracts.StatementContract;
 
 public class MySQL extends HostnameDatabase
 {

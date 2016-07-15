@@ -1,8 +1,9 @@
 package com.sendev.databasemanager.plugin.type;
 
+import java.util.logging.Logger;
+
 import com.sendev.databasemanager.exceptions.InvalidPluginException;
 import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
-import java.util.logging.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeePlugin implements DatabasePlugin

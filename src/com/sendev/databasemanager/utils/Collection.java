@@ -1,6 +1,5 @@
 package com.sendev.databasemanager.utils;
 
-import com.google.gson.Gson;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -15,6 +14,8 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Random;
+
+import com.google.gson.Gson;
 
 public class Collection implements Cloneable, Iterable<DataRow>
 {

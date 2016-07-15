@@ -1,8 +1,9 @@
 package com.sendev.databasemanager;
 
-import com.sendev.databasemanager.contracts.Database;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.sendev.databasemanager.contracts.Database;
 
 public class ConnectionContainer
 {

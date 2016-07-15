@@ -1,9 +1,10 @@
 package com.sendev.databasemanager.grammar.mysql;
 
-import com.sendev.databasemanager.grammar.contracts.UpdateGrammar;
-import com.sendev.databasemanager.query.QueryBuilder;
 import java.util.List;
 import java.util.Map;
+
+import com.sendev.databasemanager.grammar.contracts.UpdateGrammar;
+import com.sendev.databasemanager.query.QueryBuilder;
 
 public class Update extends UpdateGrammar
 {

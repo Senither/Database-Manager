@@ -1,8 +1,9 @@
 package com.sendev.databasemanager.plugin.bukkit.contracts;
 
-import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
+
+import com.sendev.databasemanager.plugin.bukkit.DBMPlugin;
 
 public abstract class Task implements Runnable
 {

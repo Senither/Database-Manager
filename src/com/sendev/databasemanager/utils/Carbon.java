@@ -1,6 +1,5 @@
 package com.sendev.databasemanager.utils;
 
-import com.sendev.databasemanager.exceptions.InvalidFormatException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -9,6 +8,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
+
+import com.sendev.databasemanager.exceptions.InvalidFormatException;
 
 /**
  * Carbon is the equivalent of Javas Date and Calendar utilities on steroids, the idea for

@@ -1,5 +1,7 @@
 package com.sendev.databasemanager.plugin.bukkit;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 import com.sendev.databasemanager.DatabaseFactory;
 import com.sendev.databasemanager.DatabaseManager;
 import com.sendev.databasemanager.plugin.bukkit.commands.CommandHandler;
@@ -12,7 +14,6 @@ import com.sendev.databasemanager.plugin.contracts.PlatformType;
 import com.sendev.databasemanager.plugin.contracts.PluginContract;
 import com.sendev.databasemanager.plugin.utils.BootstrapLogger;
 import com.sendev.databasemanager.plugin.utils.ChatFormatter;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class DBMPlugin extends JavaPlugin implements PluginContract
 {

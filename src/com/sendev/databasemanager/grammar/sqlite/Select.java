@@ -1,12 +1,13 @@
 package com.sendev.databasemanager.grammar.sqlite;
 
+import java.util.List;
+
 import com.sendev.databasemanager.grammar.contracts.SelectGrammar;
 import com.sendev.databasemanager.query.Clause;
 import com.sendev.databasemanager.query.JoinClause;
 import com.sendev.databasemanager.query.OperatorType;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.query.QueryOrder;
-import java.util.List;
 
 public class Select extends SelectGrammar
 {

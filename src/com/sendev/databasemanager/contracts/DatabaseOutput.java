@@ -1,8 +1,9 @@
 package com.sendev.databasemanager.contracts;
 
-import com.sendev.databasemanager.DatabaseManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.sendev.databasemanager.DatabaseManager;
 
 public abstract class DatabaseOutput
 {

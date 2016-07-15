@@ -1,9 +1,10 @@
 package com.sendev.databasemanager.plugin.bungee.commands;
 
-import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
-import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
 import java.util.Arrays;
 import java.util.List;
+
+import com.sendev.databasemanager.plugin.bungee.DBMPlugin;
+import com.sendev.databasemanager.plugin.bungee.contracts.DBMCommand;
 import net.md_5.bungee.api.CommandSender;
 
 public class VersionCommand extends DBMCommand

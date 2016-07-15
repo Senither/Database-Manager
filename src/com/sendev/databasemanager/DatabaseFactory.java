@@ -1,10 +1,5 @@
 package com.sendev.databasemanager;
 
-import com.sendev.databasemanager.exceptions.InvalidPluginException;
-import com.sendev.databasemanager.exceptions.OriginException;
-import com.sendev.databasemanager.factory.PluginContainer;
-import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
-import com.sendev.databasemanager.plugin.contracts.PlatformType;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
@@ -14,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.sendev.databasemanager.exceptions.InvalidPluginException;
+import com.sendev.databasemanager.exceptions.OriginException;
+import com.sendev.databasemanager.factory.PluginContainer;
+import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
+import com.sendev.databasemanager.plugin.contracts.PlatformType;
 
 public class DatabaseFactory
 {

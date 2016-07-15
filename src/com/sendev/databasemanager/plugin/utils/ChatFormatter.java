@@ -1,8 +1,9 @@
 package com.sendev.databasemanager.plugin.utils;
 
-import com.sendev.databasemanager.plugin.utils.sender.ChatSender;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sendev.databasemanager.plugin.utils.sender.ChatSender;
 import net.md_5.bungee.api.ChatColor;
 
 public class ChatFormatter

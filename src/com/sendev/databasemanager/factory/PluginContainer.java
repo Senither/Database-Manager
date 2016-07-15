@@ -1,9 +1,10 @@
 package com.sendev.databasemanager.factory;
 
-import com.sendev.databasemanager.DatabaseManager;
-import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sendev.databasemanager.DatabaseManager;
+import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
 
 public class PluginContainer
 {

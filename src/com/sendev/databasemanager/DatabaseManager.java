@@ -1,5 +1,13 @@
 package com.sendev.databasemanager;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.sendev.databasemanager.contracts.Database;
 import com.sendev.databasemanager.contracts.DatabaseOutput;
 import com.sendev.databasemanager.exceptions.DatabaseException;
@@ -9,13 +17,6 @@ import com.sendev.databasemanager.plugin.contracts.DatabasePlugin;
 import com.sendev.databasemanager.query.QueryBuilder;
 import com.sendev.databasemanager.schema.Schema;
 import com.sendev.databasemanager.utils.Collection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLTimeoutException;
-import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
 
 public final class DatabaseManager
 {

@@ -1,9 +1,10 @@
 package com.sendev.databasemanager.grammar.sqlite;
 
-import com.sendev.databasemanager.grammar.contracts.InsertGrammar;
-import com.sendev.databasemanager.query.QueryBuilder;
 import java.util.List;
 import java.util.Map;
+
+import com.sendev.databasemanager.grammar.contracts.InsertGrammar;
+import com.sendev.databasemanager.query.QueryBuilder;
 
 public class Insert extends InsertGrammar
 {
