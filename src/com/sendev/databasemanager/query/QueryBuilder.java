@@ -976,7 +976,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
      * @param connection The database connection to run the query against
      * @param arrays     The list of items that should be inserted
      *
-     * @return a Collection of the geneated ids.
+     * @return a Collection of the generated IDs.
      *
      * @throws SQLException if a database access error occurs;
      *                      this method is called on a closed  <code>PreparedStatement</code>
@@ -993,7 +993,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
      *
      * @param items The map of items that should be inserted
      *
-     * @return a Collection of the geneated ids.
+     * @return a Collection of the generated IDs.
      *
      * @throws SQLException if a database access error occurs;
      *                      this method is called on a closed  <code>PreparedStatement</code>
@@ -1011,7 +1011,7 @@ public final class QueryBuilder implements DatabaseOriginLookup
      * @param connection The database connection to run the query against
      * @param items      The map of items that should be inserted
      *
-     * @return a Collection of the geneated ids.
+     * @return a Collection of the generated IDs.
      *
      * @throws SQLException if a database access error occurs;
      *                      this method is called on a closed  <code>PreparedStatement</code>
