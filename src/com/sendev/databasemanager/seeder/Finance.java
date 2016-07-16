@@ -10,8 +10,8 @@ import org.apache.commons.lang.StringUtils;
 
 import com.sendev.databasemanager.seeder.contracts.CreditCardType;
 import com.sendev.databasemanager.seeder.contracts.FakeValuesServiceContract;
-import com.sendev.databasemanager.seeder.contracts.ResolverContract;
 import com.sendev.databasemanager.seeder.contracts.Generator;
+import com.sendev.databasemanager.seeder.contracts.ResolverContract;
 
 public class Finance extends Generator
 {
@@ -60,6 +60,8 @@ public class Finance extends Generator
 
     /**
      * Generates a random Business Identifier Code
+     *
+     * @return a random Business Identifier Code.
      */
     public String bic()
     {
@@ -99,7 +101,7 @@ public class Finance extends Generator
 
         StringBuilder sb = new StringBuilder();
         char[] characters = basis.toLowerCase().toCharArray();
-        
+
         for (int i = 0; i < characters.length; i++) {
             char c = characters[i];
             if (Character.isLetter(c)) {
@@ -110,7 +112,7 @@ public class Finance extends Generator
         }
 
         int mod97 = new BigInteger(sb.toString()).mod(BigInteger.valueOf(97L)).intValue();
-        
+
         return StringUtils.leftPad(String.valueOf(98 - mod97), 2, '0');
     }
 

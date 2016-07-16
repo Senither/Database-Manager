@@ -53,6 +53,8 @@ public class Company extends Generator
 
     /**
      * Generate a buzzword-laden catch phrase.
+     *
+     * @return a buzzword-laden catch phrase.
      */
     public String catchPhrase()
     {
@@ -64,16 +66,21 @@ public class Company extends Generator
 
     /**
      * When a straight answer won't do, BS to the rescue!
+     *
+     * @return some bullshit.
      */
     public String bs()
     {
         @SuppressWarnings("unchecked")
         List<List<String>> buzzwordLists = (List<List<String>>) service().fetchObject("company.bs");
+
         return joinSampleOfEachList(buzzwordLists, " ");
     }
 
     /**
      * Generate a random company logo url in PNG format.
+     *
+     * @return a random company logo url in PNG format.
      */
     public String logo()
     {

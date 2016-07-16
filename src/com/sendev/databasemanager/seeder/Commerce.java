@@ -51,6 +51,8 @@ public class Commerce extends Generator
 
     /**
      * Generate a random price between 0.00 and 100.00
+     *
+     * @return a random price between 0.00 and 100.00.
      */
     public String price()
     {
