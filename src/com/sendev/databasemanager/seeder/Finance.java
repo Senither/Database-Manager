@@ -15,26 +15,27 @@ import com.sendev.databasemanager.seeder.contracts.ResolverContract;
 
 public class Finance extends Generator
 {
-    private final Map<String, String> countryCodeToBasicBankAccountNumberPattern;
+    private final Map<String, String> bankAccountNumberPattern;
 
     public Finance(ResolverContract resolver, FakeValuesServiceContract fakeValueService)
     {
         super(resolver, fakeValueService);
 
-        countryCodeToBasicBankAccountNumberPattern = createCountryCodeToBasicBankAccountNumberPatternMap();
+        bankAccountNumberPattern = createCountryCodeToBasicBankAccountNumberPatternMap();
     }
 
     public String creditCard(CreditCardType type)
     {
         String key = String.format("credit_card.%s", type.toString().toLowerCase());
 
-        String template = fakeValueService.numerify(fakeValueService.fetchString(key));
+        String template = service().numerify(service().fetchString(key));
 
         String[] split = template.replaceAll("[^0-9]", "").split("");
         List<Integer> reversedAsInt = new ArrayList<Integer>();
 
         for (int i = 0; i < split.length; i++) {
             final String current = split[split.length - 1 - i];
+
             if (!current.isEmpty()) {
                 reversedAsInt.add(Integer.valueOf(current));
             }
@@ -65,33 +66,37 @@ public class Finance extends Generator
      */
     public String bic()
     {
-        return fakeValueService.regexify("([A-Z]){4}([A-Z]){2}([0-9A-Z]){2}([0-9A-Z]{3})?");
+        return service().regexify("([A-Z]){4}([A-Z]){2}([0-9A-Z]){2}([0-9A-Z]{3})?");
     }
 
     public String iban()
     {
-        List<String> countryCodes = new ArrayList<String>(countryCodeToBasicBankAccountNumberPattern.keySet());
+        List<String> countryCodes = new ArrayList<String>(bankAccountNumberPattern.keySet());
 
-        String randomCountryCode = countryCodes.get(fakeValueService.getRandomService().nextInt(countryCodes.size()));
+        String randomCountryCode = countryCodes.get(service().getRandomService().nextInt(countryCodes.size()));
 
         return iban(randomCountryCode);
     }
 
     public String iban(String countryCode)
     {
-        String basicBankAccountNumber = fakeValueService.regexify(countryCodeToBasicBankAccountNumberPattern.get(countryCode));
+        String basicBankAccountNumber = service().regexify(bankAccountNumberPattern.get(countryCode));
+
         String checkSum = calculateIbanChecksum(countryCode, basicBankAccountNumber);
+
         return countryCode + checkSum + basicBankAccountNumber;
     }
 
     private int sum(String[] string)
     {
         int sum = 0;
+
         for (String s : string) {
             if (!s.isEmpty()) {
                 sum += Integer.valueOf(s);
             }
         }
+
         return sum;
     }
 

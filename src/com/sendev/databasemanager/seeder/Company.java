@@ -117,6 +117,7 @@ public class Company extends Generator
         for (List<String> list : listOfLists) {
             words.add(list.get(random().nextInt(list.size())));
         }
+
         return StringUtils.join(words, separator);
     }
 }

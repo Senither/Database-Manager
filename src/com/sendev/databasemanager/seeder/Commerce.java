@@ -25,16 +25,20 @@ public class Commerce extends Generator
     public String department()
     {
         int numberOfDepartments = Math.max(random().nextInt(4), 1);
+
         SortedSet<String> departments = new TreeSet<String>();
+
         while (departments.size() < numberOfDepartments) {
             departments.add(service().fetchString("commerce.department"));
         }
+
         if (departments.size() > 1) {
             String lastDepartment = departments.last();
+
             return StringUtils.join(departments.headSet(lastDepartment), ", ") + " & " + lastDepartment;
-        } else {
-            return departments.first();
         }
+
+        return departments.first();
     }
 
     public String productName()

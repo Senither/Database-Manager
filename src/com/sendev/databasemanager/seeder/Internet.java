@@ -95,9 +95,11 @@ public class Internet extends Generator
     public String image()
     {
         String[] dimension = StringUtils.split(service().fetchString("internet.image_dimension"), 'x');
+
         if (dimension.length == 0) {
             return "";
         }
+
         return image(
         Integer.valueOf(StringUtils.trim(dimension[0])), Integer.valueOf(StringUtils.trim(dimension[1])),
         random().nextBoolean(), null);
@@ -140,12 +142,14 @@ public class Internet extends Generator
         if (includeSpecial) {
             char[] password = lorem.characters(minimumLength, maximumLength, includeUppercase).toCharArray();
             char[] special = new char[]{'!', '@', '#', '$', '%', '^', '&', '*'};
+
             for (int i = 0; i < random().nextInt(minimumLength); i++) {
                 password[random().nextInt(password.length)] = special[random().nextInt(special.length)];
             }
+
             return new String(password);
-        } else {
-            return lorem.characters(minimumLength, maximumLength, includeUppercase);
         }
+
+        return lorem.characters(minimumLength, maximumLength, includeUppercase);
     }
 }

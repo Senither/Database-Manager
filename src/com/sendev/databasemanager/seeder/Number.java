@@ -57,6 +57,7 @@ public class Number extends Generator
     public long randomNumber(int numberOfDigits, boolean strict)
     {
         long max = (long) Math.pow(10, numberOfDigits);
+
         if (strict) {
             long min = (long) Math.pow(10, numberOfDigits - 1);
 
@@ -71,7 +72,7 @@ public class Number extends Generator
      */
     public long randomNumber()
     {
-        int numberOfDigits = fakeValueService.getRandomService().nextInt(8) + 1;
+        int numberOfDigits = service().getRandomService().nextInt(8) + 1;
 
         return randomNumber(numberOfDigits, false);
     }
@@ -87,7 +88,7 @@ public class Number extends Generator
      */
     public double randomDouble(int maxNumberOfDecimals, int min, int max)
     {
-        double value = min + (max - min) * fakeValueService.getRandomService().nextDouble();
+        double value = min + (max - min) * service().getRandomService().nextDouble();
 
         return new BigDecimal(value).setScale(maxNumberOfDecimals, BigDecimal.ROUND_HALF_EVEN).doubleValue();
     }

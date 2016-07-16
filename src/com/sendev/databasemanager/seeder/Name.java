@@ -1,10 +1,10 @@
 package com.sendev.databasemanager.seeder;
 
-import com.sendev.databasemanager.seeder.contracts.FakeValuesServiceContract;
-import com.sendev.databasemanager.seeder.contracts.ResolverContract;
-import com.sendev.databasemanager.seeder.contracts.Generator;
-
 import org.apache.commons.lang.StringUtils;
+
+import com.sendev.databasemanager.seeder.contracts.FakeValuesServiceContract;
+import com.sendev.databasemanager.seeder.contracts.Generator;
+import com.sendev.databasemanager.seeder.contracts.ResolverContract;
 
 public class Name extends Generator
 {
@@ -15,12 +15,12 @@ public class Name extends Generator
 
     public String name()
     {
-        return fakeValueService.resolve("name.name", this, resolver);
+        return service().resolve("name.name", this, resolver);
     }
 
     public String nameWithMiddle()
     {
-        return fakeValueService.resolve("name.name_with_middle", this, resolver);
+        return service().resolve("name.name_with_middle", this, resolver);
     }
 
     public String fullName()
@@ -30,28 +30,28 @@ public class Name extends Generator
 
     public String firstName()
     {
-        return fakeValueService.fetchString("name.first_name");
+        return service().fetchString("name.first_name");
     }
 
     public String lastName()
     {
-        return fakeValueService.fetchString("name.last_name");
+        return service().fetchString("name.last_name");
     }
 
     public String prefix()
     {
-        return fakeValueService.fetchString("name.prefix");
+        return service().fetchString("name.prefix");
     }
 
     public String suffix()
     {
-        return fakeValueService.fetchString("name.suffix");
+        return service().fetchString("name.suffix");
     }
 
     public String title()
     {
-        return StringUtils.join(new String[]{fakeValueService.fetchString("name.title.descriptor"),
-            fakeValueService.fetchString("name.title.level"), fakeValueService.fetchString("name.title.job")}, " ");
+        return StringUtils.join(new String[]{service().fetchString("name.title.descriptor"),
+            service().fetchString("name.title.level"), service().fetchString("name.title.job")}, " ");
     }
 
     public String username()

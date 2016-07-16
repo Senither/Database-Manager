@@ -22,7 +22,7 @@ public class Address extends Generator
 
     public String streetAddressNumber()
     {
-        return String.valueOf(fakeValueService.getRandomService().nextInt(1000));
+        return String.valueOf(random().nextInt(1000));
     }
 
     public String streetAddress()
@@ -41,27 +41,27 @@ public class Address extends Generator
 
     public String secondaryAddress()
     {
-        return fakeValueService.numerify(fakeValueService.fetchString("address.secondary_address"));
+        return service().numerify(service().fetchString("address.secondary_address"));
     }
 
     public String zipCode()
     {
-        return fakeValueService.bothify(fakeValueService.fetchString("address.postcode"));
+        return service().bothify(service().fetchString("address.postcode"));
     }
 
     public String streetSuffix()
     {
-        return fakeValueService.fetchString("address.street_suffix");
+        return service().fetchString("address.street_suffix");
     }
 
     public String citySuffix()
     {
-        return fakeValueService.safeFetch("address.city_suffix");
+        return service().safeFetch("address.city_suffix");
     }
 
     public String cityPrefix()
     {
-        return fakeValueService.safeFetch("address.city_prefix");
+        return service().safeFetch("address.city_prefix");
     }
 
     public String city()
@@ -76,12 +76,12 @@ public class Address extends Generator
 
     public String state()
     {
-        return fakeValueService.fetchString("address.state");
+        return service().fetchString("address.state");
     }
 
     public String stateAbbr()
     {
-        return fakeValueService.fetchString("address.state_abbr");
+        return service().fetchString("address.state_abbr");
     }
 
     public String firstName()
@@ -96,31 +96,31 @@ public class Address extends Generator
 
     public String latitude()
     {
-        return String.format("%.8g", (fakeValueService.getRandomService().nextDouble() * 180) - 90);
+        return String.format("%.8g", (random().nextDouble() * 180) - 90);
     }
 
     public String longitude()
     {
-        return String.format("%.8g", (fakeValueService.getRandomService().nextDouble() * 360) - 180);
+        return String.format("%.8g", (random().nextDouble() * 360) - 180);
     }
 
     public String timeZone()
     {
-        return fakeValueService.fetchString("address.time_zone");
+        return service().fetchString("address.time_zone");
     }
 
     public String country()
     {
-        return fakeValueService.fetchString("address.country");
+        return service().fetchString("address.country");
     }
 
     public String countryCode()
     {
-        return fakeValueService.fetchString("address.country_code");
+        return service().fetchString("address.country_code");
     }
 
     public String buildingNumber()
     {
-        return fakeValueService.numerify(fakeValueService.fetchString("address.building_number"));
+        return service().numerify(service().fetchString("address.building_number"));
     }
 }

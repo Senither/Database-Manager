@@ -43,8 +43,11 @@ public class Crypto extends Generator
     {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+
             String characters = lorem.characters();
+
             messageDigest.update(characters.getBytes(), 0, characters.length());
+
             return new BigInteger(1, messageDigest.digest()).toString(16);
         } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
             throw new RuntimeException(noSuchAlgorithmException);

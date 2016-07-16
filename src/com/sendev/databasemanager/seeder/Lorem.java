@@ -23,6 +23,7 @@ public class Lorem extends Generator
         for (char character = 'a'; character <= 'z'; character++) {
             builder.append(character);
         }
+
         characters = builder.toString().toCharArray();
     }
 
@@ -73,14 +74,19 @@ public class Lorem extends Generator
         if (fixedNumberOfCharacters < 1) {
             return "";
         }
+
         char[] buffer = new char[fixedNumberOfCharacters];
+
         for (int i = 0; i < buffer.length; i++) {
             char randomCharacter = characters[random().nextInt(characters.length)];
+
             if (includeUppercase && random().nextBoolean()) {
                 randomCharacter = Character.toUpperCase(randomCharacter);
             }
+
             buffer[i] = randomCharacter;
         }
+
         return new String(buffer);
     }
 
@@ -88,9 +94,11 @@ public class Lorem extends Generator
     public List<String> words(int num)
     {
         List<String> returnList = new ArrayList();
+
         for (int i = 0; i < num; i++) {
             returnList.add(word());
         }
+
         return returnList;
     }
 
@@ -117,9 +125,11 @@ public class Lorem extends Generator
     public List<String> sentences(int sentenceCount)
     {
         List<String> sentences = new ArrayList<String>(sentenceCount);
+
         for (int i = 0; i < sentenceCount; i++) {
             sentences.add(sentence());
         }
+
         return sentences;
     }
 
@@ -136,9 +146,11 @@ public class Lorem extends Generator
     public List<String> paragraphs(int paragraphCount)
     {
         List<String> paragraphs = new ArrayList<String>(paragraphCount);
+
         for (int i = 0; i < paragraphCount; i++) {
             paragraphs.add(paragraph());
         }
+
         return paragraphs;
     }
 
@@ -153,9 +165,11 @@ public class Lorem extends Generator
     public String fixedString(int numberOfLetters)
     {
         StringBuilder builder = new StringBuilder();
+
         while (builder.length() < numberOfLetters) {
             builder.append(sentence());
         }
+
         return StringUtils.substring(builder.toString(), 0, numberOfLetters);
     }
 }
