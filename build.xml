@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="DatabaseManager" default="all" basedir=".">    
+    <target name="-post-jar">
+        <property name="version" value="0.9.2571"/>
+        
+        <jar jarfile="dist/DatabaseManager-${version}.jar">
+            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
+            <zipfileset src="lib/automaton-1.11-8.jar" excludes="META-INF/*, *.aut" />
+            <zipfileset src="lib/generex-1.0.1.jar" excludes="META-INF/*" />
+            <manifest>
+                <attribute name="Main-Class" value="com.sendev.databasemanager.DatabaseManager"/>
+            </manifest>
+        </jar>
+        
+        <delete file="${dist.jar}"/>
+    </target>
+    
+    <description>Builds, tests, and runs the project DatabaseManager.</description>
+    <import file="nbproject/build-impl.xml"/>
+</project>

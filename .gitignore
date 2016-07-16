@@ -1,6 +1,8 @@
 *
 !/.gitignore
 !/README.md
+!/build.xml
 !/TODO
+!/test
+!/lib
 !/src
-dist/DatabaseManager.jar
