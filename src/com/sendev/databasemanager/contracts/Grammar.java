@@ -15,6 +15,8 @@ public abstract class Grammar
     protected DatabaseManager dbm;
     protected Map<String, Boolean> options;
 
+    protected boolean isIgnoreingDatabasePrefix = false;
+
     public void setDBM(DatabaseManager dbm)
     {
         this.dbm = dbm;
@@ -136,12 +138,17 @@ public abstract class Grammar
         if (field.contains(".")) {
             String[] both = field.split("\\.");
 
+            String table = both[0];
+            if (!isIgnoreingDatabasePrefix) {
+                table = buildTable(table);
+            }
+
             if (both.length == 2) {
                 if (both[1].trim().equals("*")) {
-                    return String.format("`%s`.*", both[0]);
+                    return String.format("`%s`.*", table);
                 }
 
-                return String.format("`%s`.`%s`", both[0], both[1]);
+                return String.format("`%s`.`%s`", table, both[1]);
             }
         }
 
@@ -161,12 +168,14 @@ public abstract class Grammar
         return table;
     }
 
-    protected DatabaseManager getDBMFrom(QueryBuilder query)
+    protected DatabaseManager getAndBuildDBMFrom(QueryBuilder query)
     {
+        isIgnoreingDatabasePrefix = query.isIgnoringDatabasePrefix();
+
         return DatabaseFactory.getDynamicOrigin(query.getClass());
     }
 
-    protected DatabaseManager getDBMFrom(Blueprint blueprint)
+    protected DatabaseManager getAndBuildDBMFrom(Blueprint blueprint)
     {
         return DatabaseFactory.getDynamicOrigin(blueprint.getClass());
     }

@@ -14,7 +14,7 @@ public class Select extends SelectGrammar
     @Override
     public String format(QueryBuilder builder)
     {
-        dbm = getDBMFrom(builder);
+        dbm = getAndBuildDBMFrom(builder);
 
         buildColumns(builder);
 
@@ -60,7 +60,7 @@ public class Select extends SelectGrammar
                 continue;
             }
 
-            addPart(String.format(" %s JOIN %s ON ", join.type.toUpperCase(), formatField(join.table)));
+            addPart(String.format(" %s JOIN %s ON ", join.type.toUpperCase(), formatField(isIgnoreingDatabasePrefix ? join.table : buildTable(join.table))));
 
             int orderLength = 0;
 

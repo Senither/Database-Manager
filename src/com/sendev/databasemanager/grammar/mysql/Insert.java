@@ -11,7 +11,7 @@ public class Insert extends InsertGrammar
     @Override
     public String format(QueryBuilder builder)
     {
-        dbm = getDBMFrom(builder);
+        dbm = getAndBuildDBMFrom(builder);
 
         String table = builder.getTable();
         if (!builder.isIgnoringDatabasePrefix()) {

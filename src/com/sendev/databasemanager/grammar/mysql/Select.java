@@ -14,7 +14,7 @@ public class Select extends SelectGrammar
     @Override
     public String format(QueryBuilder builder)
     {
-        dbm = getDBMFrom(builder);
+        dbm = getAndBuildDBMFrom(builder);
 
         buildColumns(builder);
 
