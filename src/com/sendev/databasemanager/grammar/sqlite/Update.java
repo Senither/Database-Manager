@@ -14,7 +14,7 @@ public class Update extends UpdateGrammar
         dbm = getAndBuildDBMFrom(builder);
 
         String table = builder.getTable();
-        if (!builder.isIgnoringDatabasePrefix()) {
+        if (!isIgnoreingDatabasePrefix) {
             table = buildTable(table);
         }
 

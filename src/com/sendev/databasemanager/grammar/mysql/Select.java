@@ -44,7 +44,7 @@ public class Select extends SelectGrammar
         }
 
         String table = builder.getTable();
-        if (!builder.isIgnoringDatabasePrefix()) {
+        if (!isIgnoreingDatabasePrefix) {
             table = buildTable(table);
         }
 
@@ -60,7 +60,7 @@ public class Select extends SelectGrammar
                 continue;
             }
 
-            addPart(String.format(" %s JOIN %s ON ", join.type.toUpperCase(), formatField(join.table)));
+            addPart(String.format(" %s JOIN %s ON ", join.type.toUpperCase(), formatField(isIgnoreingDatabasePrefix ? join.table : buildTable(join.table))));
 
             int orderLength = 0;
 

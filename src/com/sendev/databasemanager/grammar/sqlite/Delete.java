@@ -9,7 +9,7 @@ public class Delete extends DeleteGrammar
     public String format(QueryBuilder builder)
     {
         String table = builder.getTable();
-        if (!builder.isIgnoringDatabasePrefix()) {
+        if (!isIgnoreingDatabasePrefix) {
             table = buildTable(table);
         }
 

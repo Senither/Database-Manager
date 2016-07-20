@@ -44,7 +44,7 @@ public class Select extends SelectGrammar
         }
 
         String table = builder.getTable();
-        if (!builder.isIgnoringDatabasePrefix()) {
+        if (!isIgnoreingDatabasePrefix) {
             table = buildTable(table);
         }
 
