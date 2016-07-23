@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -177,7 +178,7 @@ public abstract class Database implements DatabaseContract
     {
         queryValidation(getStatement(query));
 
-        PreparedStatement statement = createPreparedStatement(query);
+        Statement statement = createPreparedStatement(query);
 
         if (statement.execute(query)) {
             return statement.getResultSet();
@@ -256,12 +257,14 @@ public abstract class Database implements DatabaseContract
      * @throws SQLException if a database access error occurs or this method is called on a
      *                      closed <code>Statement</code>
      */
-    public final synchronized PreparedStatement prepare(String query) throws SQLException
+    public final synchronized Statement prepare(String query) throws SQLException
     {
         StatementContract statement = getStatement(query);
-        PreparedStatement ps = createPreparedStatement(query);
+        Statement ps = createPreparedStatement(query);
 
-        preparedStatements.put(ps, statement);
+        if (ps instanceof PreparedStatement) {
+            preparedStatements.put((PreparedStatement) ps, statement);
+        }
 
         return ps;
     }
@@ -339,7 +342,7 @@ public abstract class Database implements DatabaseContract
         return keys;
     }
 
-    private PreparedStatement createPreparedStatement(String query) throws SQLException
+    protected Statement createPreparedStatement(String query) throws SQLException
     {
         PreparedStatement statement = getConnection().prepareStatement(query);
 

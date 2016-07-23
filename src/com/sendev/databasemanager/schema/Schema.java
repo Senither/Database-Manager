@@ -1,6 +1,7 @@
 package com.sendev.databasemanager.schema;
 
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -157,7 +158,13 @@ public class Schema
 
         dbm.output().debug("create query was generated, executing query: %s", query);
 
-        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
+        Statement stmt = dbm.getConnections().getDefaultConnection().prepare(query);
+
+        if (stmt instanceof PreparedStatement) {
+            return !((PreparedStatement) stmt).execute();
+        }
+
+        return !stmt.execute(query);
     }
 
     /**
@@ -189,7 +196,13 @@ public class Schema
 
         dbm.output().debug("create query was generated, executing query: %s", query);
 
-        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
+        Statement stmt = dbm.getConnections().getDefaultConnection().prepare(query);
+
+        if (stmt instanceof PreparedStatement) {
+            return !((PreparedStatement) stmt).execute();
+        }
+
+        return !stmt.execute(query);
     }
 
     /**
@@ -225,7 +238,13 @@ public class Schema
 
         dbm.output().debug("Schema::createIfNotExists query was generated, executing query: %s", query);
 
-        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
+        Statement stmt = dbm.getConnections().getDefaultConnection().prepare(query);
+
+        if (stmt instanceof PreparedStatement) {
+            return !((PreparedStatement) stmt).execute();
+        }
+
+        return !stmt.execute(query);
     }
 
     /**
@@ -266,7 +285,13 @@ public class Schema
 
         dbm.output().debug("Schema::createIfNotExists query was generated, executing query: %s", query);
 
-        return !dbm.getConnections().getDefaultConnection().prepare(query).execute();
+        Statement stmt = dbm.getConnections().getDefaultConnection().prepare(query);
+
+        if (stmt instanceof PreparedStatement) {
+            return !((PreparedStatement) stmt).execute();
+        }
+
+        return !stmt.execute(query);
     }
 
     /**

@@ -143,4 +143,22 @@ public class SQLite extends FilenameDatabase
 
         return false;
     }
+
+    @Override
+    protected Statement createPreparedStatement(String query) throws SQLException
+    {
+        Statement statement = getConnection().createStatement();
+
+        if (dbm != null) {
+            if (dbm.options().getQueryTimeout() > 0) {
+                statement.setQueryTimeout(dbm.options().getQueryTimeout());
+            }
+
+            if (dbm.options().getQueryReturnLimit() > 0) {
+                statement.setMaxRows(dbm.options().getQueryReturnLimit());
+            }
+        }
+
+        return statement;
+    }
 }

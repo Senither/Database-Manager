@@ -315,9 +315,13 @@ public final class DatabaseManager
     {
         output.debug("DatabaseManager::queryUpdate was called with the following SQL statement: %s", query);
 
-        PreparedStatement stmt = connections.getDefaultConnection().prepare(query);
+        Statement stmt = connections.getDefaultConnection().prepare(query);
 
-        return stmt.executeUpdate();
+        if (stmt instanceof PreparedStatement) {
+            return ((PreparedStatement) stmt).executeUpdate();
+        }
+
+        return stmt.executeUpdate(query);
     }
 
     /**
@@ -377,7 +381,13 @@ public final class DatabaseManager
             throw new DatabaseException("Invalid connection, there are no connection with the name \"" + connection + "\"");
         }
 
-        return db.prepare(query).executeUpdate();
+        Statement stmt = db.prepare(query);
+
+        if (stmt instanceof PreparedStatement) {
+            return ((PreparedStatement) stmt).executeUpdate();
+        }
+
+        return stmt.executeUpdate(query);
     }
 
     /**
