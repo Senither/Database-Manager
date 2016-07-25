@@ -47,9 +47,30 @@ public class Update extends UpdateGrammar
 
         for (Map<String, Object> row : items) {
 
-            keyset.stream().forEach(( key ) -> {
-                addPart((row.containsKey(key)) ? String.format(" %s = '%s', ", formatField(key), row.get(key)) : " NULL, ");
-            });
+            for (String key : keyset) {
+                if (!row.containsKey(key)) {
+                    addPart("NULL, ");
+
+                    continue;
+                }
+
+                String value = row.get(key).toString();
+                String formatKey = formatField(key);
+
+                if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                    addPart(String.format(" %s = %s, ", formatKey, value.equalsIgnoreCase("true") ? 1 : 0));
+
+                    continue;
+                }
+
+                if (isNumeric(value)) {
+                    addPart(String.format("%s = %s, ", formatKey, value.toUpperCase()));
+
+                    continue;
+                }
+
+                addPart(String.format("%s = %s, ", formatKey, value.toUpperCase()));
+            }
 
             removeLast(2).addPart(" ");
         }

@@ -55,9 +55,29 @@ public class Insert extends InsertGrammar
         for (Map<String, Object> row : items) {
             addPart(" (");
 
-            keyset.stream().forEach(( key ) -> {
-                addPart((row.containsKey(key)) ? String.format("'%s', ", row.get(key)) : "NULL, ");
-            });
+            for (String key : keyset) {
+                if (!row.containsKey(key)) {
+                    addPart("NULL, ");
+
+                    continue;
+                }
+
+                String value = row.get(key).toString();
+
+                if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                    addPart(String.format("%s, ", value.equalsIgnoreCase("true") ? 1 : 0));
+
+                    continue;
+                }
+
+                if (isNumeric(value)) {
+                    addPart(String.format("%s, ", value));
+
+                    continue;
+                }
+
+                addPart(String.format("'%s', ", value));
+            }
 
             removeLast(2).addPart("),");
         }
