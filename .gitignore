@@ -1,5 +1,6 @@
 *
 !/.gitignore
+!/LICENSE.md
 !/README.md
 !/build.xml
 !/TODO
